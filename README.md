@@ -70,3 +70,102 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+
+# API Documentation
+
+### Error Handling
+
+    {
+        "error": "This is a error message"
+    }
+
+### /api/booking/register
+
+- `POST` Create a booking object in server session
+
+  {
+  "movieId",
+  }
+
+##### Response
+
+    {
+        "bookingId",
+        "seats": [],
+        "movie": {}
+        "pricing": {
+            "amount": number
+        }
+    }
+
+### /api/booking/update
+
+- `POST` Validates and updates booking details
+
+##### Request
+
+        {
+            "bookingId",
+            "seats": [],
+            "email": "string",
+        }
+
+##### Response
+
+    200 OK
+        {
+            "bookingId",
+            "seats": [],
+            "movie": {}
+            "pricing": {
+                "amount": number
+            }
+        }
+
+### /api/booking/create
+
+- `POST` Create a new ticket
+
+  ##### Request
+
+        {
+            "bookingId": "string",
+        }
+
+  ##### Response
+
+### /api/auth/login
+
+- `POST` Login user
+
+  ##### Request
+
+        {
+            "email": "string",
+            "password": "string"
+        }
+
+  ##### Response
+
+        {
+
+        }
+
+### /api/auth/register
+
+- `POST` Register user
+
+  ##### Request
+
+        {
+            "email": "string",
+            "password": "string"
+        }
+
+  ##### Response
+
+        {
+
+        }
