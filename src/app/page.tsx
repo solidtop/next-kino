@@ -1,26 +1,9 @@
 import MovieList from "@/components/MovieList";
-import { Movie } from "@/types";
+import * as api from "@/utils/api";
 
-const movies: Movie[] = [
-  {
-    title: "Avatar",
-    imgUrl: "",
-  },
-  {
-    title: "Shawshank",
-    imgUrl: "",
-  },
-  {
-    title: "Toy Story",
-    imgUrl: "",
-  },
-  {
-    title: "Up",
-    imgUrl: "",
-  },
-];
+export default async function Home() {
+  const movies = await api.getMovies();
 
-export default function Home() {
   return (
     <main>
       <MovieList movies={movies}></MovieList>

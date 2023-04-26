@@ -1,4 +1,14 @@
 export type Movie = {
-  title: string;
-  imgUrl: string;
+  id: number;
+  attributes: {
+    title: string;
+    imdbId: string;
+    intro: string;
+    image: {
+      url: string;
+    };
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+  };
 };

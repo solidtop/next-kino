@@ -8,11 +8,11 @@ type MovieListProps = {
 
 const MovieList: FC<MovieListProps> = ({ movies }) => {
   return (
-    <section className="container mx-auto p-4 max-w-4xl">
-      <h1 className="text-xl text-center my-6">Hela Bioprogrammet</h1>
-      <ul className="grid gap-4 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-center">
-        {movies.map((movie, index) => (
-          <MovieCard key={index} movie={movie}></MovieCard>
+    <section className="container mx-auto p-6 max-w-4xl">
+      <h1 className="font-bold text-xl text-center my-6">Hela Bioprogrammet</h1>
+      <ul className="grid grid-cols-fluid gap-4 justify-center">
+        {movies.map((movie) => (
+          <MovieCard key={movie.id} movie={movie}></MovieCard>
         ))}
       </ul>
     </section>
