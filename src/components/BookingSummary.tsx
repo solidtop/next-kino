@@ -1,24 +1,19 @@
 "use client";
 
-import { Movie } from "@/types";
+import { Booking } from "@/types";
 import { FC } from "react";
-
-type Booking = {
-  bookingId: number;
-  pricing: {
-    amountTotal: number;
-  };
-  movie: Movie;
-};
+import formatDate from "@/utils/formatting";
 
 type BookingSummaryProps = {
-  booking: {};
-  movie: Movie;
+  booking: Booking;
 };
 
-const BookingSummary: FC<BookingSummaryProps> = ({ booking, movie }) => {
+const BookingSummary: FC<BookingSummaryProps> = ({ booking }) => {
+  const screening = booking.screening;
+  const movie = screening.attributes.movie.data;
+
   return (
-    <aside className="bg-container-color rounded max-w-xs p-4 m-4 md:ml-auto">
+    <aside className="bg-container-color rounded md:w-1/3 mb-4 p-4 md:fixed md:top-4 md:right-4">
       <div className="flex justify-start items-center gap-x-4">
         <img
           className="w-24 rounded"
@@ -27,23 +22,26 @@ const BookingSummary: FC<BookingSummaryProps> = ({ booking, movie }) => {
         />
         <ul>
           <li className="font-bold text-lg mb-2">{movie.attributes.title}</li>
-          <li>Stora salongen</li>
-          <li>Idag, Måndag 26 februari 13:00</li>
+          <li className="text-white opacity-70">Stora salongen</li>
+          <li className="text-white opacity-70">
+            {formatDate(new Date(screening.attributes.start_time))}
+          </li>
         </ul>
       </div>
 
       <div className="flex flex-col gap-20 justify-between mt-2">
         <ul>
           <li>
-            <p>2 st Ordinarie</p>
-            <p>270.00 kr</p>
+            <p className="text-white opacity-70">2 st Ordinarie</p>
+            <p>{booking.pricing.amountTotal} kr</p>
           </li>
         </ul>
 
         <ul>
+          <hr className="h-[2px] bg-slate-400 mb-2 rounded"></hr>
           <li className="flex justify-between">
             <div>Totalt att betala</div>
-            <div>270.00 kr</div>
+            <div>{booking.pricing.amountTotal} kr</div>
           </li>
         </ul>
       </div>
