@@ -7,9 +7,9 @@ export type Movie = {
     image: {
       url: string;
     };
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
+    createdAt: Date;
+    updatedAt: Date;
+    publishedAt: Date;
   };
 };
 
