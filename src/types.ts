@@ -26,10 +26,27 @@ export type Screening = {
   };
 };
 
-export type Booking = {
+export type Ticket = {
   id: number;
+  type: string;
+  price: number;
+  quantity: number;
+  maxQuantity: number;
+};
+
+export type BookingDetails = {
+  id: string;
+  screening: Screening;
+  tickets: Ticket[];
   pricing: {
     amountTotal: number;
   };
-  screening: Screening;
+  email: string;
+};
+
+export type BookingForm = {
+  id?: string;
+  seats?: [];
+  email?: string;
+  tickets?: Ticket[];
 };
