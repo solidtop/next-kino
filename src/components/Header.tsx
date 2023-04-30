@@ -1,14 +1,11 @@
-"use client";
 import { FC } from "react";
-import { useState } from "react";
 import Link from "next/link";
 import LoginModal from "./LoginModal";
 import MyPages from "./MyPages";
 
-const Header: FC = () => {
-  //This useState is only temporary, remove this and put it as a prop
-  //once we start working on the login function
-  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+//Still temporary code, will swap loggedIn for props from something like next-auth.
+//Probably with useSession to get session data
+const Header: FC<{ loggedIn: boolean }> = (loggedIn) => {
   return (
     <section>
       <header className="grid grid-cols-5 mt-6 ">
@@ -22,7 +19,7 @@ const Header: FC = () => {
           <Link href="/">Biljettinfo</Link>
         </ul>
 
-        {loggedIn ? <MyPages /> : <LoginModal />}
+        {loggedIn.loggedIn ? <MyPages /> : <LoginModal />}
       </header>
     </section>
   );
