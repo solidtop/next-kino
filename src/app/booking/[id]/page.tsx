@@ -1,44 +1,91 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import BackButton from "@/components/BackButton";
 import BookingSummary from "@/components/BookingSummary";
-import TicketTypeMenu from "@/components/TicketTypeMenu";
-import * as api from "../../../utils/api";
+import TicketTypeMenu from "@/components/TicketMenu";
+import { BookingDetails, BookingForm } from "@/types";
+import { useParams } from "next/navigation";
 
-const types = [
-  {
-    name: "Ordinarie",
-    price: 135,
-    maxAmount: 5,
-  },
-  {
-    name: "Pensionär",
-    price: 100,
-    maxAmount: 5,
-  },
-  {
-    name: "Student",
-    price: 100,
-    maxAmount: 5,
-  },
-];
+export default function BookingPage() {
+  const [bookingDetails, setBookingDetails] = useState<BookingDetails | null>(
+    null
+  );
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const timer = useRef<number | undefined>(undefined);
+  const params = useParams();
 
-export default async function Booking() {
-  const screenings = await api.getScreenings();
-  const booking = {
-    id: 0,
-    pricing: {
-      amountTotal: 270,
-    },
-    screening: screenings[0],
+  // NOTE: Fetch booking info from server API, included to demonstrate menu functionality
+  useEffect(() => {
+    const loadBookingDetails = async () => {
+      try {
+        const res = await fetch("/api/booking/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const payload = await res.json();
+        setBookingDetails(payload);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadBookingDetails();
+  }, []);
+
+  // NOTE: Make update request to server api, included to demonstrate menu functionality
+  const handleUpdate = ({ tickets }: BookingForm): void => {
+    clearTimeout(timer.current);
+
+    // Set delay before sending request (prevents request spam)
+    timer.current = window.setTimeout(async () => {
+      setIsLoading(true);
+
+      try {
+        const res = await fetch("/api/booking/update", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...tickets,
+            bookingId: params.id, // Placeholder
+            seats: [], // Placeholder
+          }),
+        });
+        const payload = await res.json();
+        setBookingDetails(payload);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setIsLoading(false);
+      }
+    }, 1000);
   };
 
   return (
-    <>
-      <div className="max-w-4xl mx-auto relative translate-x-0 p-4">
-        <BookingSummary booking={booking}></BookingSummary>
+    <div className="max-w-screen-xl mx-auto">
+      <BackButton />
 
-        <main className="flex flex-col gap-y-4 md:w-2/3 md:pr-8">
-          <TicketTypeMenu types={types}></TicketTypeMenu>
-        </main>
-      </div>
-    </>
+      {bookingDetails && (
+        <>
+          <BookingSummary bookingDetails={bookingDetails} />
+          <main className="flex flex-col gap-y-4 md:w-2/3 lg:w-1/2 p-4 lg:mx-auto">
+            <form onSubmit={(ev) => ev.preventDefault()}>
+              <TicketTypeMenu
+                onUpdate={handleUpdate}
+                tickets={bookingDetails.tickets}
+              />
+            </form>
+          </main>
+        </>
+      )}
+
+      {isLoading && <p className="text-center m-auto">Loading...</p>}
+    </div>
   );
 }
