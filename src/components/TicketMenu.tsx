@@ -12,6 +12,7 @@ const TicketMenu: FC<MenuProps> = ({ onUpdate, tickets }) => {
     const updatedTickets = tickets.map((ticket) =>
       ticket.id === id ? { ...ticket, quantity: newQuantity } : ticket
     );
+    tickets = updatedTickets;
     onUpdate({ tickets: updatedTickets });
   };
 
