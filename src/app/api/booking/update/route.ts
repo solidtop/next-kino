@@ -1,35 +1,22 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
+  const body = await req.json();
+
+  let amountTotal = 0;
+  for (let i = 0; i < body.tickets.length; i++) {
+    for (let j = 0; j < body.tickets[i].quantity; j++) {
+      amountTotal += body.tickets[i].price;
+    }
+  }
+
   /* NOTE: Placeholder object for demonstrating functionality, remove when implementing api endpoint */
   const booking = {
     bookingId: 0,
     pricing: {
-      amountTotal: 570,
+      amountTotal,
     },
-    tickets: [
-      {
-        id: 0,
-        type: "Ordinarie",
-        price: 135,
-        quantity: 1,
-        maxQuantity: 5,
-      },
-      {
-        id: 1,
-        type: "Pensionär",
-        price: 100,
-        quantity: 0,
-        maxQuantity: 5,
-      },
-      {
-        id: 2,
-        type: "Student",
-        price: 100,
-        quantity: 0,
-        maxQuantity: 5,
-      },
-    ],
+    tickets: body.tickets,
     screening: {
       id: 101,
       attributes: {

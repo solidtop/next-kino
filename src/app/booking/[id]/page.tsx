@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import BackButton from "@/components/BackButton";
 import BookingSummary from "@/components/BookingSummary";
-import TicketTypeMenu from "@/components/TicketMenu";
+import TicketMenu from "@/components/TicketMenu";
+import NumericHeader from "@/components/NumericHeader";
 import { BookingDetails, BookingForm } from "@/types";
 import { useParams } from "next/navigation";
 
@@ -15,7 +16,7 @@ export default function BookingPage() {
   const timer = useRef<number | undefined>(undefined);
   const params = useParams();
 
-  // NOTE: Fetch booking info from server API, included to demonstrate menu functionality
+  // NOTE: Fetch booking details from server API, included to demonstrate menu functionality
   useEffect(() => {
     const loadBookingDetails = async () => {
       try {
@@ -52,7 +53,7 @@ export default function BookingPage() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            ...tickets,
+            tickets,
             bookingId: params.id, // Placeholder
             seats: [], // Placeholder
           }),
@@ -76,10 +77,13 @@ export default function BookingPage() {
           <BookingSummary bookingDetails={bookingDetails} />
           <main className="flex flex-col gap-y-4 md:w-2/3 lg:w-1/2 p-4 lg:mx-auto">
             <form onSubmit={(ev) => ev.preventDefault()}>
-              <TicketTypeMenu
-                onUpdate={handleUpdate}
-                tickets={bookingDetails.tickets}
-              />
+              <section id="tickets">
+                <NumericHeader number="1" title="Välj biljettyper" />
+                <TicketMenu
+                  onUpdate={handleUpdate}
+                  tickets={bookingDetails.tickets}
+                />
+              </section>
             </form>
           </main>
         </>
