@@ -38,15 +38,9 @@ export type BookingDetails = {
   id: string;
   screening: Screening;
   tickets: Ticket[];
+  seats: [];
   pricing: {
     amountTotal: number;
   };
   email: string;
-};
-
-export type BookingForm = {
-  id?: string;
-  seats?: [];
-  email?: string;
-  tickets?: Ticket[];
 };

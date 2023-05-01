@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { useState, FC } from "react";
 import { Ticket } from "@/types";
 
 type ItemProps = {
@@ -6,8 +6,8 @@ type ItemProps = {
   onTicketChange: (id: number, newQuantity: number) => void;
 };
 
-const TicketItem: FC<ItemProps> = ({ onTicketChange, ticket }) => {
-  const [quantity, setQuantity] = useState(ticket.quantity);
+const TicketItem: FC<ItemProps> = ({ ticket, onTicketChange }) => {
+  const [quantity, setQuantity] = useState<number>(ticket.quantity);
 
   return (
     <li className="grid grid-cols-3 items-center justify-items-center">

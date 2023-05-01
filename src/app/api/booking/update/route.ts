@@ -2,11 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
+  const { tickets } = body;
 
   let amountTotal = 0;
-  for (let i = 0; i < body.tickets.length; i++) {
-    for (let j = 0; j < body.tickets[i].quantity; j++) {
-      amountTotal += body.tickets[i].price;
+  for (let i = 0; i < tickets.length; i++) {
+    for (let j = 0; j < tickets[i].quantity; j++) {
+      amountTotal += tickets[i].price;
     }
   }
 
@@ -16,7 +17,7 @@ export async function POST(req: NextRequest) {
     pricing: {
       amountTotal,
     },
-    tickets: body.tickets,
+    tickets: tickets,
     screening: {
       id: 101,
       attributes: {

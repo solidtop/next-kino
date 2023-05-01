@@ -5,8 +5,8 @@ import BackButton from "@/components/BackButton";
 import BookingSummary from "@/components/BookingSummary";
 import TicketMenu from "@/components/TicketMenu";
 import NumericHeader from "@/components/NumericHeader";
-import { BookingDetails, BookingForm } from "@/types";
-import { useParams } from "next/navigation";
+import Loader from "@/components/Loader";
+import { BookingDetails } from "@/types";
 
 export default function BookingPage() {
   const [bookingDetails, setBookingDetails] = useState<BookingDetails | null>(
@@ -14,9 +14,8 @@ export default function BookingPage() {
   );
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const timer = useRef<number | undefined>(undefined);
-  const params = useParams();
 
-  // NOTE: Fetch booking details from server API, included to demonstrate menu functionality
+  // Fetch & register booking details from server API
   useEffect(() => {
     const loadBookingDetails = async () => {
       try {
@@ -38,14 +37,12 @@ export default function BookingPage() {
     loadBookingDetails();
   }, []);
 
-  // NOTE: Make update request to server api, included to demonstrate menu functionality
-  const handleUpdate = ({ tickets }: BookingForm): void => {
+  const handleUpdate = (bookingDetails: BookingDetails): void => {
     clearTimeout(timer.current);
 
     // Set delay before sending request (prevents request spam)
     timer.current = window.setTimeout(async () => {
       setIsLoading(true);
-
       try {
         const res = await fetch("/api/booking/update", {
           method: "POST",
@@ -53,9 +50,7 @@ export default function BookingPage() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            tickets,
-            bookingId: params.id, // Placeholder
-            seats: [], // Placeholder
+            ...bookingDetails,
           }),
         });
         const payload = await res.json();
@@ -63,7 +58,9 @@ export default function BookingPage() {
       } catch (err) {
         console.log(err);
       } finally {
-        setIsLoading(false);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 500);
       }
     }, 1000);
   };
@@ -77,11 +74,11 @@ export default function BookingPage() {
           <BookingSummary bookingDetails={bookingDetails} />
           <main className="flex flex-col gap-y-4 md:w-2/3 lg:w-1/2 p-4 lg:mx-auto">
             <form onSubmit={(ev) => ev.preventDefault()}>
-              <section id="tickets">
+              <section id="tickets" className="relative">
                 <NumericHeader number="1" title="Välj biljettyper" />
                 <TicketMenu
+                  bookingDetails={bookingDetails}
                   onUpdate={handleUpdate}
-                  tickets={bookingDetails.tickets}
                 />
               </section>
             </form>
@@ -89,7 +86,7 @@ export default function BookingPage() {
         </>
       )}
 
-      {isLoading && <p className="text-center m-auto">Loading...</p>}
+      {isLoading && <Loader size="40" />}
     </div>
   );
 }

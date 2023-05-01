@@ -1,19 +1,23 @@
 import { FC } from "react";
 import TicketItem from "./TicketItem";
-import { BookingForm, Ticket } from "@/types";
+import { BookingDetails } from "@/types";
 
 type MenuProps = {
-  onUpdate: (data: BookingForm) => void;
-  tickets: Ticket[];
+  bookingDetails: BookingDetails;
+  onUpdate: (bookingDetails: BookingDetails) => void;
 };
 
-const TicketMenu: FC<MenuProps> = ({ onUpdate, tickets }) => {
+const TicketMenu: FC<MenuProps> = ({ bookingDetails, onUpdate }) => {
+  const tickets = bookingDetails.tickets;
+
   const handleTicketChange = (id: number, newQuantity: number): void => {
+    const tickets = bookingDetails.tickets;
     const updatedTickets = tickets.map((ticket) =>
       ticket.id === id ? { ...ticket, quantity: newQuantity } : ticket
     );
-    tickets = updatedTickets;
-    onUpdate({ tickets: updatedTickets });
+
+    bookingDetails.tickets = updatedTickets;
+    onUpdate({ ...bookingDetails, tickets: updatedTickets });
   };
 
   return (
