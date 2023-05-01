@@ -1,5 +1,3 @@
-"use client";
-
 import { BookingDetails } from "@/types";
 import { FC } from "react";
 import formatDate from "@/utils/formatting";
