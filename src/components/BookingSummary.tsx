@@ -1,13 +1,13 @@
-import { BookingDetails } from "@/types";
 import { FC } from "react";
+import { BookingDetails } from "@/types";
 import formatDate from "@/utils/formatting";
 
-type BookingSummaryProps = {
+type SummaryProps = {
   bookingDetails: BookingDetails;
 };
 
-const BookingSummary: FC<BookingSummaryProps> = ({ bookingDetails }) => {
-  const screening = bookingDetails.screening;
+const BookingSummary: FC<SummaryProps> = ({ bookingDetails }) => {
+  const { screening, tickets, pricing } = bookingDetails;
   const movie = screening.attributes.movie.data;
 
   return (
@@ -30,7 +30,7 @@ const BookingSummary: FC<BookingSummaryProps> = ({ bookingDetails }) => {
 
         <div className="flex flex-col gap-20 justify-between mt-2">
           <ul>
-            {bookingDetails.tickets.map((ticket) =>
+            {tickets.map((ticket) =>
               ticket.quantity ? (
                 <li key={ticket.id}>
                   <p className="text-white opacity-70">{`${ticket.quantity} st ${ticket.type}`}</p>
@@ -46,7 +46,7 @@ const BookingSummary: FC<BookingSummaryProps> = ({ bookingDetails }) => {
             <hr className="h-[2px] bg-slate-400 mb-2 rounded"></hr>
             <li className="flex justify-between">
               <div>Totalt att betala</div>
-              <div>{bookingDetails.pricing.amountTotal} kr</div>
+              <div>{pricing.amountTotal} kr</div>
             </li>
           </ul>
         </div>
