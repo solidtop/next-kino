@@ -5,8 +5,9 @@ import BackButton from "@/components/BackButton";
 import BookingSummary from "@/components/BookingSummary";
 import TicketMenu from "@/components/TicketMenu";
 import NumericHeader from "@/components/NumericHeader";
-import Loader from "@/components/Loader";
 import { BookingDetails } from "@/types";
+import DetailsForm from "@/components/DetailsForm";
+import UserDetails from "@/components/UserDetails";
 
 export default function BookingPage() {
   const [bookingDetails, setBookingDetails] = useState<BookingDetails | null>(
@@ -63,6 +64,18 @@ export default function BookingPage() {
     }, 1000);
   };
 
+  // Placeholder (maybe change to status === "authenticated")
+  const loggedIn = false;
+  const session = loggedIn
+    ? {
+        user: {
+          email: "john@gmail.com",
+          name: "John Doe",
+          bonusPoints: 5,
+        },
+      }
+    : false;
+
   return (
     <div className="max-w-screen-xl mx-auto">
       <BackButton />
@@ -72,13 +85,20 @@ export default function BookingPage() {
           <BookingSummary bookingDetails={bookingDetails} />
           <main className="flex flex-col gap-y-4 md:w-2/3 lg:w-1/2 p-4 lg:mx-auto">
             <form onSubmit={(ev) => ev.preventDefault()}>
-              <section id="tickets" className="relative">
+              <section id="tickets">
                 <NumericHeader number="1" title="Välj biljettyper" />
                 <TicketMenu
                   bookingDetails={bookingDetails}
                   onUpdate={handleUpdate}
                 />
               </section>
+              <section id="details">
+                <NumericHeader number="3" title="Fyll i detaljer" />
+                {!session && <DetailsForm />}
+                {session && <UserDetails user={session.user} />}
+              </section>
+
+              <button type="submit">Submit</button>
             </form>
           </main>
         </>

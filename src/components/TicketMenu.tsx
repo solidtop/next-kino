@@ -2,12 +2,12 @@ import { FC } from "react";
 import TicketItem from "./TicketItem";
 import { BookingDetails } from "@/types";
 
-type MenuProps = {
+type TicketMenuProps = {
   bookingDetails: BookingDetails;
   onUpdate: (bookingDetails: BookingDetails) => void;
 };
 
-const TicketMenu: FC<MenuProps> = ({ bookingDetails, onUpdate }) => {
+const TicketMenu: FC<TicketMenuProps> = ({ bookingDetails, onUpdate }) => {
   const tickets = bookingDetails.tickets;
 
   const handleTicketChange = (id: number, newQuantity: number): void => {
