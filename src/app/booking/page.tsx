@@ -58,9 +58,7 @@ export default function BookingPage() {
       } catch (err) {
         console.log(err);
       } finally {
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 500);
+        setIsLoading(false);
       }
     }, 1000);
   };
@@ -85,8 +83,6 @@ export default function BookingPage() {
           </main>
         </>
       )}
-
-      {isLoading && <Loader size="40" />}
     </div>
   );
 }

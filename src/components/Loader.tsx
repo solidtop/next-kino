@@ -1,16 +1,12 @@
 import { FC } from "react";
 
-type LoaderProps = {
-  size: string;
-};
-
-const Loader: FC<LoaderProps> = ({ size }) => {
+const Loader: FC = () => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-md flex justify-center items-center transition-all">
       <div role="status">
         <svg
           aria-hidden="true"
-          className={`w-${size} h-${size} inline mr-2 animate-spin fill-btn-primary-color`}
+          className={`w-40 h-40 inline mr-2 animate-spin fill-btn-primary-color`}
           viewBox="0 0 100 101"
           fill="none"
         >
