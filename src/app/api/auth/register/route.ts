@@ -1,14 +1,18 @@
-import { connectMongo } from "../../../../../utils/connectDb";
-import bcrypt from "bcryptjs";
+import connectDb from "../../../../../utils/connectDb";
+/* import bcrypt from "bcryptjs";
 import userModel from "../../../../../models/user";
-import generateToken from "../../../../../utils/token";
+import generateToken from "../../../../../utils/token"; */
 import { NextApiRequest, NextApiResponse } from "next";
 
 //Register a user
 async function handleRegister(req: NextApiRequest, res: NextApiResponse) {
-  try {
+  connectDb();
+  const { name, email, password } = req.body;
+  console.log(name, email, password);
+  res.send(name, email, password);
+  /* try {
     const { name, email, password } = req.body;
-    await connectMongo();
+    await connectDb();
     let user = await userModel.findOne({ email });
     if (user) {
       res.status(404).json({ message: "User already exists" });
@@ -34,7 +38,7 @@ async function handleRegister(req: NextApiRequest, res: NextApiResponse) {
     }
   } catch (error) {
     console.log(error);
-  }
+  } */
 }
 
 export default async function handler(

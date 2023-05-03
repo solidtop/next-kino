@@ -1,4 +1,4 @@
-import { connectMongo } from "../../../../../utils/connectDb";
+import connectDb from "../../../../../utils/connectDb";
 import bcrypt from "bcryptjs";
 import userModel from "../../../../../models/user.js";
 import generateToken from "../../../../../utils/token.js";
@@ -11,7 +11,7 @@ export default async function handler(
 ) {
   if (req.method === "POST") {
     try {
-      await connectMongo();
+      await connectDb();
       const { email, password } = req.body;
       let user = await userModel.findOne({ email });
       if (!user) {
