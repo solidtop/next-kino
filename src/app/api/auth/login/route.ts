@@ -1,7 +1,7 @@
-import connectDb from "../../../../../utils/connectDb";
+import connectDb from "../../../../utils/connectDb";
 import bcrypt from "bcryptjs";
-import userModel from "../../../../../models/user.js";
-import generateToken from "../../../../../utils/token.js";
+import userModel from "../../../../models/user.js";
+import generateToken from "../../../../utils/token.js";
 import { NextApiRequest, NextApiResponse } from "next";
 
 //login a user
