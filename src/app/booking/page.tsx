@@ -9,6 +9,18 @@ import { BookingDetails } from "@/types";
 import DetailsForm from "@/components/DetailsForm";
 import UserDetails from "@/components/UserDetails";
 
+// PLACEHOLDER: Based on next-auth useSession()
+const loggedIn = false;
+const session = loggedIn
+  ? {
+      user: {
+        email: "john@gmail.com",
+        name: "John Doe",
+        bonusPoints: 5,
+      },
+    }
+  : null;
+
 export default function BookingPage() {
   const [bookingDetails, setBookingDetails] = useState<BookingDetails | null>(
     null
@@ -64,18 +76,6 @@ export default function BookingPage() {
     }, 1000);
   };
 
-  // Placeholder (maybe change to status === "authenticated")
-  const loggedIn = false;
-  const session = loggedIn
-    ? {
-        user: {
-          email: "john@gmail.com",
-          name: "John Doe",
-          bonusPoints: 5,
-        },
-      }
-    : false;
-
   return (
     <div className="max-w-screen-xl mx-auto">
       <BackButton />
@@ -94,11 +94,14 @@ export default function BookingPage() {
               </section>
               <section id="details">
                 <NumericHeader number="3" title="Fyll i detaljer" />
-                {!session && <DetailsForm />}
+                {!session && (
+                  <DetailsForm
+                    bookingDetails={bookingDetails}
+                    setBookingDetails={setBookingDetails}
+                  />
+                )}
                 {session && <UserDetails user={session.user} />}
               </section>
-
-              <button type="submit">Submit</button>
             </form>
           </main>
         </>

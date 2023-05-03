@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 /* NOTE: Placeholder object for demonstrating functionality, remove when implementing api endpoint */
 const booking = {
   bookingId: 0,
+  email: "",
   pricing: {
     amountTotal: 0,
   },
