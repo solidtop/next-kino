@@ -5,9 +5,9 @@ import BackButton from "@/components/BackButton";
 import BookingSummary from "@/components/BookingSummary";
 import TicketMenu from "@/components/TicketMenu";
 import NumericHeader from "@/components/NumericHeader";
-import { BookingDetails } from "@/types";
 import DetailsForm from "@/components/DetailsForm";
 import UserDetails from "@/components/UserDetails";
+import { BookingDetails } from "@/types";
 
 // PLACEHOLDER: Based on next-auth useSession()
 const loggedIn = false;
