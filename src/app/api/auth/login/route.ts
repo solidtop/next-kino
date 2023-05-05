@@ -1,37 +1,37 @@
 import connectDb from "../../../../utils/connectDb";
 import bcrypt from "bcryptjs";
-import userModel from "../../../../models/user.js";
-import generateToken from "../../../../utils/token.js";
-import { NextApiRequest, NextApiResponse } from "next";
+import userModel from "../../../../models/user";
+import generateToken from "../../../../utils/token";
+import { NextRequest, NextResponse } from "next/server";
 
 //login a user
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  if (req.method === "POST") {
-    try {
-      await connectDb();
-      const { email, password } = req.body;
-      let user = await userModel.findOne({ email });
-      if (!user) {
-        res.status(404).json({ message: "User not found." });
-        return;
-      }
-
-      let isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) {
-        res.status(401).json({ msg: "Invalid user credentials" });
-        return;
-      }
-      res.json({
-        _id: user.id,
-        name: user.name,
-        email: user.email,
-        token: generateToken(user._id),
+export async function POST(req: NextRequest, res: NextResponse) {
+  try {
+    await connectDb();
+    const { email, password } = await req.json();
+    let user = await userModel.findOne({ email });
+    if (!user) {
+      return new NextResponse("User not found.", {
+        status: 401,
       });
-    } catch (error) {
-      console.log(error);
     }
+
+    let isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return new NextResponse("Invalid User Credentials", {
+        status: 401,
+      });
+    }
+    return NextResponse.json({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      token: generateToken(user._id),
+    });
+  } catch (error) {
+    console.log(error);
+    return new NextResponse("An error occurred while processing the request.", {
+      status: 500,
+    });
   }
 }

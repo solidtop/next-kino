@@ -1,4 +1,4 @@
-/** @type {import('next').NextConfig} */
+/* /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
     topLevelAwait: true,
@@ -13,3 +13,4 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
+ 
