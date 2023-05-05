@@ -1,51 +1,42 @@
 import { NextRequest, NextResponse } from "next/server";
+import { cookies } from "next/headers";
+import JWT from "jsonwebtoken";
+import { BookingDetails, Ticket } from "@/types";
+import { isValidBookingDetails } from "@/utils/validation";
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
-  const { tickets, email } = body;
-
-  let amountTotal = 0;
-  for (let i = 0; i < tickets.length; i++) {
-    for (let j = 0; j < tickets[i].quantity; j++) {
-      amountTotal += tickets[i].price;
-    }
+  const cookieList = cookies();
+  const session = cookieList.get("b-session")?.value;
+  if (!session) {
+    return NextResponse.json(
+      { error: { message: "Session expired", code: 401 } },
+      { status: 401 }
+    );
   }
 
-  /* NOTE: Placeholder object for demonstrating functionality, remove when implementing api endpoint */
-  const booking = {
-    bookingId: 0,
-    email: email,
-    pricing: {
-      amountTotal,
-    },
-    tickets: tickets,
-    screening: {
-      id: 101,
-      attributes: {
-        start_time: "2023-03-24T21:00:00.000Z",
-        room: "Stora salongen",
-        createdAt: "2023-03-12T15:56:09.684Z",
-        updatedAt: "2023-03-12T15:56:09.684Z",
-        movie: {
-          data: {
-            id: 1,
-            attributes: {
-              title: "Isle of dogs",
-              imdbId: "tt5104604",
-              intro:
-                "An outbreak of dog flu has spread through the city of **Megasaki, Japan**, and Mayor Kobayashi has demanded all dogs to be sent to Trash Island.",
-              image: {
-                url: "https://m.media-amazon.com/images/M/MV5BZDQwOWQ2NmUtZThjZi00MGM0LTkzNDctMzcyMjcyOGI1OGRkXkEyXkFqcGdeQXVyMTA3MDk2NDg2._V1_.jpg",
-              },
-              createdAt: "2023-01-23T05:58:58.110Z",
-              updatedAt: "2023-01-27T07:11:53.523Z",
-              publishedAt: "2023-01-23T06:01:31.679Z",
-            },
-          },
-        },
-      },
-    },
-  };
+  const secretKey = process.env.SECRET_KEY as string;
+  const payload = JWT.verify(session, secretKey);
+  const bookingDetails: BookingDetails =
+    typeof payload == "object" ? payload.bookingDetails : null;
 
-  return NextResponse.json(booking);
+  const body = await req.json();
+  const isValid = isValidBookingDetails(body, bookingDetails);
+  if (!isValid) {
+    return NextResponse.json(bookingDetails, { status: 400 });
+  }
+
+  body.pricing.amountTotal = getAmountTotal(body.tickets);
+  const res = NextResponse.json(body);
+  const jwt = JWT.sign({ bookingDetails: body }, secretKey);
+  res.cookies.set("b-session", jwt, {
+    httpOnly: true,
+  });
+
+  return res;
+}
+
+function getAmountTotal(tickets: Ticket[]): number {
+  return tickets.reduce((total, ticket) => {
+    return total + ticket.price * ticket.quantity;
+  }, 0);
 }

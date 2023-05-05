@@ -1,63 +1,68 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import JWT from "jsonwebtoken";
+import { v4 as uuidv4 } from "uuid";
+import * as api from "@/utils/api";
+import { BookingDetails, Screening } from "@/types";
 
-/* NOTE: Placeholder object for demonstrating functionality, remove when implementing api endpoint */
-const booking = {
-  bookingId: 0,
-  email: "",
-  pricing: {
-    amountTotal: 0,
-  },
-  tickets: [
-    {
-      id: 0,
-      type: "Ordinarie",
-      price: 135,
-      quantity: 0,
-      maxQuantity: 5,
-    },
-    {
-      id: 1,
-      type: "Pensionär",
-      price: 100,
-      quantity: 0,
-      maxQuantity: 5,
-    },
-    {
-      id: 2,
-      type: "Student",
-      price: 100,
-      quantity: 0,
-      maxQuantity: 5,
-    },
-  ],
-  screening: {
-    id: 101,
-    attributes: {
-      start_time: "2023-03-24T21:00:00.000Z",
-      room: "Stora salongen",
-      createdAt: "2023-03-12T15:56:09.684Z",
-      updatedAt: "2023-03-12T15:56:09.684Z",
-      movie: {
-        data: {
-          id: 1,
-          attributes: {
-            title: "Isle of dogs",
-            imdbId: "tt5104604",
-            intro:
-              "An outbreak of dog flu has spread through the city of **Megasaki, Japan**, and Mayor Kobayashi has demanded all dogs to be sent to Trash Island.",
-            image: {
-              url: "https://m.media-amazon.com/images/M/MV5BZDQwOWQ2NmUtZThjZi00MGM0LTkzNDctMzcyMjcyOGI1OGRkXkEyXkFqcGdeQXVyMTA3MDk2NDg2._V1_.jpg",
-            },
-            createdAt: "2023-01-23T05:58:58.110Z",
-            updatedAt: "2023-01-27T07:11:53.523Z",
-            publishedAt: "2023-01-23T06:01:31.679Z",
-          },
-        },
+export async function POST(req: NextRequest) {
+  const body = await req.json();
+  const { screeningId = null } = body;
+
+  const secretKey = process.env.SECRET_KEY as string;
+  const session = req.cookies.get("b-session")?.value;
+  if (session) {
+    const payload = JWT.verify(session, secretKey);
+    const bookingDetails =
+      typeof payload === "object" ? payload.bookingDetails : null;
+
+    if (bookingDetails.screening.id == screeningId) {
+      return NextResponse.json(bookingDetails);
+    }
+  }
+
+  const screening = await api.getScreening(screeningId);
+  const bookingId = uuidv4();
+  const bookingDetails = initBooking(bookingId, screening);
+  const res = NextResponse.json(bookingDetails);
+  const jwt = JWT.sign({ bookingDetails }, secretKey);
+  res.cookies.set("b-session", jwt, {
+    httpOnly: true,
+  });
+
+  return res;
+}
+
+function initBooking(bookingId: string, screening: Screening): BookingDetails {
+  return {
+    id: bookingId,
+    screening,
+    tickets: [
+      {
+        id: 0,
+        type: "Ordinarie",
+        price: 135,
+        quantity: 0,
+        maxQuantity: 5,
       },
+      {
+        id: 1,
+        type: "Pensionär",
+        price: 100,
+        quantity: 0,
+        maxQuantity: 5,
+      },
+      {
+        id: 2,
+        type: "Student",
+        price: 100,
+        quantity: 0,
+        maxQuantity: 5,
+      },
+    ],
+    seats: [],
+    pricing: {
+      amountTotal: 0,
     },
-  },
-};
-
-export async function POST(req: Request) {
-  return NextResponse.json(booking);
+    email: null,
+  };
 }
