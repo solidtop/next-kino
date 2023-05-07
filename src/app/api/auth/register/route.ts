@@ -8,7 +8,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    await connectDb();
+     connectDb();
     const { name, email, password } = await req.json();
 
     let user = await userModel.findOne({ email });
@@ -19,12 +19,12 @@ export async function POST(req: NextRequest) {
     }
     const salt = await bcrypt.genSalt(10);
 
-    const harsedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
     user = new userModel({
       name,
       email,
-      password: harsedPassword,
+      password: hashedPassword,
     });
 
     await user.save();

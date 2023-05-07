@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 //login a user
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
-    await connectDb();
+    connectDb();
     const { email, password } = await req.json();
     let user = await userModel.findOne({ email });
     if (!user) {
