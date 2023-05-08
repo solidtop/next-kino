@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const { tickets } = body;
+  const { tickets, email } = body;
 
   let amountTotal = 0;
   for (let i = 0; i < tickets.length; i++) {
@@ -14,6 +14,7 @@ export async function POST(req: NextRequest) {
   /* NOTE: Placeholder object for demonstrating functionality, remove when implementing api endpoint */
   const booking = {
     bookingId: 0,
+    email: email,
     pricing: {
       amountTotal,
     },

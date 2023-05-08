@@ -19,7 +19,16 @@ module.exports = {
       },
       gridTemplateColumns: {
         'fluid': 'repeat(auto-fit, 200px)',
-      }
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+      },
+      animation: {
+        'menu-reveal': 'fadeIn .1s linear', 
+      },
     },
   },
   plugins: [],

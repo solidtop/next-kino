@@ -1,12 +1,12 @@
 import { useState, FC } from "react";
 import { Ticket } from "@/types";
 
-type ItemProps = {
+type TicketItemProps = {
   ticket: Ticket;
   onTicketChange: (id: number, newQuantity: number) => void;
 };
 
-const TicketItem: FC<ItemProps> = ({ ticket, onTicketChange }) => {
+const TicketItem: FC<TicketItemProps> = ({ ticket, onTicketChange }) => {
   const [quantity, setQuantity] = useState<number>(ticket.quantity);
 
   return (
@@ -14,6 +14,7 @@ const TicketItem: FC<ItemProps> = ({ ticket, onTicketChange }) => {
       <div className="justify-self-start">{ticket.type}</div>
       <div className="flex items-center">
         <button
+          type="button"
           className="w-10 h-10 bg-gray-700 rounded-full text-3xl enabled:hover:bg-gray-600 disabled:opacity-50"
           onClick={() => {
             setQuantity(quantity - 1);
@@ -29,6 +30,7 @@ const TicketItem: FC<ItemProps> = ({ ticket, onTicketChange }) => {
         </button>
         <p className="text-xl font-bold text-center w-8 md:w-14">{quantity}</p>
         <button
+          type="button"
           className="w-10 h-10 bg-gray-700 rounded-full text-3xl enabled:hover:bg-gray-600 disabled:opacity-50"
           onClick={() => {
             setQuantity(quantity + 1);
