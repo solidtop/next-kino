@@ -1,4 +1,4 @@
-import { BookingDetails } from "@/types";
+import { BookingDetails, Screening, Ticket } from "@/types";
 
 export function isValidEmail(email: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -35,7 +35,7 @@ export function isValidBookingDetails(
       ticket.id !== bookingDetails.tickets[i].id ||
       ticket.type !== bookingDetails.tickets[i].type ||
       ticket.quantity < 0 ||
-      ticket.quantity > 5
+      ticket.quantity > 10
     ) {
       return false;
     }
@@ -46,4 +46,15 @@ export function isValidBookingDetails(
 
 function isEqual(obj1: any, obj2: any): boolean {
   return JSON.stringify(obj1) === JSON.stringify(obj2);
+}
+
+export function screeningHasStarted(screening: Screening): boolean {
+  const { start_time } = screening.attributes;
+  return false; //new Date(start_time) < new Date();
+}
+
+export function getAmountTotal(tickets: Ticket[]): number {
+  return tickets.reduce((total, ticket) => {
+    return total + ticket.price * ticket.quantity;
+  }, 0);
 }

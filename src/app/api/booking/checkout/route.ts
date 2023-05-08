@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { BookingDetails } from "@/types";
 import {
   isValidBookingDetails,
+  isValidEmail,
   screeningHasStarted,
-  getAmountTotal,
 } from "@/utils/validation";
 import {
   RES_INVALID_REQUEST,
@@ -13,6 +13,7 @@ import {
   getBookingSession,
   loadBookingSession,
   saveBookingSession,
+  successResponse,
 } from "@/utils/bookingSession";
 
 export async function POST(req: NextRequest) {
@@ -34,8 +35,15 @@ export async function POST(req: NextRequest) {
     return errorResponse(RES_INVALID_REQUEST.message, RES_INVALID_REQUEST.code);
   }
 
-  body.pricing.amountTotal = getAmountTotal(body.tickets);
-  const res = NextResponse.json(body);
+  if (!body.tickets.some((ticket) => ticket.quantity > 0)) {
+    return errorResponse("Inga biljetter valda", 400);
+  }
+
+  if (!isValidEmail(body.email || "")) {
+    return errorResponse("Felaktig e-postadress", 400);
+  }
+
+  const res = successResponse("Bokningsdetaljer godkänd");
   saveBookingSession(body, res);
 
   return res;

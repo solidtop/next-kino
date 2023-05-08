@@ -8,8 +8,8 @@ import TicketMenu from "@/components/TicketMenu";
 import NumericHeader from "@/components/NumericHeader";
 import DetailsForm from "@/components/DetailsForm";
 import UserDetails from "@/components/UserDetails";
+import ErrorMessage from "@/components/ErrorMessage";
 import { BookingDetails } from "@/types";
-import Loader from "@/components/Loader";
 
 // PLACEHOLDER: Based on next-auth useSession()
 const loggedIn = false;
@@ -28,6 +28,7 @@ export default function BookingPage() {
     null
   );
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
   const timer = useRef<number | undefined>(undefined);
   const params = useParams();
   const { push } = useRouter();
@@ -44,6 +45,11 @@ export default function BookingPage() {
           body: JSON.stringify({ screeningId: params.screeningId }),
         });
         const payload = await res.json();
+        console.log(payload);
+        if (payload.error) {
+          handleError(payload.error);
+          return;
+        }
         setBookingDetails(payload);
       } catch (err) {
         console.log(err);
@@ -61,6 +67,7 @@ export default function BookingPage() {
     // Set delay before sending request (prevents request spam)
     timer.current = window.setTimeout(async () => {
       setIsLoading(true);
+      setError("");
       try {
         const res = await fetch("/api/booking/update", {
           method: "POST",
@@ -71,8 +78,8 @@ export default function BookingPage() {
         });
         const payload = await res.json();
         if (payload.error) {
-          alert(payload.error.message);
-          return push("/");
+          handleError(payload.error);
+          return;
         }
         setBookingDetails(payload);
       } catch (err) {
@@ -83,6 +90,40 @@ export default function BookingPage() {
     }, 1000);
   };
 
+  const handleSubmit = async (
+    bookingDetails: BookingDetails
+  ): Promise<void> => {
+    try {
+      const res = await fetch("/api/booking/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookingDetails),
+      });
+      const payload = await res.json();
+      if (payload.error) {
+        handleError(payload.error);
+        return;
+      }
+      push("/payment");
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleError = (error: { message: string; code?: number }): void => {
+    if (error.code === 401) {
+      alert(error.message);
+      push("/");
+      return;
+    }
+
+    setError(error.message);
+  };
+
   return (
     <div className="max-w-screen-xl mx-auto">
       <BackButton />
@@ -91,7 +132,14 @@ export default function BookingPage() {
         <>
           <BookingSummary bookingDetails={bookingDetails} />
           <main className="flex flex-col gap-y-4 md:w-2/3 lg:w-1/2 p-4 lg:mx-auto">
-            <form onSubmit={(ev) => ev.preventDefault()}>
+            {error && <ErrorMessage error={error} setError={setError} />}
+
+            <form
+              onSubmit={(ev) => {
+                ev.preventDefault();
+                handleSubmit(bookingDetails);
+              }}
+            >
               <section id="tickets">
                 <NumericHeader number="1" title="Välj biljettyper" />
                 <TicketMenu
@@ -109,6 +157,7 @@ export default function BookingPage() {
                 )}
                 {session && <UserDetails user={session.user} />}
               </section>
+              <button type="submit">Fortsätt</button>
             </form>
           </main>
         </>
