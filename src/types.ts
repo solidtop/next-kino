@@ -44,3 +44,13 @@ export type BookingDetails = {
   };
   email: string;
 };
+
+export type LoginResponse = {
+  token: string;
+  userId: string;
+};
+
+export type LoginCredentials = {
+  email: string;
+  password: string;
+};
