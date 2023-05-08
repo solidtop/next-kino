@@ -1,22 +1,23 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import BackButton from "@/components/BackButton";
 import BookingSummary from "@/components/BookingSummary";
 import TicketMenu from "@/components/TicketMenu";
 import NumericHeader from "@/components/NumericHeader";
 import DetailsForm from "@/components/DetailsForm";
 import UserDetails from "@/components/UserDetails";
+import ErrorMessage from "@/components/ErrorMessage";
 import { BookingDetails } from "@/types";
 
-// PLACEHOLDER: Based on next-auth useSession()
+// PLACEHOLDER: Remove when implementing jwt session
 const loggedIn = false;
 const session = loggedIn
   ? {
       user: {
         email: "john@gmail.com",
         name: "John Doe",
-        bonusPoints: 5,
       },
     }
   : null;
@@ -26,7 +27,9 @@ export default function BookingPage() {
     null
   );
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
   const timer = useRef<number | undefined>(undefined);
+  const { push } = useRouter();
 
   // Fetch & register booking details from server API
   useEffect(() => {
@@ -39,6 +42,10 @@ export default function BookingPage() {
           },
         });
         const payload = await res.json();
+        if (payload.error) {
+          handleError(payload.error);
+          return;
+        }
         setBookingDetails(payload);
       } catch (err) {
         console.log(err);
@@ -62,11 +69,13 @@ export default function BookingPage() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            ...bookingDetails,
-          }),
+          body: JSON.stringify(bookingDetails),
         });
         const payload = await res.json();
+        if (payload.error) {
+          handleError(payload.error);
+          return;
+        }
         setBookingDetails(payload);
       } catch (err) {
         console.log(err);
@@ -74,6 +83,16 @@ export default function BookingPage() {
         setIsLoading(false);
       }
     }, 1000);
+  };
+
+  const handleError = (error: { message: string; code?: number }): void => {
+    if (error.code === 401) {
+      alert(error.message);
+      push("/");
+      return;
+    }
+
+    setError(error.message);
   };
 
   return (
@@ -84,6 +103,8 @@ export default function BookingPage() {
         <>
           <BookingSummary bookingDetails={bookingDetails} />
           <main className="flex flex-col gap-y-4 md:w-2/3 lg:w-1/2 p-4 lg:mx-auto">
+            {error && <ErrorMessage error={error} setError={setError} />}
+
             <form onSubmit={(ev) => ev.preventDefault()}>
               <section id="tickets">
                 <NumericHeader number="1" title="Välj biljettyper" />

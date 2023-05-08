@@ -1,6 +1,6 @@
-import { FC } from "react";
+import { FC, useState, useEffect } from "react";
 import TicketItem from "./TicketItem";
-import { BookingDetails } from "@/types";
+import { BookingDetails, Ticket } from "@/types";
 
 type TicketMenuProps = {
   bookingDetails: BookingDetails;
@@ -8,15 +8,18 @@ type TicketMenuProps = {
 };
 
 const TicketMenu: FC<TicketMenuProps> = ({ bookingDetails, onUpdate }) => {
-  const tickets = bookingDetails.tickets;
+  const [tickets, setTickets] = useState<Ticket[]>(bookingDetails.tickets);
+
+  useEffect(() => {
+    setTickets(bookingDetails.tickets);
+  }, [bookingDetails.tickets]);
 
   const handleTicketChange = (id: number, newQuantity: number): void => {
-    const tickets = bookingDetails.tickets;
     const updatedTickets = tickets.map((ticket) =>
       ticket.id === id ? { ...ticket, quantity: newQuantity } : ticket
     );
 
-    bookingDetails.tickets = updatedTickets;
+    setTickets(updatedTickets);
     onUpdate({ ...bookingDetails, tickets: updatedTickets });
   };
 
