@@ -12,3 +12,40 @@ export type Movie = {
     publishedAt: Date;
   };
 };
+
+export type Screening = {
+  id: number;
+  attributes: {
+    start_time: Date;
+    room: string;
+    createdAt: Date;
+    updatedAt: Date;
+    movie: {
+      data: Movie;
+    };
+  };
+};
+
+export type Ticket = {
+  id: number;
+  type: "Ordinarie" | "Student" | "Pensionär";
+  price: number;
+  quantity: number;
+  maxQuantity: number;
+};
+
+export type BookingDetails = {
+  id: string;
+  screening: Screening;
+  tickets: Ticket[];
+  seats: [];
+  pricing: {
+    amountTotal: number;
+  };
+  email: string;
+};
+
+export type User = {
+  name: string;
+  email: string;
+};
