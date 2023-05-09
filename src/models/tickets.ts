@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import mongoose from "mongoose";
 import { Ticket } from "@/types";
 
 const TicketsSchema: Schema = new Schema({
@@ -11,5 +12,6 @@ const TicketsSchema: Schema = new Schema({
   email: String,
 });
 
-const TicketsModel = model<Ticket>("Ticket", TicketsSchema);
+const TicketsModel =
+  mongoose.models.Ticket || model<Ticket>("Ticket", TicketsSchema);
 export default TicketsModel;
