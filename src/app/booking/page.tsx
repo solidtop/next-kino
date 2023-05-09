@@ -9,6 +9,8 @@ import NumericHeader from "@/components/NumericHeader";
 import DetailsForm from "@/components/DetailsForm";
 import UserDetails from "@/components/UserDetails";
 import ErrorMessage from "@/components/ErrorMessage";
+import SeatingChart from "@/components/SeatingChart";
+import SeatingLegend from "@/components/SeatingLegend";
 import { BookingDetails } from "@/types";
 
 // PLACEHOLDER: Remove when implementing jwt session
@@ -112,6 +114,11 @@ export default function BookingPage() {
                   bookingDetails={bookingDetails}
                   onUpdate={handleUpdate}
                 />
+              </section>
+              <section id="seating">
+                <NumericHeader number="2" title="Välj sittplatser" />
+                <SeatingChart bookingDetails={bookingDetails} />
+                <SeatingLegend />
               </section>
               <section id="details">
                 <NumericHeader number="3" title="Fyll i detaljer" />
