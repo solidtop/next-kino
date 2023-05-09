@@ -1,8 +1,8 @@
-import connectDb from "../../../../utils/connectDb";
 import bcrypt from "bcryptjs";
-import userModel from "../../../../models/user";
-import generateToken from "../../../../utils/token";
 import { NextRequest, NextResponse } from "next/server";
+import connectDb from "@/utils/connectDb";
+import userModel from "@/models/user";
+import generateToken from "@/utils/token";
 
 //login a user
 export async function POST(req: NextRequest, res: NextResponse) {

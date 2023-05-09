@@ -1,14 +1,14 @@
-import connectDb from "../../../../utils/connectDb";
 import bcrypt from "bcryptjs";
-import userModel from "../../../../models/user";
-import generateToken from "../../../../utils/token";
 import { NextRequest, NextResponse } from "next/server";
+import connectDb from "@/utils/connectDb";
+import userModel from "@/models/user";
+import generateToken from "@/utils/token";
 
 //Register a user
 
 export async function POST(req: NextRequest) {
   try {
-     connectDb();
+    connectDb();
     const { name, email, password } = await req.json();
 
     let user = await userModel.findOne({ email });
@@ -29,14 +29,14 @@ export async function POST(req: NextRequest) {
 
     await user.save();
 
-    let updatedUsser = {
+    let updatedUser = {
       _id: user.id,
       name: user.name,
       email: user.email,
       token: generateToken(user._id),
     };
 
-    return NextResponse.json(updatedUsser);
+    return NextResponse.json(updatedUser);
   } catch (error) {
     console.error(error);
     return new NextResponse("An error occurred while processing the request.", {
