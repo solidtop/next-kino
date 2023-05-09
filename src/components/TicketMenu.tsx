@@ -11,7 +11,6 @@ const TicketMenu: FC<TicketMenuProps> = ({ bookingDetails, onUpdate }) => {
   const [tickets, setTickets] = useState<Ticket[]>(bookingDetails.tickets);
 
   useEffect(() => {
-    // Todo: Maybe fix updating quantity from server
     setTickets(bookingDetails.tickets);
   }, [bookingDetails.tickets]);
 

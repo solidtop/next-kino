@@ -46,6 +46,6 @@ export type BookingDetails = {
 };
 
 export type User = {
-  email: string;
   name: string;
+  email: string;
 };

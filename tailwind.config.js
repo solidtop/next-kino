@@ -28,7 +28,7 @@ module.exports = {
       },
       animation: {
         'menu-reveal': 'fadeIn .1s linear', 
-      }
+      },
     },
   },
   plugins: [],
