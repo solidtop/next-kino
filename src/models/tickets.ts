@@ -13,6 +13,7 @@ const TicketsSchema: Schema = new Schema({
   screeningId: Number,
   startTime: String,
   tickets: Array<iTickets>,
+  seats: Array<Number>,
   email: String,
 });
 
