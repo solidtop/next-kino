@@ -7,7 +7,7 @@ type ErrorMessageProps = {
 
 const ErrorMessage: FC<ErrorMessageProps> = ({ error, setError }) => {
   return (
-    <div className="flex items-center py-2 rounded bg-red-600 bg-opacity-50 transition-opacity animate-menu-reveal">
+    <div id="errorMessage" className="flex items-center py-2 rounded bg-red-600 bg-opacity-50 transition-opacity animate-menu-reveal">
       <div slot="avatar">
         <svg
           width="100%"
