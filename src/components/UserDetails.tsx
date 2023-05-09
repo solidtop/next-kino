@@ -11,7 +11,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user }) => {
       <ul className="">
         <li className="mb-4 text-xl font-bold">{user.name}</li>
         <li>{user.email}</li>
-        <li className="mt-4 font-bold">Du har {user.bonusPoints} bonuspoäng</li>
+        <li className="mt-4 font-bold">Du har 5 bonuspoäng</li>
       </ul>
     </div>
   );

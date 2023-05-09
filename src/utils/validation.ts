@@ -49,8 +49,10 @@ function isEqual(obj1: any, obj2: any): boolean {
 }
 
 export function screeningHasStarted(screening: Screening): boolean {
-  const { start_time } = screening.attributes;
-  return false; //new Date(start_time) < new Date();
+  // const { start_time } = screening.attributes;
+  // return new Date(start_time) < new Date();
+  /* Return false for now since all screenings have already started */
+  return false;
 }
 
 export function getAmountTotal(tickets: Ticket[]): number {

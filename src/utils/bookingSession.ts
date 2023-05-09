@@ -25,6 +25,7 @@ export function saveBookingSession(
   const jwt = JWT.sign({ bookingDetails: data }, key);
   res.cookies.set("b-session", jwt, {
     maxAge: 3600, // 1 hour
+    httpOnly: true,
   });
 }
 

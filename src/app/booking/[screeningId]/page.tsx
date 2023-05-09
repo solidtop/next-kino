@@ -11,14 +11,13 @@ import UserDetails from "@/components/UserDetails";
 import ErrorMessage from "@/components/ErrorMessage";
 import { BookingDetails } from "@/types";
 
-// PLACEHOLDER: Based on next-auth useSession()
+// PLACEHOLDER: Remove when implementing jwt session
 const loggedIn = false;
 const session = loggedIn
   ? {
       user: {
         email: "john@gmail.com",
         name: "John Doe",
-        bonusPoints: 5,
       },
     }
   : null;
@@ -45,7 +44,6 @@ export default function BookingPage() {
           body: JSON.stringify({ screeningId: params.screeningId }),
         });
         const payload = await res.json();
-        console.log(payload);
         if (payload.error) {
           handleError(payload.error);
           return;
@@ -67,7 +65,6 @@ export default function BookingPage() {
     // Set delay before sending request (prevents request spam)
     timer.current = window.setTimeout(async () => {
       setIsLoading(true);
-      setError("");
       try {
         const res = await fetch("/api/booking/update", {
           method: "POST",
@@ -86,13 +83,12 @@ export default function BookingPage() {
         console.log(err);
       } finally {
         setIsLoading(false);
+        setError("");
       }
     }, 1000);
   };
 
-  const handleSubmit = async (
-    bookingDetails: BookingDetails
-  ): Promise<void> => {
+  const handleSubmit = async (bookingDetails: BookingDetails) => {
     try {
       const res = await fetch("/api/booking/checkout", {
         method: "POST",
@@ -109,15 +105,13 @@ export default function BookingPage() {
       push("/payment");
     } catch (err) {
       console.log(err);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   const handleError = (error: { message: string; code?: number }): void => {
     if (error.code === 401) {
       alert(error.message);
-      push("/");
+      push("/"); // If unauthorized, return back to home page
       return;
     }
 
@@ -157,7 +151,13 @@ export default function BookingPage() {
                 )}
                 {session && <UserDetails user={session.user} />}
               </section>
-              <button type="submit">Fortsätt</button>
+
+              <button
+                type="submit"
+                className="block w-full my-8 py-2 rounded-full bg-btn-primary-color hover:brightness-110 text-center font-semibold"
+              >
+                Fortsätt
+              </button>
             </form>
           </main>
         </>
