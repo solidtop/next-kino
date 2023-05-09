@@ -2,11 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import TicketsModel from "@/models/tickets";
 import connectTicketDb from "@/utils/connectTicketDb";
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest, res: NextResponse) {
   connectTicketDb();
-  const body = await req.json();
+
+  const screeningId = req.nextUrl.searchParams.values().next().value;
+
   const screening: Array<any> = await TicketsModel.find({
-    screeningId: body.screening.id,
+    screeningId: screeningId,
   });
 
   const seating: Array<number> = [];
@@ -15,5 +17,24 @@ export async function POST(req: NextRequest, res: NextResponse) {
       seating.push(num);
     });
   });
+
   return NextResponse.json(seating);
 }
+
+/*
+async function handleTickets(booking: object) {
+  try {
+    const res = await fetch("/api/seating?screeningId={*INSERT SCREENING ID HERE*}", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const payload = await res.json();
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+*/
