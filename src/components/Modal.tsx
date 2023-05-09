@@ -17,12 +17,8 @@ const Modal: FC<ModalProps> = ({ setShowModal }) => {
     loginUser(user);
   };
   return (
-    <>
-      <form
-        onSubmit={handleUserLogin}
-        className="bg-dark
-      "
-      >
+    <div className="container bg-blue-500">
+      <form onSubmit={handleUserLogin} className="bg-dark-500 w-100 ">
         <div className="user-form">
           <label htmlFor="email">E-post</label>
           <input
@@ -34,7 +30,6 @@ const Modal: FC<ModalProps> = ({ setShowModal }) => {
             onChange={(ev) => {
               setEmail(ev.target.value);
             }}
-            required
           />
         </div>
         <div className="user-form">
@@ -48,7 +43,6 @@ const Modal: FC<ModalProps> = ({ setShowModal }) => {
             onChange={(ev) => {
               setPassword(ev.target.value);
             }}
-            required
           />
         </div>
       </form>
@@ -58,7 +52,7 @@ const Modal: FC<ModalProps> = ({ setShowModal }) => {
       <div>
         <button onClick={() => setShowModal(false)}>Close</button>
       </div>
-    </>
+    </div>
   );
 };
 
