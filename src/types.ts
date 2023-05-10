@@ -42,7 +42,7 @@ export type BookingDetails = {
   pricing: {
     amountTotal: number;
   };
-  email: string;
+  email: string | null;
 };
 
 export type User = {

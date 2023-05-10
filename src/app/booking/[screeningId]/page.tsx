@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import BackButton from "@/components/BackButton";
 import BookingSummary from "@/components/BookingSummary";
 import TicketMenu from "@/components/TicketMenu";
@@ -29,6 +29,7 @@ export default function BookingPage() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const timer = useRef<number | undefined>(undefined);
+  const params = useParams();
   const { push } = useRouter();
 
   // Fetch & register booking details from server API
@@ -40,6 +41,7 @@ export default function BookingPage() {
           headers: {
             "Content-Type": "application/json",
           },
+          body: JSON.stringify({ screeningId: params.screeningId }),
         });
         const payload = await res.json();
         if (payload.error) {
@@ -81,18 +83,40 @@ export default function BookingPage() {
         console.log(err);
       } finally {
         setIsLoading(false);
+        setError("");
       }
     }, 1000);
+  };
+
+  const handleSubmit = async (bookingDetails: BookingDetails) => {
+    try {
+      const res = await fetch("/api/booking/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookingDetails),
+      });
+      const payload = await res.json();
+      if (payload.error) {
+        handleError(payload.error);
+        return;
+      }
+      push("/payment");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleError = (error: { message: string; code?: number }): void => {
     if (error.code === 401) {
       alert(error.message);
-      push("/");
+      push("/"); // If unauthorized, return back to home page
       return;
     }
 
     setError(error.message);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -105,7 +129,12 @@ export default function BookingPage() {
           <main className="flex flex-col gap-y-4 md:w-2/3 lg:w-1/2 p-4 lg:mx-auto">
             {error && <ErrorMessage error={error} setError={setError} />}
 
-            <form onSubmit={(ev) => ev.preventDefault()}>
+            <form
+              onSubmit={(ev) => {
+                ev.preventDefault();
+                handleSubmit(bookingDetails);
+              }}
+            >
               <section id="tickets">
                 <NumericHeader number="1" title="Välj biljettyper" />
                 <TicketMenu
@@ -123,6 +152,13 @@ export default function BookingPage() {
                 )}
                 {session && <UserDetails user={session.user} />}
               </section>
+
+              <button
+                type="submit"
+                className="block w-full my-8 py-2 rounded-full bg-btn-primary-color hover:brightness-110 text-center font-semibold"
+              >
+                Fortsätt
+              </button>
             </form>
           </main>
         </>
