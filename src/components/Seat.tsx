@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 
 const Seats: FC<any> = ({ seatIndex, tickets, selectedSeats }) => {
-  const [seatState, setSeatState] = useState("available");
+  const [seatState, setSeatState] = useState<string>("available");
 
   const selectSeat = (e) => {
     if (seatState === "occupied" || selectedSeats.length >= tickets.length) {
