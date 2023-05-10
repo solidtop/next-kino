@@ -23,17 +23,14 @@ const DetailsForm: FC<DetailsFormProps> = ({
         value={email}
         onChange={(ev) => {
           setEmail(ev.target.value);
-        }}
-        onBlur={(ev) =>
           setBookingDetails({
             ...bookingDetails,
             email: ev.target.value,
-          })
-        }
+          });
+        }}
         required
       />
       <p className="my-4">Eller</p>
-      {/* NOTE: How do we handle/trigger login modal in react?? */}
       <button
         type="button"
         className="block w-full py-2 rounded-full bg-btn-primary-color hover:brightness-110 text-center font-semibold"
