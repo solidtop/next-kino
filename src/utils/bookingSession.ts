@@ -5,8 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { BookingDetails, Screening } from "@/types";
 
 export function getBookingSession(): string | undefined {
-  const cookieList = cookies();
-  return cookieList.get("b-session")?.value;
+  return cookies().get("b-session")?.value;
 }
 
 export function loadBookingSession(session: string): BookingDetails {
@@ -27,6 +26,10 @@ export function saveBookingSession(
     maxAge: 3600, // 1 hour
     httpOnly: true,
   });
+}
+
+export function endBookingSession(res: NextResponse): void {
+  res.cookies.delete("b-session");
 }
 
 export function errorResponse(message: string, code?: number) {
