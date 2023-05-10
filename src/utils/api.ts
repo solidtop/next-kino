@@ -21,6 +21,7 @@ export async function loginUser(
 
   if (res.ok) {
     const data = await res.json();
+    console.log("data", data);
     return data as LoginResponse;
   } else {
     throw new Error("Login failed");
