@@ -2,7 +2,7 @@ import { FC } from "react";
 
 const SeatingGrid: FC<any> = ({ seating }) => {
   return (
-    <div className="flex flex-wrap flex-row justify-center gap-1.5 pt-16 mb-2">
+    <div className="grid auto-cols-fr grid-cols-12 gap-4 pt-16 mb-4 justify-center ml-16 mr-16">
       {seating.map((seat: number) => {
         const seatIndex: number = seat;
         return (
