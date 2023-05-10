@@ -1,15 +1,20 @@
 import { FC } from "react";
+import Seats from "./Seat";
 
-const SeatingGrid: FC<any> = ({ seating }) => {
+const SeatingGrid: FC<any> = ({ seating, tickets }) => {
+  const ticketsArray = tickets;
+  const selectedSeats: Array<number> = [];
+
   return (
-    <div className="grid grid-cols-12 gap-4 pt-16 mb-4 ml-16 mr-16 ">
+    <div className="flex flex-wrap gap-2 pt-16 mb-4 justify-center mr-10 ml-10 w-[480px] ">
       {seating.map((seat: number) => {
         const seatIndex: number = seat;
         return (
-          <div
-            key={seatIndex}
-            id={seatIndex.toString()}
-            className="bg-gray-700 h-8 w-8 rounded hover:bg-gray-400 hover:cursor-pointer"></div>
+          <Seats
+            seatIndex={seatIndex}
+            tickets={ticketsArray}
+            selectedSeats={selectedSeats}
+          />
         );
       })}
     </div>
