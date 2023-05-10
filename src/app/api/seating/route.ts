@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import TicketsModel from "@/models/tickets";
 import connectTicketDb from "@/utils/connectTicketDb";
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest) {
   try {
-    connectTicketDb();
+    await connectTicketDb();
     const screeningId = req.nextUrl.searchParams.values().next().value;
 
     const screening: Array<any> = await TicketsModel.find({
