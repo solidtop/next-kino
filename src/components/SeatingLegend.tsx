@@ -10,7 +10,7 @@ const SeatingLegend: FC<any> = () => {
           Tillgänglig
         </label>
 
-        <div id="selected" className="h-6 w-6 bg-gray-400 rounded"></div>
+        <div id="selected" className="h-6 w-6 bg-gray-100 rounded"></div>
         <label htmlFor="selected">Vald plats</label>
 
         <div
