@@ -26,7 +26,8 @@ export async function loginUser(
 
   if (res.ok) {
     const data = await res.json();
-    console.log("data", data);
+    localStorage.setItem("token", data.token);
+    console.log("token", data.token);
     return data as AuthResponse;
   } else {
     throw new Error("Login failed");

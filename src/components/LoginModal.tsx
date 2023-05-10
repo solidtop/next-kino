@@ -3,7 +3,9 @@
 import React, { FC, useState } from "react";
 import Modal from "./Modal";
 
+
 const LoginModal: FC = () => {
+
   const [showModal, setShowModal] = useState<boolean>(false);
   return (
     <>
