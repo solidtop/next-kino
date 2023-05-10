@@ -28,7 +28,7 @@ export type Screening = {
 
 export type Ticket = {
   id: number;
-  type: string;
+  type: "Ordinarie" | "Student" | "Pensionär";
   price: number;
   quantity: number;
   maxQuantity: number;
@@ -53,4 +53,9 @@ export type LoginResponse = {
 export type LoginCredentials = {
   email: string;
   password: string;
+}
+
+export type User = {
+  name: string;
+  email: string;
 };

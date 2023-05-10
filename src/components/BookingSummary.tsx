@@ -2,11 +2,11 @@ import { FC } from "react";
 import { BookingDetails } from "@/types";
 import formatDate from "@/utils/formatting";
 
-type SummaryProps = {
+type BookingSummaryProps = {
   bookingDetails: BookingDetails;
 };
 
-const BookingSummary: FC<SummaryProps> = ({ bookingDetails }) => {
+const BookingSummary: FC<BookingSummaryProps> = ({ bookingDetails }) => {
   const { screening, tickets, pricing } = bookingDetails;
   const movie = screening.attributes.movie.data;
 

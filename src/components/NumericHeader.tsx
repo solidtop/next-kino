@@ -1,11 +1,11 @@
 import { FC } from "react";
 
-type HeaderProps = {
+type NumericHeaderProps = {
   number: string;
   title: string;
 };
 
-const NumericHeader: FC<HeaderProps> = ({ number, title }) => {
+const NumericHeader: FC<NumericHeaderProps> = ({ number, title }) => {
   return (
     <div className="flex gap-4 items-center my-4">
       <div className="w-10 h-10 rounded-full flex justify-center items-center text-center bg-btn-primary-color text-xl">
