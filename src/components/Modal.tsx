@@ -115,7 +115,7 @@ const Modal: FC<ModalProps> = ({ setShowModal }) => {
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg font-medium"
+            className="w-full bg-container-color text-white py-2 px-4 rounded-lg font-medium"
           >
             Login
           </button>
