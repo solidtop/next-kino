@@ -28,6 +28,7 @@ export default function BookingPage() {
   const [bookingDetails, setBookingDetails] = useState<BookingDetails | null>(
     null
   );
+  const [seatingDetails, setSeatingDetails] = useState<Array<number>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const timer = useRef<number | undefined>(undefined);
@@ -59,6 +60,10 @@ export default function BookingPage() {
     };
 
     loadBookingDetails();
+
+    if (bookingDetails !== null) {
+      loadSeating(bookingDetails);
+    }
   }, []);
 
   const handleUpdate = (bookingDetails: BookingDetails): void => {
@@ -121,6 +126,25 @@ export default function BookingPage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const loadSeating = async (bookingDetails: BookingDetails) => {
+    try {
+      const res = await fetch(
+        `/api/seating?screeningId=${bookingDetails.screening.id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const payload = await res.json();
+      setSeatingDetails(payload);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="max-w-screen-xl mx-auto">
       <BackButton />
@@ -135,8 +159,7 @@ export default function BookingPage() {
               onSubmit={(ev) => {
                 ev.preventDefault();
                 handleSubmit(bookingDetails);
-              }}
-            >
+              }}>
               <section id="tickets">
                 <NumericHeader number="1" title="Välj biljettyper" />
                 <TicketMenu
@@ -146,7 +169,11 @@ export default function BookingPage() {
               </section>
               <section id="seating">
                 <NumericHeader number="2" title="Välj sittplatser" />
-                <SeatingChart bookingDetails={bookingDetails} />
+                <SeatingChart
+                  bookingDetails={bookingDetails}
+                  seatingDetails={seatingDetails}
+                  onUpdate={handleUpdate}
+                />
                 <SeatingLegend />
               </section>
               <section id="details">
@@ -162,8 +189,7 @@ export default function BookingPage() {
 
               <button
                 type="submit"
-                className="block w-full my-8 py-2 rounded-full bg-btn-primary-color hover:brightness-110 text-center font-semibold"
-              >
+                className="block w-full my-8 py-2 rounded-full bg-btn-primary-color hover:brightness-110 text-center font-semibold">
                 Fortsätt
               </button>
             </form>
