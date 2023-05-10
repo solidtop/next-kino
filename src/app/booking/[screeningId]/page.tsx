@@ -28,6 +28,7 @@ export default function BookingPage() {
   const [bookingDetails, setBookingDetails] = useState<BookingDetails | null>(
     null
   );
+  const [seatingLoaded, setSeatingLoaded] = useState<Boolean>(false);
   const [seatingDetails, setSeatingDetails] = useState<Array<number>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
@@ -60,11 +61,14 @@ export default function BookingPage() {
     };
 
     loadBookingDetails();
-
-    if (bookingDetails !== null) {
-      loadSeating(bookingDetails);
-    }
   }, []);
+
+  useEffect(() => {
+    if (bookingDetails !== null && seatingLoaded !== true) {
+      loadSeating(bookingDetails);
+      setSeatingLoaded(true);
+    }
+  }, [bookingDetails]);
 
   const handleUpdate = (bookingDetails: BookingDetails): void => {
     clearTimeout(timer.current);
