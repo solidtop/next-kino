@@ -1,11 +1,11 @@
 import React, { FC, useState } from "react";
 import Modal from "./Modal";
 
-interface LoginModalProps {
+interface LoginButtonProps {
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const LoginModal: FC<LoginModalProps> = ({ setIsLoggedIn }) => {
+const LoginButton: FC<LoginButtonProps> = ({ setIsLoggedIn }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
 
   return (
@@ -23,4 +23,4 @@ const LoginModal: FC<LoginModalProps> = ({ setIsLoggedIn }) => {
   );
 };
 
-export default LoginModal;
+export default LoginButton;

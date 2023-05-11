@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, FC, FormEvent, Dispatch, SetStateAction } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { registerUser } from "@/utils/api";
 import { userRegistration } from "@/types";

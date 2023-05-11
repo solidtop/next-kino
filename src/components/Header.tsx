@@ -3,7 +3,7 @@
 import React, { FC, useState, useEffect } from "react";
 import Link from "next/link";
 import MyPages from "./MyPages";
-import LoginModal from "./LoginModal";
+import LoginButton from "./LoginButton";
 
 const Header: FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -34,7 +34,7 @@ const Header: FC = () => {
         {isLoggedIn ? (
           <MyPages handleLogout={handleLogout} />
         ) : (
-          <LoginModal setIsLoggedIn={setIsLoggedIn} />
+          <LoginButton setIsLoggedIn={setIsLoggedIn} />
         )}
       </header>
     </section>
