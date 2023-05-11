@@ -102,7 +102,7 @@ export default function BookingPage() {
         handleError(payload.error);
         return;
       }
-      push("/payment");
+      push(`/booking${params.screeningId}/payment`);
     } catch (err) {
       console.log(err);
     }

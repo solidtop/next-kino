@@ -17,18 +17,23 @@ export async function POST(req: NextRequest) {
   const session = getBookingSession();
   if (session) {
     const bookingDetails = loadBookingSession(session);
-    const screening = await api.getScreening(screeningId);
-    if (screeningHasStarted(screening)) {
-      return errorResponse(
-        RES_SCREENING_STARTED.message,
-        RES_SCREENING_STARTED.code
-      );
-    }
+    if (bookingDetails.screening.id === screeningId) {
+      const screening = await api.getScreening(screeningId);
+      if (screeningHasStarted(screening)) {
+        return errorResponse(
+          RES_SCREENING_STARTED.message,
+          RES_SCREENING_STARTED.code
+        );
+      }
 
-    return NextResponse.json(bookingDetails);
+      return NextResponse.json(bookingDetails);
+    }
   }
 
   const screening = await api.getScreening(screeningId);
+  if (!screening) {
+    return errorResponse("Unauthorized", 401);
+  }
   const bookingDetails = initBookingDetails(screening);
   const res = NextResponse.json(bookingDetails);
   saveBookingSession(bookingDetails, res);
