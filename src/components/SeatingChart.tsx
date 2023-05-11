@@ -11,11 +11,6 @@ type SeatingChartProps = {
   onUpdate: (bookingDetails: BookingDetails) => void;
 };
 
-type SeatProps = {
-  seat: Number;
-  state: String;
-};
-
 type SeatObject = {
   seat: Number;
   state: String;
@@ -27,13 +22,12 @@ const SeatingChart: FC<SeatingChartProps> = ({
   onUpdate,
 }) => {
   const [selectedSeats, setSelectedSeats] = useState<number>(0);
-  const [seats, setSeats] = useState<Array<Number>>(bookingDetails.seats);
   const [currSeats, setCurrSeats] = useState<Array<SeatObject>>(
     populateTheater(seatingDetails)
   );
 
   const bookingSeats: Array<Number> = [];
-
+  console.log(bookingDetails);
   //Maybe put this in Ticket Types
   let ticketQuantity: number = 0;
   ticketQuantity =
@@ -43,13 +37,9 @@ const SeatingChart: FC<SeatingChartProps> = ({
     bookingDetails.tickets[2].quantity;
 
   useEffect(() => {
-    console.log(currSeats);
-    console.log(bookingDetails);
-    setSeats(bookingDetails.seats);
     setCurrSeats(populateTheater(seatingDetails));
-
     setSelectedSeats(0);
-  }, [bookingDetails.seats]);
+  }, [seatingDetails]);
 
   const handleUpdateSeats = (
     currSeats: Array<SeatObject>,
@@ -83,14 +73,16 @@ const SeatingChart: FC<SeatingChartProps> = ({
         bookingSeats.push(seat.seat);
       }
     });
-
     onUpdate({ ...bookingDetails, seats: bookingSeats });
   };
   return (
     <div className="p-4 bg-container-color rounded">
       <FilmScreen />
-      <SelectedSeats bookingDetails={bookingDetails} />
-      <div className="flex flex-wrap gap-2 pt-16 mb-4 justify-center mr-10 ml-10 w-[480px] ">
+      <SelectedSeats
+        bookingDetails={bookingDetails}
+        selectedSeats={selectedSeats}
+      />
+      <ul className="flex flex-wrap gap-2 pt-2 mb-4 justify-center mr-10 ml-10 w-[480px]">
         {currSeats.map((seat: SeatObject) => {
           return (
             <Seats
@@ -101,7 +93,7 @@ const SeatingChart: FC<SeatingChartProps> = ({
             />
           );
         })}
-      </div>
+      </ul>
     </div>
   );
 };
