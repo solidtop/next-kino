@@ -1,15 +1,27 @@
-import { FC } from "react";
-import Link from "next/link";
-import LoginModal from "./LoginModal";
-import MyPages from "./MyPages";
+'use client'
 
-//Still temporary code, will swap loggedIn for props from something like next-auth.
-//Probably with useSession to get session data
-const Header: FC<{ loggedIn: boolean }> = (loggedIn) => {
+import React, { FC, useState, useEffect } from "react";
+import Link from "next/link";
+import MyPages from "./MyPages";
+import LoginModal from "./LoginModal";
+
+const Header: FC = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    setIsLoggedIn(!!user.token);
+  }, []);
+
+  const handleLogout = (): void => {
+    localStorage.removeItem("user");
+    setIsLoggedIn(false);
+  };
+
   return (
     <section>
-      <header className="grid grid-cols-5 mt-6 ">
-        <Link className="order-first justify-start ml-10" href="/">
+      <header className="grid grid-cols-5 mt-6">
+        <Link href="/" className="order-first justify-start ml-10">
           <img src="_next/static/public/Logo.png" alt="Spegeln Logo" />
         </Link>
 
@@ -19,7 +31,11 @@ const Header: FC<{ loggedIn: boolean }> = (loggedIn) => {
           <Link href="/">Biljettinfo</Link>
         </ul>
 
-        {loggedIn.loggedIn ? <MyPages /> : <LoginModal />}
+        {isLoggedIn ? (
+          <MyPages handleLogout={handleLogout} />
+        ) : (
+          <LoginModal setIsLoggedIn={setIsLoggedIn} />
+        )}
       </header>
     </section>
   );

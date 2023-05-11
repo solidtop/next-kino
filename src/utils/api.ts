@@ -16,21 +16,24 @@ export async function getMovies(): Promise<Movie[]> {
 export async function loginUser(
   userInfo: LoginCredentials
 ): Promise<AuthResponse> {
-  const res = await fetch("http://localhost:3000/api/auth/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(userInfo),
-  });
+  try {
+    const res = await fetch("http://localhost:3000/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userInfo),
+    });
 
-  if (res.ok) {
-    const data = await res.json();
-    localStorage.setItem("token", data.token);
-    console.log("token", data.token);
-    return data as AuthResponse;
-  } else {
-    throw new Error("Login failed");
+    if (res.ok) {
+      const data = await res.json();
+      localStorage.setItem("user", JSON.stringify(data));
+      return data as AuthResponse;
+    } else {
+      throw new Error("Login failed");
+    }
+  } catch (error) {
+    throw new Error("An error occurred during login");
   }
 }
 
@@ -47,7 +50,6 @@ export async function registerUser(
 
   if (res.ok) {
     const data = await res.json();
-    console.log("data", data);
     return data as AuthResponse;
   } else {
     throw new Error("User registration failed");

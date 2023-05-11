@@ -1,12 +1,13 @@
-"use client";
-
 import React, { FC, useState } from "react";
 import Modal from "./Modal";
 
+interface LoginModalProps {
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-const LoginModal: FC = () => {
-
+const LoginModal: FC<LoginModalProps> = ({ setIsLoggedIn }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
+
   return (
     <>
       <button
@@ -15,7 +16,9 @@ const LoginModal: FC = () => {
       >
         Login/Register
       </button>
-      {showModal && <Modal setShowModal={setShowModal} />}
+      {showModal && (
+        <Modal setShowModal={setShowModal} setIsLoggedIn={setIsLoggedIn} />
+      )}
     </>
   );
 };

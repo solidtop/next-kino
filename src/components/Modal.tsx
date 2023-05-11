@@ -7,9 +7,10 @@ import { LoginCredentials } from "@/types";
 
 interface ModalProps {
   setShowModal: Dispatch<SetStateAction<boolean>>;
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Modal: FC<ModalProps> = ({ setShowModal }) => {
+const Modal: FC<ModalProps> = ({ setShowModal, setIsLoggedIn }) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errors, setErrors] = useState<LoginCredentials>({
@@ -53,6 +54,7 @@ const Modal: FC<ModalProps> = ({ setShowModal }) => {
       // Reset form inputs and close the modal
       setEmail("");
       setPassword("");
+      setIsLoggedIn(true)
       setShowModal(false);
     } catch (error) {
       // Handle any login errors
