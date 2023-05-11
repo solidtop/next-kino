@@ -3,17 +3,17 @@
 import { useState, FC, FormEvent, Dispatch, SetStateAction } from "react";
 import { useRouter } from "next/navigation";
 import { registerUser } from "@/utils/api";
-import { userRegistration } from "@/types";
+import { UserRegistration } from "@/types";
 
-const UserRegistration: FC = () => {
+const RegisterUser: FC = () => {
   const router = useRouter();
-  const [user, setUser] = useState<userRegistration>({
+  const [user, setUser] = useState<UserRegistration>({
     name: "",
     email: "",
     password: "",
   });
 
-  const [errors, setErrors] = useState<userRegistration>({
+  const [errors, setErrors] = useState<UserRegistration>({
     name: "",
     email: "",
     password: "",
@@ -169,4 +169,4 @@ const UserRegistration: FC = () => {
   );
 };
 
-export default UserRegistration;
+export default RegisterUser;

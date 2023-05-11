@@ -2,7 +2,7 @@ import {
   Movie,
   LoginCredentials,
   AuthResponse,
-  userRegistration,
+  UserRegistration,
 } from "@/types";
 
 const API_URL: string = "https://plankton-app-xhkom.ondigitalocean.app/api";
@@ -38,7 +38,7 @@ export async function loginUser(
 }
 
 export async function registerUser(
-  registrationCreds: userRegistration
+  registrationCreds: UserRegistration
 ): Promise<AuthResponse> {
   const res = await fetch("/api/auth/register", {
     method: "POST",

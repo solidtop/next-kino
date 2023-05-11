@@ -53,13 +53,13 @@ export type AuthResponse = {
 export type LoginCredentials = {
   email: string;
   password: string;
-}
+};
 
-export type userRegistration = {
-  name:string,
+export type UserRegistration = {
+  name: string;
   email: string;
   password: string;
-}
+};
 
 export type User = {
   name: string;
