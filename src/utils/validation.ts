@@ -60,3 +60,9 @@ export function getAmountTotal(tickets: Ticket[]): number {
     return total + ticket.price * ticket.quantity;
   }, 0);
 }
+
+export function getTicketsQuantity(tickets: Ticket[]): number {
+  return tickets.reduce((total, ticket) => {
+    return total + ticket.quantity;
+  }, 0);
+}
