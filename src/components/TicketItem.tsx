@@ -1,12 +1,19 @@
 import { useState, FC } from "react";
-import { Ticket } from "@/types";
+import { BookingDetails, Ticket } from "@/types";
 
 type TicketItemProps = {
   ticket: Ticket;
   onTicketChange: (id: number, newQuantity: number) => void;
+  bookingDetails: BookingDetails;
+  onLoadSeating: (bookingDetails: BookingDetails) => void;
 };
 
-const TicketItem: FC<TicketItemProps> = ({ ticket, onTicketChange }) => {
+const TicketItem: FC<TicketItemProps> = ({
+  ticket,
+  onTicketChange,
+  bookingDetails,
+  onLoadSeating,
+}) => {
   const [quantity, setQuantity] = useState<number>(ticket.quantity);
 
   return (
@@ -19,9 +26,9 @@ const TicketItem: FC<TicketItemProps> = ({ ticket, onTicketChange }) => {
           onClick={() => {
             setQuantity(quantity - 1);
             onTicketChange(ticket.id, quantity - 1);
+            onLoadSeating(bookingDetails);
           }}
-          disabled={quantity === 0}
-        >
+          disabled={quantity === 0}>
           <img
             src="/icons/minus-solid.svg"
             alt="minus"
@@ -35,9 +42,9 @@ const TicketItem: FC<TicketItemProps> = ({ ticket, onTicketChange }) => {
           onClick={() => {
             setQuantity(quantity + 1);
             onTicketChange(ticket.id, quantity + 1);
+            onLoadSeating(bookingDetails);
           }}
-          disabled={quantity === ticket.maxQuantity}
-        >
+          disabled={quantity === ticket.maxQuantity}>
           <img src="/icons/plus-solid.svg" alt="plus" className="w-5 m-auto" />
         </button>
       </div>

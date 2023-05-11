@@ -131,6 +131,7 @@ export default function BookingPage() {
   };
 
   const loadSeating = async (bookingDetails: BookingDetails) => {
+    console.log("LOAD SEATING");
     try {
       const res = await fetch(
         `/api/seating?screeningId=${bookingDetails.screening.id}`,
@@ -169,6 +170,7 @@ export default function BookingPage() {
                 <TicketMenu
                   bookingDetails={bookingDetails}
                   onUpdate={handleUpdate}
+                  loadSeating={loadSeating}
                 />
               </section>
               <section id="seating">

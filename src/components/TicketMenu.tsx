@@ -5,9 +5,14 @@ import { BookingDetails, Ticket } from "@/types";
 type TicketMenuProps = {
   bookingDetails: BookingDetails;
   onUpdate: (bookingDetails: BookingDetails) => void;
+  loadSeating: (bookingDetails: BookingDetails) => void;
 };
 
-const TicketMenu: FC<TicketMenuProps> = ({ bookingDetails, onUpdate }) => {
+const TicketMenu: FC<TicketMenuProps> = ({
+  bookingDetails,
+  onUpdate,
+  loadSeating,
+}) => {
   const [tickets, setTickets] = useState<Ticket[]>(bookingDetails.tickets);
 
   useEffect(() => {
@@ -30,6 +35,8 @@ const TicketMenu: FC<TicketMenuProps> = ({ bookingDetails, onUpdate }) => {
           key={ticket.id}
           ticket={ticket}
           onTicketChange={handleTicketChange}
+          bookingDetails={bookingDetails}
+          onLoadSeating={loadSeating}
         />
       ))}
     </menu>
