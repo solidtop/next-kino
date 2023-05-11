@@ -46,7 +46,10 @@ export async function POST(req: NextRequest) {
 
   /* Validate seating */
   if (body.seats.length !== getTicketsQuantity(bookingDetails.tickets)) {
-    return false;
+    return errorResponse(
+      "Andel biljetter och valda platser överstämmer ej",
+      400
+    );
   }
 
   const res = successResponse("Bokningsdetaljer godkänd");

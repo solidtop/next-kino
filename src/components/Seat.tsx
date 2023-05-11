@@ -21,7 +21,9 @@ const Seats: FC<SeatProps> = ({
       onClick={(e) => {
         onSeatChange(currSeats, (e.target as HTMLInputElement).id);
       }}
-      className={`bg-${seatState} h-8 w-8 rounded hover:bg-gray-400 hover:cursor-pointer state-${seatState}`}></li>
+      className={`bg-${seatState} h-8 w-8 rounded hover:bg-gray-400 hover:cursor-pointer text-center font-semibold pt-1 text-black text-opacity-80 state-${seatState}`}>
+      {seatIndex}
+    </li>
   );
 };
 
