@@ -7,6 +7,7 @@ import {
   initBookingDetails,
   errorResponse,
   RES_SCREENING_STARTED,
+  RES_INVALID_REQUEST,
 } from "@/utils/bookingSession";
 import { screeningHasStarted } from "@/utils/validation";
 
@@ -32,7 +33,7 @@ export async function POST(req: NextRequest) {
 
   const screening = await api.getScreening(screeningId);
   if (!screening) {
-    return errorResponse("Unauthorized", 401);
+    return errorResponse(RES_INVALID_REQUEST.message, RES_INVALID_REQUEST.code);
   }
   const bookingDetails = initBookingDetails(screening);
   const res = NextResponse.json(bookingDetails);
