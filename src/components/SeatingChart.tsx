@@ -11,9 +11,9 @@ type SeatingChartProps = {
   onUpdate: (bookingDetails: BookingDetails) => void;
 };
 
-type SeatObject = {
-  seat: Number;
-  state: String;
+export type SeatObject = {
+  seat: number;
+  state: string;
 };
 
 const SeatingChart: FC<SeatingChartProps> = ({
@@ -26,8 +26,8 @@ const SeatingChart: FC<SeatingChartProps> = ({
     populateTheater(seatingDetails)
   );
 
-  const bookingSeats: Array<Number> = [];
-  console.log(bookingDetails);
+  const bookingSeats: Array<number> = [];
+
   //Maybe put this in Ticket Types
   let ticketQuantity: number = 0;
   ticketQuantity =
@@ -86,6 +86,7 @@ const SeatingChart: FC<SeatingChartProps> = ({
         {currSeats.map((seat: SeatObject) => {
           return (
             <Seats
+              key={seat.seat}
               seatIndex={seat.seat}
               seatState={seat.state}
               currSeats={currSeats}

@@ -28,7 +28,7 @@ export default function BookingPage() {
   const [bookingDetails, setBookingDetails] = useState<BookingDetails | null>(
     null
   );
-  const [seatingLoaded, setSeatingLoaded] = useState<Boolean>(false);
+  const [seatingLoaded, setSeatingLoaded] = useState<boolean>(false);
   const [seatingDetails, setSeatingDetails] = useState<Array<number>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
@@ -63,6 +63,7 @@ export default function BookingPage() {
     loadBookingDetails();
   }, []);
 
+  // Load occupied seats from database on page load
   useEffect(() => {
     if (bookingDetails !== null && seatingLoaded !== true) {
       loadSeating(bookingDetails);
@@ -131,7 +132,6 @@ export default function BookingPage() {
   };
 
   const loadSeating = async (bookingDetails: BookingDetails) => {
-    console.log("LOAD SEATING");
     try {
       const res = await fetch(
         `/api/seating?screeningId=${bookingDetails.screening.id}`,
