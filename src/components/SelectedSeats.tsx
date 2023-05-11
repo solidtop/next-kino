@@ -4,8 +4,6 @@ import SeatIndication from "./SeatIndication";
 const SelectedSeats: FC<any> = ({ bookingDetails, selectedSeats }) => {
   const seatArray: Array<number> = bookingDetails.seats;
 
-  console.log(bookingDetails);
-
   if (selectedSeats < seatArray.length) {
     return (
       <div className="flex flex-row ml-11 mt-12 text-xl">Valda platser:</div>
