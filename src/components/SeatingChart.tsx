@@ -31,8 +31,6 @@ const SeatingChart: FC<SeatingChartProps> = ({
 
   let ticketQuantity = getTicketsQuantity(bookingDetails.tickets);
 
-  console.log(ticketQuantity);
-
   useEffect(() => {
     setCurrSeats(populateTheater(seatingDetails));
     setSelectedSeats(0);
@@ -46,7 +44,6 @@ const SeatingChart: FC<SeatingChartProps> = ({
 
     const updatedSeats = currSeats.map((seat) => {
       if (selectedSeats >= ticketQuantity && seat.state !== "selected") {
-        console.log("NO MORE TICKETS");
         return seat;
       } else {
         if (seat.state === "occupied") {
