@@ -61,15 +61,9 @@ export default function BookingPage() {
     };
 
     loadBookingDetails();
+    loadSeating(params.screeningId);
+    setSeatingLoaded(true);
   }, []);
-
-  // Load occupied seats from database on page load
-  useEffect(() => {
-    if (bookingDetails !== null && seatingLoaded !== true) {
-      loadSeating(bookingDetails);
-      setSeatingLoaded(true);
-    }
-  }, [bookingDetails]);
 
   const handleUpdate = (bookingDetails: BookingDetails): void => {
     clearTimeout(timer.current);
@@ -131,10 +125,10 @@ export default function BookingPage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const loadSeating = async (bookingDetails: BookingDetails) => {
+  const loadSeating = async (screeningId: string) => {
     try {
       const res = await fetch(
-        `/api/seating?screeningId=${bookingDetails.screening.id}`,
+        `/api/seating?screeningId=${params.screeningId}`,
         {
           method: "GET",
           headers: {
