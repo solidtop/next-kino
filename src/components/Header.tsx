@@ -1,8 +1,10 @@
-'use client'
+"use client";
 
 import React, { FC, useState, useEffect } from "react";
 import Link from "next/link";
 import MyPages from "./MyPages";
+import Image from "next/image";
+import logo from "../../public/icons/Logo.png";
 import LoginButton from "./LoginButton";
 
 const Header: FC = () => {
@@ -20,9 +22,9 @@ const Header: FC = () => {
 
   return (
     <section>
-      <header className="grid grid-cols-5 mt-6">
-        <Link href="/" className="order-first justify-start ml-10">
-          <img src="_next/static/public/Logo.png" alt="Spegeln Logo" />
+      <header className="grid grid-cols-5 mt-6 ">
+        <Link className="order-first justify-start ml-10" href="/">
+          <Image src={logo} alt="Spegeln Logo" className="h-auto w-auto" />
         </Link>
 
         <ul className="flex flex-row col-start-2 col-end-5 text-xl font-semibold justify-center mt-6 gap-14">

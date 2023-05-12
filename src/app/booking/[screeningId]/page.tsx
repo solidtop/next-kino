@@ -12,6 +12,7 @@ import ErrorMessage from "@/components/ErrorMessage";
 import SeatingChart from "@/components/SeatingChart";
 import SeatingLegend from "@/components/SeatingLegend";
 import { getTicketsQuantity } from "@/utils/validation";
+import PaymentSection from "@/components/PaymentSection";
 import { BookingDetails } from "@/types";
 
 // PLACEHOLDER: Remove when implementing jwt session
@@ -194,6 +195,11 @@ export default function BookingPage() {
                   />
                 )}
                 {session && <UserDetails user={session.user} />}
+              </section>
+
+              <section id="payment">
+                <NumericHeader number="4" title="Betalning" />
+                <PaymentSection />
               </section>
 
               <button
