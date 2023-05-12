@@ -4,6 +4,7 @@ import Seats from "./Seat";
 import FilmScreen from "./FilmScreen";
 import { populateTheater } from "@/utils/seatingTemplate";
 import { BookingDetails } from "@/types";
+import { getTicketsQuantity } from "@/utils/validation";
 
 type SeatingChartProps = {
   bookingDetails: BookingDetails;
@@ -28,13 +29,9 @@ const SeatingChart: FC<SeatingChartProps> = ({
 
   const bookingSeats: Array<number> = [];
 
-  //Maybe put this in Ticket Types
-  let ticketQuantity: number = 0;
-  ticketQuantity =
-    ticketQuantity +
-    bookingDetails.tickets[0].quantity +
-    bookingDetails.tickets[1].quantity +
-    bookingDetails.tickets[2].quantity;
+  let ticketQuantity = getTicketsQuantity(bookingDetails.tickets);
+
+  console.log(ticketQuantity);
 
   useEffect(() => {
     setCurrSeats(populateTheater(seatingDetails));
