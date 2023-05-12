@@ -38,7 +38,7 @@ export type BookingDetails = {
   id: string;
   screening: Screening;
   tickets: Ticket[];
-  seats: [];
+  seats: Number[];
   pricing: {
     amountTotal: number;
   };
@@ -64,4 +64,9 @@ export type UserRegistration = {
 export type User = {
   name: string;
   email: string;
+};
+
+export type SeatObject = {
+  seat: number;
+  state: string;
 };

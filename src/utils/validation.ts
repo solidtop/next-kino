@@ -1,4 +1,4 @@
-import { BookingDetails, Screening, Ticket } from "@/types";
+import { BookingDetails, Screening, Ticket, SeatObject } from "@/types";
 
 export function isValidEmail(email: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -59,4 +59,21 @@ export function getAmountTotal(tickets: Ticket[]): number {
   return tickets.reduce((total, ticket) => {
     return total + ticket.price * ticket.quantity;
   }, 0);
+}
+
+export function getTicketsQuantity(tickets: Ticket[]): number {
+  return tickets.reduce((total, ticket) => {
+    return total + ticket.quantity;
+  }, 0);
+}
+
+export function getSelectedSeats(seats: Array<SeatObject>): Array<any> {
+  const seatArray: number[] = [];
+  seats.map((seat) => {
+    if (seat.state === "selected") {
+      seatArray.push(seat.seat);
+    }
+  });
+
+  return seatArray;
 }

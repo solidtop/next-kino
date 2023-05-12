@@ -4,6 +4,7 @@ import {
   isValidBookingDetails,
   isValidEmail,
   screeningHasStarted,
+  getTicketsQuantity,
 } from "@/utils/validation";
 import {
   RES_INVALID_REQUEST,
@@ -41,6 +42,14 @@ export async function POST(req: NextRequest) {
 
   if (!isValidEmail(body.email || "")) {
     return errorResponse("Felaktig e-postadress", 400);
+  }
+
+  /* Validate seating */
+  if (body.seats.length !== getTicketsQuantity(bookingDetails.tickets)) {
+    return errorResponse(
+      "Andel biljetter och valda platser överstämmer ej",
+      400
+    );
   }
 
   const res = successResponse("Bokningsdetaljer godkänd");

@@ -9,6 +9,9 @@ import NumericHeader from "@/components/NumericHeader";
 import DetailsForm from "@/components/DetailsForm";
 import UserDetails from "@/components/UserDetails";
 import ErrorMessage from "@/components/ErrorMessage";
+import SeatingChart from "@/components/SeatingChart";
+import SeatingLegend from "@/components/SeatingLegend";
+import { getTicketsQuantity } from "@/utils/validation";
 import { BookingDetails } from "@/types";
 
 // PLACEHOLDER: Remove when implementing jwt session
@@ -26,11 +29,19 @@ export default function BookingPage() {
   const [bookingDetails, setBookingDetails] = useState<BookingDetails | null>(
     null
   );
+  const [seatingLoaded, setSeatingLoaded] = useState<boolean>(false);
+  const [seatingDetails, setSeatingDetails] = useState<Array<number>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const timer = useRef<number | undefined>(undefined);
+
   const params = useParams();
   const { push } = useRouter();
+
+  let ticketQuantity: number;
+  bookingDetails
+    ? (ticketQuantity = getTicketsQuantity(bookingDetails.tickets))
+    : (ticketQuantity = 0);
 
   // Fetch & register booking details from server API
   useEffect(() => {
@@ -57,6 +68,7 @@ export default function BookingPage() {
     };
 
     loadBookingDetails();
+    loadSeating(params.screeningId);
   }, []);
 
   const handleUpdate = (bookingDetails: BookingDetails): void => {
@@ -79,6 +91,10 @@ export default function BookingPage() {
           return;
         }
         setBookingDetails(payload);
+
+        if (getTicketsQuantity(payload.tickets) !== ticketQuantity) {
+          loadSeating(params.screeningId);
+        }
       } catch (err) {
         console.log(err);
       } finally {
@@ -119,6 +135,25 @@ export default function BookingPage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const loadSeating = async (screeningId: string) => {
+    try {
+      const res = await fetch(
+        `/api/seating?screeningId=${params.screeningId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const payload = await res.json();
+      setSeatingDetails(payload);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="max-w-screen-xl mx-auto">
       <BackButton />
@@ -133,14 +168,22 @@ export default function BookingPage() {
               onSubmit={(ev) => {
                 ev.preventDefault();
                 handleSubmit(bookingDetails);
-              }}
-            >
+              }}>
               <section id="tickets">
                 <NumericHeader number="1" title="Välj biljettyper" />
                 <TicketMenu
                   bookingDetails={bookingDetails}
                   onUpdate={handleUpdate}
                 />
+              </section>
+              <section id="seating">
+                <NumericHeader number="2" title="Välj sittplatser" />
+                <SeatingChart
+                  bookingDetails={bookingDetails}
+                  seatingDetails={seatingDetails}
+                  onUpdate={handleUpdate}
+                />
+                <SeatingLegend />
               </section>
               <section id="details">
                 <NumericHeader number="3" title="Fyll i detaljer" />
@@ -155,8 +198,7 @@ export default function BookingPage() {
 
               <button
                 type="submit"
-                className="block w-full my-8 py-2 rounded-full bg-btn-primary-color hover:brightness-110 text-center font-semibold"
-              >
+                className="block w-full my-8 py-2 rounded-full bg-btn-primary-color hover:brightness-110 text-center font-semibold">
                 Fortsätt
               </button>
             </form>
