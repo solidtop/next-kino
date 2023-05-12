@@ -1,10 +1,43 @@
+"use client";
 import { useEffect, useState } from "react";
 import { BookingDetails } from "@/types";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
-import logo from "../../../public/icons/Logo.png";
+import logo from "../../../../../public/icons/Logo.png";
+import TicketSummary from "@/components/TicketSummary";
+import Link from "next/link";
+import formatDate from "@/utils/formatting";
 
 export default function PaymentPage() {
+  const { push } = useRouter();
+  const [bookingDetails, setBookingDetails] = useState<BookingDetails | null>(
+    null
+  );
+
+  useEffect(() => {
+    const loadBookingDetails = async () => {
+      const res = await fetch("/api/booking/payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const payload = await res.json();
+      if (payload.error) {
+        alert(payload.error.message);
+        push("/");
+        return;
+      }
+      setBookingDetails(payload);
+    };
+
+    loadBookingDetails();
+  }, []);
+
+  if (!bookingDetails) {
+    return null;
+  }
+
   return (
     <>
       <header>
@@ -14,12 +47,28 @@ export default function PaymentPage() {
       <form className="mt-32 mx-auto h-[800px] w-2/5">
         <h1 className="text-3xl font-semibold">Betala med kontokort</h1>
         <ul className="bg-container-color rounded p-3 mt-6">
-          <li>Title</li>
-          <li className="text-white opacity-50">Stora salongen</li>
-          <li className="text-white opacity-50">Time</li>
+          <img
+            className="w-24 sm:w-auto sm:h-44 rounded"
+            src={
+              bookingDetails.screening.attributes.movie.data.attributes.image
+                .url
+            }
+            alt="Movie poster"
+          />
+          <li>
+            {bookingDetails.screening.attributes.movie.data.attributes.title}
+          </li>
+          <li className="text-white opacity-50">
+            {bookingDetails.screening.attributes.room}
+          </li>
+          <li className="text-white opacity-50">
+            {formatDate(
+              new Date(bookingDetails.screening.attributes.start_time)
+            )}
+          </li>
 
           <hr className=" mb-2 mt-10 opacity-50"></hr>
-          <li className="">Totalt: *insert* kr</li>
+          <li className="">Totalt: {bookingDetails.pricing.amountTotal} kr</li>
         </ul>
 
         <div className="mt-8">
