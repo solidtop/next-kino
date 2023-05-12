@@ -77,3 +77,8 @@ export function getSelectedSeats(seats: Array<SeatObject>): Array<any> {
 
   return seatArray;
 }
+
+export function isValidCardNumber(numbers: string) {
+  const numberRegex = /^\d+$/;
+  return numberRegex.test(numbers);
+}
