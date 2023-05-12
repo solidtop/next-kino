@@ -30,15 +30,13 @@ const PaymentSection: FC<any> = ({}) => {
           </label>
           <Image
             src={VisaIcon}
-            style={{ objectFit: "contain" }}
             alt="Icon for Visa"
-            className="inline relative ml-auto left-28"
+            className="inline relative ml-auto left-28 object-contain h-auto w-auto"
           />
           <Image
             src={MasterCardIcon}
-            style={{ objectFit: "contain" }}
             alt="Icon for Mastercard"
-            className="inline justify-end ml-auto"
+            className="inline justify-end ml-auto object-contain h-auto w-auto"
           />
         </div>
 
@@ -56,9 +54,8 @@ const PaymentSection: FC<any> = ({}) => {
           <label className="ml-4 mt-2 font-semibold text-xl">Swish</label>
           <Image
             src={SwishIcon}
-            style={{ objectFit: "contain" }}
             alt="Icon for Swish"
-            className="inline justify-end ml-auto mr-2"
+            className="inline justify-end ml-auto mr-2 object-contain h-auto w-auto"
           />
         </div>
 
@@ -76,9 +73,8 @@ const PaymentSection: FC<any> = ({}) => {
           <label className="ml-4 mt-2 font-semibold text-xl">Klarna</label>
           <Image
             src={KlarnaIcon}
-            style={{ objectFit: "contain" }}
             alt="Icon for Klarna"
-            className="inline justify-end ml-auto mr-2"
+            className="inline justify-end ml-auto mr-2 object-contain h-auto w-auto"
           />
         </div>
       </div>
