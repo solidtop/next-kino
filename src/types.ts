@@ -45,6 +45,22 @@ export type BookingDetails = {
   email: string | null;
 };
 
+export type AuthResponse = {
+  token: string;
+  userId: string;
+};
+
+export type LoginCredentials = {
+  email: string;
+  password: string;
+};
+
+export type UserRegistration = {
+  name: string;
+  email: string;
+  password: string;
+};
+
 export type User = {
   name: string;
   email: string;
