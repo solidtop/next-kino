@@ -51,6 +51,7 @@ const PaymentSection: FC<any> = ({}) => {
             name="swish-payment"
             checked={isRadioSelected("swishPayment")}
             onChange={handleRadioClick}
+            disabled={true}
           />
           <label className="ml-4 mt-2 font-semibold text-xl">Swish</label>
           <Image
@@ -70,6 +71,7 @@ const PaymentSection: FC<any> = ({}) => {
             name="klarna-payment"
             checked={isRadioSelected("klarnaPayment")}
             onChange={handleRadioClick}
+            disabled={true}
           />
           <label className="ml-4 mt-2 font-semibold text-xl">Klarna</label>
           <Image
