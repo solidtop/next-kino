@@ -1,21 +1,14 @@
 import { FC, useState, useEffect } from "react";
 import TicketItem from "./TicketItem";
 import { BookingDetails, Ticket } from "@/types";
-import { useParams } from "next/navigation";
 
 type TicketMenuProps = {
   bookingDetails: BookingDetails;
   onUpdate: (bookingDetails: BookingDetails) => void;
-  loadSeating: (screeningId: string) => void;
 };
 
-const TicketMenu: FC<TicketMenuProps> = ({
-  bookingDetails,
-  onUpdate,
-  loadSeating,
-}) => {
+const TicketMenu: FC<TicketMenuProps> = ({ bookingDetails, onUpdate }) => {
   const [tickets, setTickets] = useState<Ticket[]>(bookingDetails.tickets);
-  const params = useParams();
 
   useEffect(() => {
     setTickets(bookingDetails.tickets);
@@ -37,8 +30,6 @@ const TicketMenu: FC<TicketMenuProps> = ({
           key={ticket.id}
           ticket={ticket}
           onTicketChange={handleTicketChange}
-          screeningId={params.screeninId}
-          onLoadSeating={loadSeating}
         />
       ))}
     </menu>
