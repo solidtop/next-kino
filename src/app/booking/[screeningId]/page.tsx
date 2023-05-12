@@ -11,8 +11,8 @@ import UserDetails from "@/components/UserDetails";
 import ErrorMessage from "@/components/ErrorMessage";
 import SeatingChart from "@/components/SeatingChart";
 import SeatingLegend from "@/components/SeatingLegend";
-import PaymentSection from "@/components/PaymentSection";
 import { getTicketsQuantity } from "@/utils/validation";
+import PaymentSection from "@/components/PaymentSection";
 import { BookingDetails } from "@/types";
 
 // PLACEHOLDER: Remove when implementing jwt session
