@@ -1,21 +1,13 @@
 import { useState, FC } from "react";
-import { BookingDetails, Ticket } from "@/types";
+import { Ticket } from "@/types";
 
 type TicketItemProps = {
   ticket: Ticket;
   onTicketChange: (id: number, newQuantity: number) => void;
-  bookingDetails: BookingDetails;
-  onLoadSeating: (bookingDetails: BookingDetails) => void;
 };
 
-const TicketItem: FC<TicketItemProps> = ({
-  ticket,
-  onTicketChange,
-  bookingDetails,
-  onLoadSeating,
-}) => {
+const TicketItem: FC<TicketItemProps> = ({ ticket, onTicketChange }) => {
   const [quantity, setQuantity] = useState<number>(ticket.quantity);
-
   return (
     <li className="grid grid-cols-3 items-center justify-items-center">
       <div className="justify-self-start">{ticket.type}</div>
@@ -26,7 +18,6 @@ const TicketItem: FC<TicketItemProps> = ({
           onClick={() => {
             setQuantity(quantity - 1);
             onTicketChange(ticket.id, quantity - 1);
-            onLoadSeating(bookingDetails);
           }}
           disabled={quantity === 0}>
           <img
@@ -42,7 +33,6 @@ const TicketItem: FC<TicketItemProps> = ({
           onClick={() => {
             setQuantity(quantity + 1);
             onTicketChange(ticket.id, quantity + 1);
-            onLoadSeating(bookingDetails);
           }}
           disabled={quantity === ticket.maxQuantity}>
           <img src="/icons/plus-solid.svg" alt="plus" className="w-5 m-auto" />

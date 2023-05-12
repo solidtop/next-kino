@@ -1,3 +1,4 @@
+import { NextResponse } from "next/server";
 import { isValidEmail } from "@/utils/validation";
 import {
   RES_SESSION_EXPIRED,
@@ -5,7 +6,6 @@ import {
   errorResponse,
   getBookingSession,
   loadBookingSession,
-  successResponse,
 } from "@/utils/bookingSession";
 
 export async function POST() {
@@ -21,7 +21,7 @@ export async function POST() {
 
   /* Save to database */
 
-  const res = successResponse("Biljett skapad");
+  const res = NextResponse.json(bookingDetails);
   endBookingSession(res);
 
   return res;

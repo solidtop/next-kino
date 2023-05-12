@@ -1,13 +1,25 @@
-import { FC } from "react";
+"use client";
+
+import React, { FC, useState, useEffect } from "react";
 import Link from "next/link";
-import LoginModal from "./LoginModal";
 import MyPages from "./MyPages";
 import Image from "next/image";
 import logo from "../../public/icons/Logo.png";
+import LoginButton from "./LoginButton";
 
-//Still temporary code, will swap loggedIn for props from something like next-auth.
-//Probably with useSession to get session data
-const Header: FC<{ loggedIn: boolean }> = (loggedIn) => {
+const Header: FC = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    setIsLoggedIn(!!user.token);
+  }, []);
+
+  const handleLogout = (): void => {
+    localStorage.removeItem("user");
+    setIsLoggedIn(false);
+  };
+
   return (
     <section>
       <header className="grid grid-cols-5 mt-6 ">
@@ -21,7 +33,11 @@ const Header: FC<{ loggedIn: boolean }> = (loggedIn) => {
           <Link href="/">Biljettinfo</Link>
         </ul>
 
-        {loggedIn.loggedIn ? <MyPages /> : <LoginModal />}
+        {isLoggedIn ? (
+          <MyPages handleLogout={handleLogout} />
+        ) : (
+          <LoginButton setIsLoggedIn={setIsLoggedIn} />
+        )}
       </header>
     </section>
   );

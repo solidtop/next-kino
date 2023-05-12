@@ -3,17 +3,13 @@ import SelectedSeats from "./SelectedSeats";
 import Seats from "./Seat";
 import FilmScreen from "./FilmScreen";
 import { populateTheater } from "@/utils/seatingTemplate";
-import { BookingDetails } from "@/types";
+import { BookingDetails, SeatObject } from "@/types";
+import { getTicketsQuantity, getSelectedSeats } from "@/utils/validation";
 
 type SeatingChartProps = {
   bookingDetails: BookingDetails;
   seatingDetails: Array<number>;
   onUpdate: (bookingDetails: BookingDetails) => void;
-};
-
-export type SeatObject = {
-  seat: number;
-  state: string;
 };
 
 const SeatingChart: FC<SeatingChartProps> = ({
@@ -28,13 +24,7 @@ const SeatingChart: FC<SeatingChartProps> = ({
 
   const bookingSeats: Array<number> = [];
 
-  //Maybe put this in Ticket Types
-  let ticketQuantity: number = 0;
-  ticketQuantity =
-    ticketQuantity +
-    bookingDetails.tickets[0].quantity +
-    bookingDetails.tickets[1].quantity +
-    bookingDetails.tickets[2].quantity;
+  let ticketQuantity = getTicketsQuantity(bookingDetails.tickets);
 
   useEffect(() => {
     setCurrSeats(populateTheater(seatingDetails));
@@ -49,7 +39,6 @@ const SeatingChart: FC<SeatingChartProps> = ({
 
     const updatedSeats = currSeats.map((seat) => {
       if (selectedSeats >= ticketQuantity && seat.state !== "selected") {
-        console.log("NO MORE TICKETS");
         return seat;
       } else {
         if (seat.state === "occupied") {
@@ -73,7 +62,14 @@ const SeatingChart: FC<SeatingChartProps> = ({
         bookingSeats.push(seat.seat);
       }
     });
-    onUpdate({ ...bookingDetails, seats: bookingSeats });
+
+    if (
+      getSelectedSeats(updatedSeats).length == ticketQuantity &&
+      !bookingSeats.includes(parseInt(newSeat))
+    ) {
+    } else {
+      onUpdate({ ...bookingDetails, seats: bookingSeats });
+    }
   };
   return (
     <div className="p-4 bg-container-color rounded">

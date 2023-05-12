@@ -11,6 +11,7 @@ import UserDetails from "@/components/UserDetails";
 import ErrorMessage from "@/components/ErrorMessage";
 import SeatingChart from "@/components/SeatingChart";
 import SeatingLegend from "@/components/SeatingLegend";
+import { getTicketsQuantity } from "@/utils/validation";
 import PaymentSection from "@/components/PaymentSection";
 import { BookingDetails } from "@/types";
 
@@ -34,8 +35,14 @@ export default function BookingPage() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const timer = useRef<number | undefined>(undefined);
+
   const params = useParams();
   const { push } = useRouter();
+
+  let ticketQuantity: number;
+  bookingDetails
+    ? (ticketQuantity = getTicketsQuantity(bookingDetails.tickets))
+    : (ticketQuantity = 0);
 
   // Fetch & register booking details from server API
   useEffect(() => {
@@ -62,15 +69,8 @@ export default function BookingPage() {
     };
 
     loadBookingDetails();
+    loadSeating(params.screeningId);
   }, []);
-
-  // Load occupied seats from database on page load
-  useEffect(() => {
-    if (bookingDetails !== null && seatingLoaded !== true) {
-      loadSeating(bookingDetails);
-      setSeatingLoaded(true);
-    }
-  }, [bookingDetails]);
 
   const handleUpdate = (bookingDetails: BookingDetails): void => {
     clearTimeout(timer.current);
@@ -92,6 +92,10 @@ export default function BookingPage() {
           return;
         }
         setBookingDetails(payload);
+
+        if (getTicketsQuantity(payload.tickets) !== ticketQuantity) {
+          loadSeating(params.screeningId);
+        }
       } catch (err) {
         console.log(err);
       } finally {
@@ -115,7 +119,7 @@ export default function BookingPage() {
         handleError(payload.error);
         return;
       }
-      push("/payment");
+      push(`/booking${params.screeningId}/payment`);
     } catch (err) {
       console.log(err);
     }
@@ -132,10 +136,10 @@ export default function BookingPage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const loadSeating = async (bookingDetails: BookingDetails) => {
+  const loadSeating = async (screeningId: string) => {
     try {
       const res = await fetch(
-        `/api/seating?screeningId=${bookingDetails.screening.id}`,
+        `/api/seating?screeningId=${params.screeningId}`,
         {
           method: "GET",
           headers: {
@@ -171,7 +175,6 @@ export default function BookingPage() {
                 <TicketMenu
                   bookingDetails={bookingDetails}
                   onUpdate={handleUpdate}
-                  loadSeating={loadSeating}
                 />
               </section>
               <section id="seating">
