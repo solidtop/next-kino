@@ -4,7 +4,6 @@ import { BookingDetails } from "@/types";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import logo from "../../../../../public/icons/Logo.png";
-import { isValidCardNumber } from "@/utils/validation";
 import ErrorMessage from "@/components/ErrorMessage";
 import PaymentSummary from "@/components/PaymentSummary";
 import PaymentDetails from "@/components/PaymentDetails";
@@ -48,27 +47,43 @@ export default function PaymentPage() {
     return null;
   }
 
-  const handlePayment = () => {
-    const cardCheck = isValidCardNumber(cardNumber);
-    const ccvCheck = isValidCardNumber(ccv);
-    const todaysDate = new Date();
-    const cardDate = new Date(cardYear, cardMonth, 0);
+  /* Replace with request to a real payment api using something like Stripe */
 
-    if (cardDate > todaysDate) {
-    }
+  const handlePayment = async (
+    cardNumber: string,
+    ccv: string,
+    cardYear: number,
+    cardMonth: number
+  ) => {
+    const paymentDetails = {
+      cardNumber,
+      ccv,
+      cardYear,
+      cardMonth,
+    };
 
-    if (
-      cardCheck === true &&
-      ccvCheck === true &&
-      cardNumber.length === 12 &&
-      ccv.length === 3 &&
-      cardDate > todaysDate
-    ) {
-      push(`/booking/${params.screeningId}/confirmation`);
-    } else {
-      setError("Felaktiga kortdetaljer");
+    try {
+      const res = await fetch("/api/payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(paymentDetails),
+      });
+
+      const payload = await res.json();
+
+      if (payload === "Payment valid") {
+        push(`/booking/${params.screeningId}/confirmation`);
+      } else {
+        setError("Felaktiga kortdetaljer");
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
+
+  /* -------------------------------- */
 
   return (
     <>
@@ -79,7 +94,7 @@ export default function PaymentPage() {
       <form
         onSubmit={(ev) => {
           ev.preventDefault();
-          handlePayment();
+          handlePayment(cardNumber, ccv, cardYear, cardMonth);
         }}
         className="mt-10 mx-auto h-[800px] w-2/5">
         {error && <ErrorMessage error={error} setError={setError} />}
