@@ -9,7 +9,6 @@ import {
 } from "@/utils/bookingSession";
 import connectdb from "@/utils/connectDb";
 import TicketsModel from "@/models/tickets";
-import { Ticket } from "@/types";
 
 export async function POST() {
   const session = getBookingSession();
