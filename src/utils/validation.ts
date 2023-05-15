@@ -82,3 +82,18 @@ export function isValidCardNumber(numbers: string) {
   const numberRegex = /^\d+$/;
   return numberRegex.test(numbers);
 }
+
+export async function isSeatsAvailable(
+  databaseSeats: number[],
+  bookingSeats: number[]
+) {
+  const check = bookingSeats.map((seat) => {
+    if (databaseSeats.includes(seat)) {
+      return false;
+    } else {
+      return true;
+    }
+  });
+
+  return check;
+}
