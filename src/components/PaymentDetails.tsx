@@ -17,6 +17,16 @@ const PaymentDetails: FC<PaymentProps> = ({
   setCardYear,
   setCcv,
 }) => {
+  const monthArray: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  const yearArray: number[] = [0, 1, 2, 3, 4];
+
+  const futureYears = (yearInterval: number): number => {
+    const currentYear = new Date();
+    const futureYear = currentYear.getFullYear() + yearInterval;
+
+    return futureYear;
+  };
+
   return (
     <>
       <div className="mt-8">
@@ -53,64 +63,30 @@ const PaymentDetails: FC<PaymentProps> = ({
             setCardMonth(parseInt(ev.target.value));
           }}
           className="h-10 w-3/5 block mt-2 p-2 bg-white bg-opacity-10 rounded text-lg outline-none outline-offset-0 invalid:outline-2 invalid:outline-red-700">
-          <option className="bg-container-color" value="1">
-            1
-          </option>
-          <option className="bg-container-color" value="2">
-            2
-          </option>
-          <option className="bg-container-color" value="3">
-            3
-          </option>
-          <option className="bg-container-color" value="4">
-            4
-          </option>
-          <option className="bg-container-color" value="5">
-            5
-          </option>
-          <option className="bg-container-color" value="6">
-            6
-          </option>
-          <option className="bg-container-color" value="7">
-            7
-          </option>
-          <option className="bg-container-color" value="8">
-            8
-          </option>
-          <option className="bg-container-color" value="9">
-            9
-          </option>
-          <option className="bg-container-color" value="10">
-            10
-          </option>
-          <option className="bg-container-color" value="11">
-            11
-          </option>
-          <option className="bg-container-color" value="12">
-            12
-          </option>
+          {monthArray.map((month) => {
+            return (
+              <option className="bg-container-color" value={`${month}`}>
+                {month}
+              </option>
+            );
+          })}
         </select>
+
         <select
           id="validityYear"
           onChange={(ev) => {
             setCardYear(parseInt(ev.target.value));
           }}
           className="h-10 w-3/5  block mt-2 p-2 bg-white bg-opacity-10 rounded text-lg outline-none outline-offset-0 invalid:outline-2 invalid:outline-red-700">
-          <option className="bg-container-color" value="2023">
-            2023
-          </option>
-          <option className="bg-container-color" value="2024">
-            2024
-          </option>
-          <option className="bg-container-color" value="2025">
-            2025
-          </option>
-          <option className="bg-container-color" value="2026">
-            2026
-          </option>
-          <option className="bg-container-color" value="2027">
-            2027
-          </option>
+          {yearArray.map((yearInterval) => {
+            return (
+              <option
+                className="bg-container-color"
+                value={`${futureYears(yearInterval)}`}>
+                {futureYears(yearInterval)}
+              </option>
+            );
+          })}
         </select>
       </div>
       <div className="mt-6">
