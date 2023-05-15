@@ -5,13 +5,15 @@ const API_URL: string = "https://plankton-app-xhkom.ondigitalocean.app/API";
 export async function getMovies(): Promise<Movie[]> {
   const res = await fetch(API_URL + "/movies");
   const payload = await res.json();
+  
   return payload.data;
 }
 // GET the movie with the specified id
 export async function getMovieById(id: string) {
   const res = await fetch(API_URL + "/movies/" + id);
   const payload = await res.json();
-  return payload;
+  console.log(payload.data)
+  return payload.data;
 }
 // GET all the screenings
 export async function getScreenings() {
