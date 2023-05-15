@@ -19,7 +19,7 @@ const MyPages: FC<MyPagesProps> = ({ handleLogout }) => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative z-10">
       <button
         className="order-last col-start-5 flex justify-end mr-10 mt-6 text-xl font-semibold"
         onClick={toggleDropdown}

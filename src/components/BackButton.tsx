@@ -9,7 +9,7 @@ const BackButton: FC = () => {
       <Link
         href="#"
         onClick={() => history.go(-1)}
-        className="lg:absolute top-4 right-3/4 inline-flex items-center h-8 px-4 rounded lg:mx-10 bg-btn-primary-color hover:brightness-110"
+        className="lg:absolute top-36 right-3/4 inline-flex items-center h-8 px-4 rounded lg:mx-10 bg-btn-primary-color hover:brightness-110"
       >
         <Image src={ChevronIcon} alt="chevron left" className="w-2 mr-2" />
         Tillbaka

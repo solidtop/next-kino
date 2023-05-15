@@ -5,6 +5,8 @@ import { BookingDetails } from "@/types";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import ChevronIcon from "../../public/icons/chevron-left-solid.svg";
 
 export default function ConfirmationPage() {
   const { push } = useRouter();
@@ -46,10 +48,12 @@ export default function ConfirmationPage() {
         href="/"
         className="inline-flex items-center h-10 my-6 px-4 rounded-full lg:mx-10 bg-btn-primary-color hover:brightness-110"
       >
-        <img
+        <Image
           src="/icons/chevron-left-solid.svg"
           alt="chevron left"
           className="w-2 mr-2"
+          width={8}
+          height={8}
         />
         Tillbaka till startsidan
       </Link>

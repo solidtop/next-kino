@@ -29,14 +29,16 @@ const PaymentSection: FC<any> = ({}) => {
           <Image
             src={VisaIcon}
             alt="Icon for Visa"
-            width={50}
-            className="object-contain ml-auto mr-2"
+            width={40}
+            height={40}
+            className="object-contain ml-auto mr-2 w-auto"
           />
           <Image
             src={MasterCardIcon}
             alt="Icon for Mastercard"
-            width={50}
-            className="object-contain justify-self-end mr-2"
+            width={40}
+            height={40}
+            className="object-contain justify-self-end mr-2 w-auto"
           />
         </div>
 
@@ -56,7 +58,8 @@ const PaymentSection: FC<any> = ({}) => {
             src={SwishIcon}
             alt="Icon for Swish"
             width={25}
-            className="object-contain ml-auto mr-4"
+            height={25}
+            className="object-contain ml-auto mr-4 w-6"
           />
         </div>
 
@@ -75,8 +78,9 @@ const PaymentSection: FC<any> = ({}) => {
           <Image
             src={KlarnaIcon}
             alt="Icon for Klarna"
-            width={70}
-            className="object-contain ml-auto mr-4"
+            width={80}
+            height={30}
+            className="object-contain ml-auto mr-4 w-16"
           />
         </div>
       </div>
