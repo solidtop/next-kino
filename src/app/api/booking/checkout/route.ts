@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { BookingDetails } from "@/types";
 import {
   isValidBookingDetails,
@@ -54,6 +54,20 @@ export async function POST(req: NextRequest) {
 
   const res = successResponse("Bokningsdetaljer godkänd");
   saveBookingSession(body, res);
+
+  return res;
+}
+
+export async function GET() {
+  const session = getBookingSession();
+
+  if (!session) {
+    return errorResponse(RES_SESSION_EXPIRED.message, RES_SESSION_EXPIRED.code);
+  }
+
+  const bookingDetails = loadBookingSession(session);
+
+  const res = NextResponse.json(bookingDetails);
 
   return res;
 }

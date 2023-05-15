@@ -1,5 +1,4 @@
 "use client";
-
 import React, { FC, useState, useEffect } from "react";
 import Link from "next/link";
 import MyPages from "./MyPages";
