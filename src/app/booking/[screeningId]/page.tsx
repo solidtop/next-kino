@@ -14,6 +14,7 @@ import SeatingLegend from "@/components/SeatingLegend";
 import { getTicketsQuantity } from "@/utils/validation";
 import PaymentSection from "@/components/PaymentSection";
 import { BookingDetails } from "@/types";
+import Loader from "@/components/Loader";
 
 // PLACEHOLDER: Remove when implementing jwt session
 const loggedIn = false;
@@ -77,7 +78,6 @@ export default function BookingPage() {
 
     // Set delay before sending request (prevents request spam)
     timer.current = window.setTimeout(async () => {
-      setIsLoading(true);
       try {
         const res = await fetch("/api/booking/update", {
           method: "POST",
@@ -99,7 +99,6 @@ export default function BookingPage() {
       } catch (err) {
         console.log(err);
       } finally {
-        setIsLoading(false);
         setError("");
       }
     }, 1000);
@@ -169,7 +168,8 @@ export default function BookingPage() {
               onSubmit={(ev) => {
                 ev.preventDefault();
                 handleSubmit(bookingDetails);
-              }}>
+              }}
+            >
               <section id="tickets">
                 <NumericHeader number="1" title="Välj biljettyper" />
                 <TicketMenu
@@ -204,13 +204,16 @@ export default function BookingPage() {
 
               <button
                 type="submit"
-                className="block w-full my-8 py-2 rounded-full bg-btn-primary-color hover:brightness-110 text-center font-semibold">
+                className="block w-full my-8 py-2 rounded-full bg-btn-primary-color hover:brightness-110 text-center font-semibold"
+              >
                 Fortsätt
               </button>
             </form>
           </main>
         </>
       )}
+
+      {isLoading && <Loader />}
     </div>
   );
 }
