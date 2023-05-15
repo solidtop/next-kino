@@ -16,6 +16,7 @@ import { getTicketsQuantity } from "@/utils/validation";
 import PaymentSection from "@/components/PaymentSection";
 import Loader from "@/components/Loader";
 import { BookingDetails } from "@/types";
+import Footer from "@/components/Footer";
 
 // PLACEHOLDER: Remove when implementing jwt session
 const loggedIn = false;
@@ -214,6 +215,7 @@ export default function BookingPage() {
 
         {isLoading && <Loader />}
       </div>
+      <Footer />
     </>
   );
 }

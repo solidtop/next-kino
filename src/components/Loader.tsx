@@ -2,7 +2,7 @@ import { FC } from "react";
 
 const Loader: FC = () => {
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-md flex justify-center items-center transition-all">
+    <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-md flex justify-center items-center transition-all z-50">
       <div role="status">
         <svg
           aria-hidden="true"
