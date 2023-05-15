@@ -51,10 +51,30 @@ export async function registerUser(
   }
 }
 
+export async function getScreeningsById(id: string) {
+  try {
+    const res = await fetch(API_URL + "/screenings?filters[movie]=" + id);
+    const content = await res.json();
+    return content.data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export async function getMovies(): Promise<Movie[]> {
   const res = await fetch(API_URL + "/movies");
   const payload = await res.json();
   return payload.data;
+}
+
+export async function getMovie(id: string) {
+  try {
+    const res = await fetch(API_URL + "/movies/" + id);
+    const payload = await res.json();
+    return payload.data;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export async function getScreening(id: string): Promise<Screening> {
