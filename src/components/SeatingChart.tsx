@@ -1,6 +1,6 @@
 import { FC, useState, useEffect } from "react";
 import SelectedSeats from "./SelectedSeats";
-import Seats from "./Seat";
+import Seats from "./Seats";
 import FilmScreen from "./FilmScreen";
 import { populateTheater } from "@/utils/seatingTemplate";
 import { BookingDetails, SeatObject } from "@/types";
@@ -72,13 +72,15 @@ const SeatingChart: FC<SeatingChartProps> = ({
     }
   };
   return (
-    <div className="p-4 bg-container-color rounded">
+    <div className="p-4 bg-container-color rounded relative">
       <FilmScreen />
       <SelectedSeats
         bookingDetails={bookingDetails}
         selectedSeats={selectedSeats}
       />
-      <ul className="flex flex-wrap gap-2 pt-2 mb-4 justify-center mr-10 ml-10 w-[480px]">
+      <ul
+        className={`grid grid-cols-12 gap-2 mb-4 justify-center mx-auto max-w-[480px]`}
+      >
         {currSeats.map((seat: SeatObject) => {
           return (
             <Seats

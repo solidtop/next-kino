@@ -1,23 +1,21 @@
 import { FC } from "react";
 import SeatIndication from "./SeatIndication";
 
-const SelectedSeats: FC<any> = ({ bookingDetails, selectedSeats }) => {
+const SelectedSeats: FC<any> = ({ bookingDetails }) => {
   const seatArray: Array<number> = bookingDetails.seats;
 
-  if (selectedSeats < seatArray.length) {
-    return (
-      <div className="flex flex-row ml-11 mt-12 text-xl">Valda platser:</div>
-    );
-  } else {
-    return (
-      <div className="flex flex-row ml-11 mt-12 text-xl">
+  return (
+    <div className="flex flex-wrap items-center max-w-[480px] mx-auto mt-12 mb-2">
+      <p className="whitespace-nowrap h-fit text-left text-lg">
         Valda platser:
+      </p>
+      <ul className="flex flex-wrap gap-2 ml-4">
         {seatArray.map((seat) => (
           <SeatIndication seat={seat} key={seat} />
         ))}
-      </div>
-    );
-  }
+      </ul>
+    </div>
+  );
 };
 
 export default SelectedSeats;

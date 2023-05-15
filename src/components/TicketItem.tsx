@@ -1,5 +1,8 @@
 import { useState, FC } from "react";
 import { Ticket } from "@/types";
+import Image from "next/image";
+import PlusIcon from "../../public/icons/plus-solid.svg";
+import MinusIcon from "../../public/icons/minus-solid.svg";
 
 type TicketItemProps = {
   ticket: Ticket;
@@ -19,12 +22,9 @@ const TicketItem: FC<TicketItemProps> = ({ ticket, onTicketChange }) => {
             setQuantity(quantity - 1);
             onTicketChange(ticket.id, quantity - 1);
           }}
-          disabled={quantity === 0}>
-          <img
-            src="/icons/minus-solid.svg"
-            alt="minus"
-            className="w-5 m-auto"
-          />
+          disabled={quantity === 0}
+        >
+          <Image src={MinusIcon} alt="minus" className="w-5 m-auto" />
         </button>
         <p className="text-xl font-bold text-center w-8 md:w-14">{quantity}</p>
         <button
@@ -34,8 +34,9 @@ const TicketItem: FC<TicketItemProps> = ({ ticket, onTicketChange }) => {
             setQuantity(quantity + 1);
             onTicketChange(ticket.id, quantity + 1);
           }}
-          disabled={quantity === ticket.maxQuantity}>
-          <img src="/icons/plus-solid.svg" alt="plus" className="w-5 m-auto" />
+          disabled={quantity === ticket.maxQuantity}
+        >
+          <Image src={PlusIcon} alt="plus" className="w-5 m-auto" />
         </button>
       </div>
       <div className="justify-self-end">{ticket.price} kr</div>
