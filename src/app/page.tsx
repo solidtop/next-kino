@@ -4,10 +4,10 @@ import * as api from "@/utils/api";
 
 export default async function Home() {
   const movies = await api.getMovies();
-  const loggedIn: boolean = false;
+
   return (
     <main>
-      <Header loggedIn={loggedIn} />
+      <Header/>
       {movies && <MovieList movies={movies}></MovieList>}
     </main>
   );

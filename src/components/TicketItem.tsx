@@ -8,7 +8,6 @@ type TicketItemProps = {
 
 const TicketItem: FC<TicketItemProps> = ({ ticket, onTicketChange }) => {
   const [quantity, setQuantity] = useState<number>(ticket.quantity);
-
   return (
     <li className="grid grid-cols-3 items-center justify-items-center">
       <div className="justify-self-start">{ticket.type}</div>
@@ -20,8 +19,7 @@ const TicketItem: FC<TicketItemProps> = ({ ticket, onTicketChange }) => {
             setQuantity(quantity - 1);
             onTicketChange(ticket.id, quantity - 1);
           }}
-          disabled={quantity === 0}
-        >
+          disabled={quantity === 0}>
           <img
             src="/icons/minus-solid.svg"
             alt="minus"
@@ -36,8 +34,7 @@ const TicketItem: FC<TicketItemProps> = ({ ticket, onTicketChange }) => {
             setQuantity(quantity + 1);
             onTicketChange(ticket.id, quantity + 1);
           }}
-          disabled={quantity === ticket.maxQuantity}
-        >
+          disabled={quantity === ticket.maxQuantity}>
           <img src="/icons/plus-solid.svg" alt="plus" className="w-5 m-auto" />
         </button>
       </div>

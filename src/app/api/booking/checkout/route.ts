@@ -2,8 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { BookingDetails } from "@/types";
 import {
   isValidBookingDetails,
+  isValidEmail,
   screeningHasStarted,
-  getAmountTotal,
+  getTicketsQuantity,
 } from "@/utils/validation";
 import {
   RES_INVALID_REQUEST,
@@ -13,6 +14,7 @@ import {
   getBookingSession,
   loadBookingSession,
   saveBookingSession,
+  successResponse,
 } from "@/utils/bookingSession";
 
 export async function POST(req: NextRequest) {
@@ -34,9 +36,38 @@ export async function POST(req: NextRequest) {
     return errorResponse(RES_INVALID_REQUEST.message, RES_INVALID_REQUEST.code);
   }
 
-  body.pricing.amountTotal = getAmountTotal(body.tickets);
-  const res = NextResponse.json(body);
+  if (!body.tickets.some((ticket) => ticket.quantity > 0)) {
+    return errorResponse("Inga biljetter valda", 400);
+  }
+
+  if (!isValidEmail(body.email || "")) {
+    return errorResponse("Felaktig e-postadress", 400);
+  }
+
+  /* Validate seating */
+  if (body.seats.length !== getTicketsQuantity(bookingDetails.tickets)) {
+    return errorResponse(
+      "Andel biljetter och valda platser överstämmer ej",
+      400
+    );
+  }
+
+  const res = successResponse("Bokningsdetaljer godkänd");
   saveBookingSession(body, res);
+
+  return res;
+}
+
+export async function GET() {
+  const session = getBookingSession();
+
+  if (!session) {
+    return errorResponse(RES_SESSION_EXPIRED.message, RES_SESSION_EXPIRED.code);
+  }
+
+  const bookingDetails = loadBookingSession(session);
+
+  const res = NextResponse.json(bookingDetails);
 
   return res;
 }

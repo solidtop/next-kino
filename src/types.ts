@@ -28,7 +28,7 @@ export type Screening = {
 
 export type Ticket = {
   id: number;
-  type: string;
+  type: "Ordinarie" | "Student" | "Pensionär";
   price: number;
   quantity: number;
   maxQuantity: number;
@@ -38,14 +38,35 @@ export type BookingDetails = {
   id: string;
   screening: Screening;
   tickets: Ticket[];
-  seats: [];
+  seats: number[];
   pricing: {
     amountTotal: number;
   };
+  email: string | null;
+};
+
+export type AuthResponse = {
+  token: string;
+  userId: string;
+};
+
+export type LoginCredentials = {
   email: string;
+  password: string;
+};
+
+export type UserRegistration = {
+  name: string;
+  email: string;
+  password: string;
 };
 
 export type User = {
   name: string;
   email: string;
+};
+
+export type SeatObject = {
+  seat: number;
+  state: string;
 };
