@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { SeatObject } from "./SeatingChart";
+import { SeatObject } from "@/types";
 
 type SeatProps = {
   seatIndex: number;
