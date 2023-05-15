@@ -2,12 +2,13 @@ import { FC } from "react";
 
 const SeatIndication: FC<any> = ({ seat }) => {
   return (
-    <p
+    <li
       key={seat}
       id={seat}
-      className="font-bold ml-2 bg-available rounded p-1 text-sm">
+      className="flex justify-center items-center w-6 h-6 font-semibold bg-available rounded text-sm text-center"
+    >
       {seat}
-    </p>
+    </li>
   );
 };
 

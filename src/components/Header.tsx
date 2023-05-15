@@ -20,13 +20,13 @@ const Header: FC = () => {
   };
 
   return (
-    <section>
-      <header className="grid grid-cols-5 mt-6 ">
+    <section className="container mx-auto my-4 max-w-6xl">
+      <header className="flex justify-between gap-4">
         <Link className="order-first justify-start ml-10" href="/">
-          <Image src={logo} alt="Spegeln Logo" className="h-auto w-auto" />
+          <Image src={logo} alt="Spegeln Logo" className="object-contain" />
         </Link>
 
-        <ul className="flex flex-row col-start-2 col-end-5 text-xl font-semibold justify-center mt-6 gap-14">
+        <ul className="hidden lg:flex flex-row text-xl font-semibold justify-center items-center gap-14">
           <Link href="/">Öppettider & Kontakt</Link>
           <Link href="/">Om Spegeln</Link>
           <Link href="/">Biljettinfo</Link>

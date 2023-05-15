@@ -19,7 +19,7 @@ const MyPages: FC<MyPagesProps> = ({ handleLogout }) => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative z-10">
       <button
         className="order-last col-start-5 flex justify-end mr-10 mt-6 text-xl font-semibold"
         onClick={toggleDropdown}
@@ -31,20 +31,16 @@ const MyPages: FC<MyPagesProps> = ({ handleLogout }) => {
           {user.name && (
             <a
               href="/"
-              className="block px-4 py-2  text-white-800  hover:bg-bg-color"
-              onClick={(e) => {
-                e.preventDefault();
-                router.push("/"); // Redirect to home page on username click
-              }}
+              className="block px-4 py-2  text-white-800 rounded  hover:bg-white hover:bg-opacity-10 text-left"
             >
-              {user.name}
+              Mina sidor
             </a>
           )}
           <button
-            className="block px-4 py-2  text-white-800 hover:bg-bg-color"
+            className="block px-4 py-2 w-full text-white-800 rounded hover:bg-white hover:bg-opacity-10 text-left"
             onClick={handleLogout}
           >
-            Logout
+            Logga ut
           </button>
         </div>
       )}
