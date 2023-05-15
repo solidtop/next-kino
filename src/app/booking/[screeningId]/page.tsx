@@ -13,8 +13,8 @@ import SeatingChart from "@/components/SeatingChart";
 import SeatingLegend from "@/components/SeatingLegend";
 import { getTicketsQuantity } from "@/utils/validation";
 import PaymentSection from "@/components/PaymentSection";
-import { BookingDetails } from "@/types";
 import Loader from "@/components/Loader";
+import { BookingDetails } from "@/types";
 
 // PLACEHOLDER: Remove when implementing jwt session
 const loggedIn = false;
