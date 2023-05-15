@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import BackButton from "@/components/BackButton";
 import BookingSummary from "@/components/BookingSummary";
 import TicketMenu from "@/components/TicketMenu";
@@ -16,7 +17,6 @@ import { getTicketsQuantity } from "@/utils/validation";
 import PaymentSection from "@/components/PaymentSection";
 import Loader from "@/components/Loader";
 import { BookingDetails } from "@/types";
-import Footer from "@/components/Footer";
 
 // PLACEHOLDER: Remove when implementing jwt session
 const loggedIn = false;
