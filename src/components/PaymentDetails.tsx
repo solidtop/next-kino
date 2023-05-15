@@ -65,7 +65,10 @@ const PaymentDetails: FC<PaymentProps> = ({
           className="h-10 w-3/5 block mt-2 p-2 bg-white bg-opacity-10 rounded text-lg outline-none outline-offset-0 invalid:outline-2 invalid:outline-red-700">
           {monthArray.map((month) => {
             return (
-              <option className="bg-container-color" value={`${month}`}>
+              <option
+                className="bg-container-color"
+                value={`${month}`}
+                key={`${month}`}>
                 {month}
               </option>
             );
@@ -82,7 +85,8 @@ const PaymentDetails: FC<PaymentProps> = ({
             return (
               <option
                 className="bg-container-color"
-                value={`${futureYears(yearInterval)}`}>
+                value={`${futureYears(yearInterval)}`}
+                key={`${futureYears(yearInterval)}`}>
                 {futureYears(yearInterval)}
               </option>
             );
