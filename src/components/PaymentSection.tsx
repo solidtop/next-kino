@@ -15,7 +15,7 @@ const PaymentSection: FC<any> = ({}) => {
   return (
     <>
       <div className="p-4 bg-container-color rounded">
-        <div className="flex flex-row h-12 my-3 bg-white bg-opacity-10 border-2 border-btn-primary-color border-opacity-60 rounded accent-btn-primary-color">
+        <div className="flex items-center h-12 my-3 bg-white bg-opacity-10 border-2 border-btn-primary-color border-opacity-60 rounded accent-btn-primary-color">
           <input
             className="my-3 ml-4 w-5 h-5 hover:cursor-pointer order-first"
             type="radio"
@@ -25,22 +25,22 @@ const PaymentSection: FC<any> = ({}) => {
             checked={isRadioSelected("cardPayment")}
             onChange={handleRadioClick}
           />
-          <label className="ml-4 mt-2 font-semibold text-xl ">
-            Kortbetalning
-          </label>
+          <label className="ml-4 font-semibold text-lg">Kortbetalning</label>
           <Image
             src={VisaIcon}
             alt="Icon for Visa"
-            className="inline relative ml-auto left-28 object-contain h-auto w-auto"
+            width={50}
+            className="object-contain ml-auto mr-2"
           />
           <Image
             src={MasterCardIcon}
             alt="Icon for Mastercard"
-            className="inline justify-end ml-auto object-contain h-auto w-auto"
+            width={50}
+            className="object-contain justify-self-end mr-2"
           />
         </div>
 
-        <div className="flex flex-row h-12 my-3 bg-white bg-opacity-10 border-2 border-btn-primary-color border-opacity-60 rounded accent-btn-primary-color">
+        <div className="flex h-12 my-3 bg-white bg-opacity-10 border-2 border-btn-primary-color border-opacity-60 rounded accent-btn-primary-color">
           <input
             className="my-3 ml-4 w-5 h-5 hover:cursor-pointer"
             type="radio"
@@ -51,15 +51,16 @@ const PaymentSection: FC<any> = ({}) => {
             onChange={handleRadioClick}
             disabled={true}
           />
-          <label className="ml-4 mt-2 font-semibold text-xl">Swish</label>
+          <label className="ml-4 mt-2 font-semibold text-lg">Swish</label>
           <Image
             src={SwishIcon}
             alt="Icon for Swish"
-            className="inline justify-end ml-auto mr-2 object-contain h-auto w-auto"
+            width={25}
+            className="object-contain ml-auto mr-4"
           />
         </div>
 
-        <div className="flex flex-row h-12 my-3 bg-white bg-opacity-10 border-2 border-btn-primary-color border-opacity-60 rounded accent-btn-primary-color">
+        <div className="flex h-12 my-3 bg-white bg-opacity-10 border-2 border-btn-primary-color border-opacity-60 rounded accent-btn-primary-color">
           <input
             className="my-3 ml-4 w-5 h-5 hover:cursor-pointer"
             type="radio"
@@ -70,11 +71,12 @@ const PaymentSection: FC<any> = ({}) => {
             onChange={handleRadioClick}
             disabled={true}
           />
-          <label className="ml-4 mt-2 font-semibold text-xl">Klarna</label>
+          <label className="ml-4 mt-2 font-semibold text-lg">Klarna</label>
           <Image
             src={KlarnaIcon}
             alt="Icon for Klarna"
-            className="inline justify-end ml-auto mr-2 object-contain h-auto w-auto"
+            width={70}
+            className="object-contain ml-auto mr-4"
           />
         </div>
       </div>
