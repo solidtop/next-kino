@@ -21,7 +21,12 @@ const Seats: FC<SeatProps> = ({
       onClick={(e) => {
         onSeatChange(currSeats, (e.target as HTMLInputElement).id);
       }}
-      className={`bg-${seatState} h-8 w-8 rounded hover:bg-gray-400 hover:cursor-pointer text-center font-semibold pt-1 text-black text-opacity-80 state-${seatState}`}>
+      className={`bg-${seatState} seat flex justify-center items-center w-full min-h-max aspect-square rounded text-center text-xs sm:text-base font-semibold text-bg-color state-${seatState} ${
+        seatState !== "occupied"
+          ? "group hover:bg-gray-600 hover:cursor-pointer"
+          : ""
+      }`}
+    >
       {seatIndex}
     </li>
   );

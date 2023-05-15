@@ -1,6 +1,7 @@
 import { FC } from "react";
 import Link from "next/link";
 import { Movie } from "@/types";
+import Image from "next/image";
 
 type MovieCardProps = {
   movie: Movie;
@@ -13,10 +14,12 @@ const MovieCard: FC<MovieCardProps> = ({ movie }) => {
         className="absolute top-0 bottom-0 left-0 right-0"
         href={"/movies/" + movie.id}
       ></Link>
-      <img
+      <Image
         className="object-cover w-full h-72"
         src={movie.attributes.image.url}
         alt={movie.attributes.title + " poster"}
+        width={130}
+        height={50}
       />
       <div className="text-white text-center text-lg">
         {movie.attributes.title}
