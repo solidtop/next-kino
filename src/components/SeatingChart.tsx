@@ -22,13 +22,26 @@ const SeatingChart: FC<SeatingChartProps> = ({
     populateTheater(seatingDetails)
   );
 
-  const bookingSeats: Array<number> = [];
+  let bookingSeats: Array<number> = [];
 
-  let ticketQuantity = getTicketsQuantity(bookingDetails.tickets);
+  const ticketQuantity = getTicketsQuantity(bookingDetails.tickets);
 
   useEffect(() => {
     setCurrSeats(populateTheater(seatingDetails));
-    setSelectedSeats(0);
+
+    bookingDetails.seats.forEach((seat) => {
+      bookingSeats.push(seat);
+      setCurrSeats((prevSeats) => {
+        return prevSeats.map((prevSeat) => {
+          if (prevSeat.seat === seat) {
+            return { state: "selected", seat };
+          } else {
+            return prevSeat;
+          }
+        });
+      });
+    });
+    setSelectedSeats(bookingDetails.seats.length);
   }, [seatingDetails]);
 
   const handleUpdateSeats = (
@@ -62,7 +75,19 @@ const SeatingChart: FC<SeatingChartProps> = ({
         bookingSeats.push(seat.seat);
       }
     });
-
+    const occupiedSeats = updatedSeats.map((seat) => {
+      if (seat.state === "occupied") {
+        return seat.seat;
+      }
+    });
+    if (
+      getSelectedSeats(updatedSeats).length === ticketQuantity &&
+      !bookingSeats.includes(newSeatNum) &&
+      !occupiedSeats.includes(newSeatNum)
+    ) {
+      alert("Du kan inte välja fler platser");
+      return;
+    }
     if (
       getSelectedSeats(updatedSeats).length == ticketQuantity &&
       !bookingSeats.includes(parseInt(newSeat))

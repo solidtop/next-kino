@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { SeatObject } from "@/types";
+import { getTicketsQuantity, getSelectedSeats } from "@/utils/validation";
 
 type SeatProps = {
   seatIndex: number;
@@ -23,7 +24,7 @@ const Seats: FC<SeatProps> = ({
       }}
       className={`bg-${seatState} seat flex justify-center items-center w-full min-h-max aspect-square rounded text-center text-xs sm:text-base font-semibold text-bg-color state-${seatState} ${
         seatState !== "occupied"
-          ? "group hover:bg-gray-600 hover:cursor-pointer"
+          ? "group hover:brightness-125 hover:cursor-pointer"
           : ""
       }`}
     >
