@@ -62,3 +62,20 @@ export async function getScreening(id: string): Promise<Screening> {
   const payload = await res.json();
   return payload.data;
 }
+
+export async function getTickets(email: string) {
+  try {
+    const res = await fetch("/api/auth/tickets", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(email),
+    });
+
+    const payload = await res.json();
+    return payload;
+  } catch (err) {
+    console.log(err);
+  }
+}
