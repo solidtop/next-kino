@@ -162,6 +162,7 @@ export default function BookingPage() {
           <>
             <BookingSummary bookingDetails={bookingDetails} />
             <main className="flex flex-col gap-y-4 md:w-2/3 lg:w-1/2 p-4 lg:mx-auto">
+              <h1 className="text-2xl font-semibold">Boka Biljetter</h1>
               {error && <ErrorMessage error={error} setError={setError} />}
 
               <form
