@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Ticket } from "@/types";
+import { Ticket, Movie } from "@/types";
 import formatDate from "@/utils/formatting";
 import { getAmountTotal } from "@/utils/validation";
 import Image from "next/image";
@@ -24,30 +24,49 @@ type TicketObject = {
 type UserInformationProps = {
   currentUser: UserObject;
   userTickets: Array<TicketObject>;
+  movies: Array<Movie>;
 };
 
 const UserInformation: FC<UserInformationProps> = ({
   currentUser,
   userTickets,
+  movies,
 }) => {
   return (
     <>
-      <div className="w-96 mx-auto my-20">
-        <p>Välkommen {currentUser.name}</p>
+      <div className="mx-auto sm:w-[600px] w-96 bg-container-color rounded p-4">
+        <p className="text-3xl">Välkommen {currentUser.name}</p>
         <p>Inloggad med: {currentUser.email}</p>
       </div>
 
-      <div className="mx-auto w-96">
-        Bokade biljetter
+      <div className="mx-auto sm:w-[600px] w-96 my-10">
+        <p className="text-3xl font-semibold">Bokade biljetter</p>
         {userTickets.map((ticket) => {
           return (
             <>
               <div className="flex flex-col sm:flex-row gap-4 bg-container-color rounded p-4 mt-4">
+                {movies.map((movie) => {
+                  if (movie.attributes.title === ticket.movie) {
+                    return (
+                      <Image
+                        className="sm:w-auto sm:h-60 rounded mx-auto sm:mx-0"
+                        src={movie.attributes.image.url}
+                        height={180}
+                        width={180}
+                        alt="Movie Poster"
+                      />
+                    );
+                  }
+                })}
                 <div className="my-auto ml-2">
                   <ul className="bg-container-color rounded ">
                     <li className="font-bold text-lg mb-2">{ticket.movie}</li>
-                    <li className="text-white opacity-70">{ticket.email}</li>
-                    <li className="text-white opacity-70">
+                    <li key={ticket.email} className="text-white opacity-70">
+                      {ticket.email}
+                    </li>
+                    <li
+                      key={formatDate(new Date(ticket.startTime))}
+                      className="text-white opacity-70">
                       {formatDate(new Date(ticket.startTime))}
                     </li>
                     <ul className="flex flex-row flex-wrap mt-2 text-white opacity-70">
@@ -58,7 +77,7 @@ const UserInformation: FC<UserInformationProps> = ({
                     </ul>
 
                     <hr className=" mb-2 mt-10 opacity-50"></hr>
-                    <li className="">
+                    <li key={getAmountTotal(ticket.tickets)} className="">
                       Totalt: {getAmountTotal(ticket.tickets)} kr
                     </li>
                   </ul>

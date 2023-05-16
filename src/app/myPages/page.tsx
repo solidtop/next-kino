@@ -2,7 +2,8 @@
 import Header from "@/components/Header";
 import UserInformation from "@/components/UserInformation";
 import { useState, useEffect } from "react";
-import { Ticket } from "@/types";
+import { Ticket, Movie } from "@/types";
+import { getMovies } from "@/utils/api";
 
 type UserObject = {
   email: string;
@@ -23,10 +24,12 @@ type TicketObject = {
 export default function MyPages() {
   const [currentUser, setCurrentUser] = useState<UserObject>();
   const [userTickets, setUserTickets] = useState<Array<TicketObject>>();
+  const [movies, setMovies] = useState<Array<Movie>>();
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     setCurrentUser(user);
+    getMovieList();
   }, []);
 
   useEffect(() => {
@@ -48,19 +51,33 @@ export default function MyPages() {
       const payload = await res.json();
       setUserTickets(payload);
       return payload;
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getMovieList = async () => {
+    try {
+      const res = await getMovies();
+      setMovies(res);
+      return res;
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   if (currentUser && userTickets) {
     return (
       currentUser &&
-      userTickets && (
+      userTickets &&
+      movies && (
         <>
           <Header />
           <div className="max-w-screen-xl mx-auto">
             <UserInformation
               currentUser={currentUser}
               userTickets={userTickets}
+              movies={movies}
             />
           </div>
         </>
