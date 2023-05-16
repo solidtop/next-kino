@@ -1,15 +1,14 @@
-"use client";
 import Header from "@/components/Header";
 import UserInformation from "@/components/UserInformation";
-import { useState, useEffect } from "react";
-import { Ticket, Movie } from "@/types";
+
+// import { useState, useEffect } from "react";
+import { Ticket } from "@/types";
 import { getMovies } from "@/utils/api";
 
-type UserObject = {
-  email: string;
-  id: string;
-  name: string;
-};
+import { cookies } from "next/headers";
+import JWT from "jsonwebtoken";
+import connectDb from "@/utils/connectDb";
+import TicketsModel from "@/models/tickets";
 
 type TicketObject = {
   bookingId: string;
@@ -21,74 +20,55 @@ type TicketObject = {
   tickets: Ticket[];
 };
 
-export default function MyPages() {
-  const [currentUser, setCurrentUser] = useState<UserObject>();
-  const [userTickets, setUserTickets] = useState<Array<TicketObject>>();
-  const [movies, setMovies] = useState<Array<Movie>>();
+const getMovieList = async () => {
+  try {
+    const res = await getMovies();
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+};
 
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
-    setCurrentUser(user);
-    getMovieList();
-  }, []);
+export default async function MyPages() {
+  const allCookies = cookies();
+  const jwt = allCookies.get("u-session")?.value;
 
-  useEffect(() => {
-    if (currentUser !== undefined) {
-      getTickets(currentUser.email);
-    }
-  }, [currentUser]);
+  if (!jwt) {
+    return null;
+  }
 
-  const getTickets = async (email: string) => {
-    try {
-      const res = await fetch("/api/auth/tickets", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
+  try {
+    const payload = JWT.verify(jwt, process.env.JWT_SECRET as string);
+    const userInfo = typeof payload == "object" ? payload.sessionObject : null;
+    const userEmail = userInfo.email;
 
-      const payload = await res.json();
-      setUserTickets(payload);
-      return payload;
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    connectDb();
+    const tickets: Array<TicketObject> = await TicketsModel.find({
+      email: userEmail,
+    });
 
-  const getMovieList = async () => {
-    try {
-      const res = await getMovies();
-      setMovies(res);
-      return res;
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    const movies = await getMovieList();
 
-  if (currentUser && userTickets) {
     return (
-      currentUser &&
-      userTickets &&
       movies && (
         <>
           <Header />
           <div className="max-w-screen-xl mx-auto">
             <UserInformation
-              currentUser={currentUser}
-              userTickets={userTickets}
+              currentUser={userInfo}
+              userTickets={tickets}
               movies={movies}
             />
           </div>
         </>
       )
     );
-  } else {
+  } catch (err) {
     return (
-      <>
-        <Header />
-        <div className="max-w-screen-xl mx-auto"></div>
-      </>
+      <div>
+        <h1>Invalid session!</h1>
+        <p>Did you tamper with your cookie?</p>
+      </div>
     );
   }
 }
