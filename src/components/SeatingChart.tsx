@@ -88,11 +88,7 @@ const SeatingChart: FC<SeatingChartProps> = ({
       alert("Du kan inte välja fler platser");
       return;
     }
-    if (
-      getSelectedSeats(updatedSeats).length == ticketQuantity &&
-      !bookingSeats.includes(parseInt(newSeat))
-    ) {
-    } else {
+    if (!occupiedSeats.includes(newSeatNum)) {
       onUpdate({ ...bookingDetails, seats: bookingSeats });
     }
   };
