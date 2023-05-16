@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { BookingDetails } from "@/types";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
-import logo from "../../../../../public/icons/Logo.png";
+import logo from "../../../../../public/icons/biospegeln.png";
 import ErrorMessage from "@/components/ErrorMessage";
 import PaymentSummary from "@/components/PaymentSummary";
 import PaymentDetails from "@/components/PaymentDetails";
@@ -90,7 +90,12 @@ export default function PaymentPage() {
   return (
     <>
       <header>
-        <Image src={logo} alt="Website logo" className="mt-6 ml-6" />
+        <Image
+          src={logo}
+          alt="spegeln logo"
+          width={96}
+          className="mt-6 ml-6 w-24"
+        />
       </header>
 
       <form
@@ -98,7 +103,8 @@ export default function PaymentPage() {
           ev.preventDefault();
           handlePayment(cardNumber, ccv, cardYear, cardMonth, bookingDetails);
         }}
-        className="mt-10 mx-auto h-[800px] w-2/5">
+        className="mt-10 mx-auto h-[800px] w-2/5"
+      >
         {error && <ErrorMessage error={error} setError={setError} />}
         <h1 className="text-3xl font-semibold">Betala med kontokort</h1>
 
