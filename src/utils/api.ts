@@ -8,9 +8,7 @@ import {
 
 const API_URL: string = "https://plankton-app-xhkom.ondigitalocean.app/api";
 
-export async function loginUser(
-  userInfo: LoginCredentials
-): Promise<AuthResponse> {
+export async function loginUser(userInfo: LoginCredentials): Promise<Boolean> {
   try {
     const res = await fetch("/api/auth/login", {
       method: "POST",
@@ -21,9 +19,7 @@ export async function loginUser(
     });
 
     if (res.ok) {
-      const data = await res.json();
-      localStorage.setItem("user", JSON.stringify(data));
-      return data as AuthResponse;
+      return true;
     } else {
       throw new Error("Login failed");
     }
@@ -61,21 +57,4 @@ export async function getScreening(id: string): Promise<Screening> {
   const res = await fetch(API_URL + `/screenings/${id}?populate=movie`);
   const payload = await res.json();
   return payload.data;
-}
-
-export async function getTickets(email: string) {
-  try {
-    const res = await fetch("/api/auth/tickets", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(email),
-    });
-
-    const payload = await res.json();
-    return payload;
-  } catch (err) {
-    console.log(err);
-  }
 }
