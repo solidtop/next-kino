@@ -70,7 +70,7 @@ export async function getMovies(): Promise<Movie[]> {
 export async function getMovie(id: string): Promise<Movie> {
   const res = await fetch(API_URL + "/movies/" + id);
   const payload = await res.json();
-  return payload;
+  return payload.data;
 }
 // GET all the screenings
 export async function getScreenings(): Promise<Screening[]> {
