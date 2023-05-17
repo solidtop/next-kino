@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { RiArrowDownSLine } from "react-icons/ri";
 import Image from "next/image";
 import userIcon from "../../public/icons/user-solid.svg";

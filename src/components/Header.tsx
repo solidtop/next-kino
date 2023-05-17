@@ -6,27 +6,26 @@ import Image from "next/image";
 import logo from "../../public/icons/biospegeln.png";
 import LoginButton from "./LoginButton";
 import { User } from "@/types";
+import { getUserSession } from "@/utils/api";
+import { useRouter } from "next/navigation";
 
 const Header: FC<any> = () => {
   const [userDetails, setUserDetails] = useState<User>();
   const [showModal, setShowModal] = useState<boolean>(false);
-
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const router = useRouter();
 
   useEffect(() => {
-    getUserSession();
+    handleSession();
   }, [showModal]);
 
-  const getUserSession = async () => {
-    try {
-      const res = await fetch("/api/auth/user", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+  useEffect(() => {
+    router.refresh();
+  }, [userDetails]);
 
-      const payload = await res.json();
+  const handleSession = async () => {
+    try {
+      const payload = await getUserSession();
       setUserDetails(payload);
     } catch (err) {
       console.log(err);
