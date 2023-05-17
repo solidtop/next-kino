@@ -14,30 +14,42 @@ import SeatingLegend from "@/components/SeatingLegend";
 import { getTicketsQuantity } from "@/utils/validation";
 import PaymentSection from "@/components/PaymentSection";
 import Loader from "@/components/Loader";
-import { BookingDetails } from "@/types";
-
-// PLACEHOLDER: Remove when implementing jwt session
-const loggedIn = false;
-const session = loggedIn
-  ? {
-      user: {
-        email: "john@gmail.com",
-        name: "John Doe",
-      },
-    }
-  : null;
+import { BookingDetails, User } from "@/types";
+import { getUserSession } from "@/utils/api";
 
 export default function Content() {
   const [bookingDetails, setBookingDetails] = useState<BookingDetails | null>(
     null
   );
   const [seatingDetails, setSeatingDetails] = useState<Array<number>>([]);
+  const [userSession, setUserSession] = useState<User>({
+    email: null,
+    name: null,
+  });
+  const [showModal, setShowModal] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const timer = useRef<number | undefined>(undefined);
 
   const params = useParams();
   const { push } = useRouter();
+
+  useEffect(() => {
+    handleSession();
+  }, []);
+
+  const handleSession = async () => {
+    try {
+      const payload = await getUserSession();
+      if (userSession.name == payload.name) {
+        return;
+      } else {
+        setUserSession(payload);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   let ticketQuantity: number;
   bookingDetails
@@ -73,6 +85,7 @@ export default function Content() {
   }, []);
 
   const handleUpdate = (bookingDetails: BookingDetails): void => {
+    handleSession();
     clearTimeout(timer.current);
 
     // Set delay before sending request (prevents request spam)
@@ -166,8 +179,7 @@ export default function Content() {
                 onSubmit={(ev) => {
                   ev.preventDefault();
                   handleSubmit(bookingDetails);
-                }}
-              >
+                }}>
                 <section id="tickets">
                   <NumericHeader number="1" title="Välj biljettyper" />
                   <TicketMenu
@@ -186,13 +198,17 @@ export default function Content() {
                 </section>
                 <section id="details">
                   <NumericHeader number="3" title="Fyll i detaljer" />
-                  {!session && (
+                  {userSession.name == null && (
                     <DetailsForm
                       bookingDetails={bookingDetails}
                       setBookingDetails={setBookingDetails}
+                      showModal={showModal}
+                      setShowModal={setShowModal}
                     />
                   )}
-                  {session && <UserDetails user={session.user} />}
+                  {userSession.name !== null && (
+                    <UserDetails user={userSession} />
+                  )}
                 </section>
 
                 <section id="payment">
@@ -202,8 +218,7 @@ export default function Content() {
 
                 <button
                   type="submit"
-                  className="block w-full my-8 py-2 rounded-full bg-btn-primary-color hover:brightness-110 text-center font-semibold"
-                >
+                  className="block w-full my-8 py-2 rounded-full bg-btn-primary-color hover:brightness-110 text-center font-semibold">
                   Fortsätt
                 </button>
               </form>

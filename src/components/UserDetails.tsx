@@ -9,9 +9,8 @@ const UserDetails: FC<UserDetailsProps> = ({ user }) => {
   return (
     <div className="p-4 bg-container-color rounded">
       <ul className="">
-        <li className="mb-4 text-xl font-bold">{user.name}</li>
-        <li>{user.email}</li>
-        <li className="mt-4 font-bold">Du har 5 bonuspoäng</li>
+        <li className="mb-4 text-xl font-bold">{user && user.name}</li>
+        <li>{user && user.email}</li>
       </ul>
     </div>
   );

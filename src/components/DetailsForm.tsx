@@ -5,14 +5,17 @@ import Modal from "./Modal";
 type DetailsFormProps = {
   bookingDetails: BookingDetails;
   setBookingDetails: Dispatch<SetStateAction<BookingDetails | null>>;
+  showModal: boolean;
+  setShowModal: Dispatch<SetStateAction<boolean>>;
 };
 
 const DetailsForm: FC<DetailsFormProps> = ({
   bookingDetails,
   setBookingDetails,
+  showModal,
+  setShowModal,
 }) => {
   const [email, setEmail] = useState<string>(bookingDetails.email || "");
-  const [showModal, setShowModal] = useState<boolean>(false);
 
   return (
     <div className="p-4 bg-container-color rounded">
