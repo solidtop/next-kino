@@ -26,7 +26,6 @@ export default function Content() {
     email: null,
     name: null,
   });
-  const [showModal, setShowModal] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const timer = useRef<number | undefined>(undefined);
@@ -202,8 +201,6 @@ export default function Content() {
                     <DetailsForm
                       bookingDetails={bookingDetails}
                       setBookingDetails={setBookingDetails}
-                      showModal={showModal}
-                      setShowModal={setShowModal}
                     />
                   )}
                   {userSession.name !== null && (

@@ -9,6 +9,7 @@ import { cookies } from "next/headers";
 import JWT from "jsonwebtoken";
 import connectDb from "@/utils/connectDb";
 import TicketsModel from "@/models/tickets";
+import MyPagesContent from "@/components/MyPagesContent";
 
 type TicketObject = {
   bookingId: string;
@@ -34,14 +35,7 @@ export default async function MyPages() {
   const jwt = allCookies.get("u-session")?.value;
 
   if (!jwt) {
-    return (
-      <>
-        <Header />
-        <div className="mx-auto sm:w-[600px] w-96 bg-container-color rounded p-4 mt-20">
-          <p className="text-3xl text-center">Logga in för att se denna sida</p>
-        </div>
-      </>
-    );
+    return <MyPagesContent />;
   }
 
   try {

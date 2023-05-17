@@ -4,6 +4,7 @@ import formatDate from "@/utils/formatting";
 import { getAmountTotal } from "@/utils/validation";
 import Image from "next/image";
 import SeatsPaymentPage from "./SeatsPaymentPage";
+import BackButton from "./BackButton";
 
 type UserObject = {
   email: string;
@@ -34,6 +35,7 @@ const UserInformation: FC<UserInformationProps> = ({
 }) => {
   return (
     <>
+      <BackButton />
       <div className="mx-auto sm:w-[600px] w-96 bg-container-color rounded p-4">
         <p className="text-3xl">Välkommen {currentUser.name}</p>
         <p>Inloggad med: {currentUser.email}</p>
