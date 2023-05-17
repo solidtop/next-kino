@@ -23,7 +23,7 @@ export function loadBookingSession(session: string[]): BookingDetails {
   const payload = JWT.verify(session[0], key);
 
   if (session.length === 2) {
-    const userPayload = JWT.verify(session[1], userKey);
+    const userPayload: any = JWT.verify(session[1], userKey);
 
     const bookingDetails: BookingDetails =
       typeof payload == "object"
