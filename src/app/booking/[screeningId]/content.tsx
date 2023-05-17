@@ -2,8 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import BackButton from "@/components/BackButton";
 import BookingSummary from "@/components/BookingSummary";
 import TicketMenu from "@/components/TicketMenu";
@@ -18,8 +16,9 @@ import PaymentSection from "@/components/PaymentSection";
 import Loader from "@/components/Loader";
 import { BookingDetails, User } from "@/types";
 
-export default function BookingPage() {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+export default function Content() {
+
+   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
   const [bookingDetails, setBookingDetails] = useState<BookingDetails | null>(
     null
@@ -32,6 +31,7 @@ export default function BookingPage() {
   const params = useParams();
   const { push } = useRouter();
 
+
   // getUser from localstorage
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function BookingPage() {
     setUser(storedUser);
     setIsLoggedIn(!!storedUser.token);
   }, []);
-
+  
   let ticketQuantity: number;
   bookingDetails
     ? (ticketQuantity = getTicketsQuantity(bookingDetails.tickets))
@@ -153,7 +153,7 @@ export default function BookingPage() {
 
   return (
     <>
-      <Header />
+
       <div className="max-w-screen-xl mx-auto">
         <BackButton />
 
@@ -188,13 +188,16 @@ export default function BookingPage() {
                 </section>
                 <section id="details">
                   <NumericHeader number="3" title="Fyll i detaljer" />
-                  {!isLoggedIn && (
+
+                  {!isLoggedIn &&
                     <DetailsForm
                       bookingDetails={bookingDetails}
                       setBookingDetails={setBookingDetails}
                     />
                   )}
+
                   {isLoggedIn && <UserDetails user={user} />}
+
                 </section>
 
                 <section id="payment">
@@ -215,7 +218,6 @@ export default function BookingPage() {
 
         {isLoading && <Loader />}
       </div>
-      <Footer />
     </>
   );
 }
