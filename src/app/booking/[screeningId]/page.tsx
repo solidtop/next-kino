@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import BackButton from "@/components/BackButton";
 import BookingSummary from "@/components/BookingSummary";
 import TicketMenu from "@/components/TicketMenu";
@@ -161,6 +162,7 @@ export default function BookingPage() {
           <>
             <BookingSummary bookingDetails={bookingDetails} />
             <main className="flex flex-col gap-y-4 md:w-2/3 lg:w-1/2 p-4 lg:mx-auto">
+              <h1 className="text-2xl font-semibold">Boka Biljetter</h1>
               {error && <ErrorMessage error={error} setError={setError} />}
 
               <form
@@ -214,6 +216,7 @@ export default function BookingPage() {
 
         {isLoading && <Loader />}
       </div>
+      <Footer />
     </>
   );
 }

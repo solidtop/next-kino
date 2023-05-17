@@ -11,9 +11,8 @@ const LoginButton: FC<LoginButtonProps> = ({ setIsLoggedIn }) => {
   return (
     <>
       <button
-        className="order-last col-start-5 flex justify-end mr-10 mt-6 text-xl font-semibold"
-        onClick={() => setShowModal(true)}
-      >
+        className="order-last col-start-5 flex justify-end mr-10 text-xl font-semibold"
+        onClick={() => setShowModal(true)}>
         Login/Register
       </button>
       {showModal && (

@@ -1,5 +1,7 @@
 import React, { FC, useState } from "react";
 import { RiArrowDownSLine } from "react-icons/ri";
+import Image from "next/image";
+import userIcon from "../../public/icons/user-solid.svg";
 import Link from "next/link";
 import { User } from "@/types";
 
@@ -16,12 +18,14 @@ const MyPages: FC<MyPagesProps> = ({ handleLogout, sessionDetails }) => {
   };
   return (
     <div className="relative z-10">
-      <button
-        className="order-last col-start-5 flex justify-end mr-10 mt-6 text-xl font-semibold"
-        onClick={toggleDropdown}>
-        {sessionDetails.name}
-        <RiArrowDownSLine className="ml-1 mt-1" />
-      </button>
+      <div className="flex items-center gap-2">
+        <Image src={userIcon} alt="user icon" width={16} />
+        <button
+          className="flex justify-end text-lg font-semibold"
+          onClick={toggleDropdown}>
+          {sessionDetails.name} <RiArrowDownSLine className="ml-1 mt-1" />
+        </button>
+      </div>
       {isOpen && (
         <div className="absolute right-30 mt-2 bg-container-color rounded shadow-md">
           <Link
