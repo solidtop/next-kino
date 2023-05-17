@@ -1,17 +1,28 @@
 import { FC } from "react";
 import { Movie, Screening } from "@/types";
+import Link from "next/link";
 
-const MovieDetails:FC<Movie> = ({ movieDetails }) => {
-
+const MovieDetails: FC<Movie> = ({ movieDetails }) => {
   return (
-    <ul>
-      <li>
-        <h3>{movieDetails.attributes.title}</h3>
-        <img className="block w-40" src={movieDetails.attributes.image.url} alt="" />
-        <p>{movieDetails.attributes.intro}</p>
+   <>
+    <div className="w-full h-10">
+      <Link href="/" className="block p-1 mx-5 h-7 w-10 bg-btn-primary-color rounded-lg text-sm text-center">Back</Link>
+    </div>
+    <div>
+      <li className="flex">
+        <img
+          className="w-80  mx-5"
+          src={movieDetails.attributes.image.url}
+          
+        />
+        <div className="flex flex-col">
+          <h3 className="text-xl ">{movieDetails.attributes.title}</h3>
+          <p>{movieDetails.attributes.intro}</p>
+        </div>
       </li>
-    </ul>
+    </div>
+   </>
+   
   );
-}
+};
 export default MovieDetails;
-

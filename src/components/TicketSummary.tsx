@@ -1,6 +1,7 @@
-import { BookingDetails, Movie, Screening, Ticket } from "@/types";
+import { BookingDetails } from "@/types";
 import formatDate from "@/utils/formatting";
 import { FC } from "react";
+import Image from "next/image";
 
 type TicketSummaryProps = {
   bookingDetails: BookingDetails;
@@ -12,10 +13,12 @@ const TicketSummary: FC<TicketSummaryProps> = ({ bookingDetails }) => {
 
   return (
     <div className="flex flex-col sm:flex-row gap-4 bg-container-color rounded p-4">
-      <img
+      <Image
         className="w-24 sm:w-auto sm:h-44 rounded"
         src={movie.attributes.image.url}
         alt={movie.attributes.title + " poster"}
+        width={70}
+        height={70}
       />
       <div className="">
         <ul>

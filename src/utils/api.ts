@@ -71,8 +71,13 @@ export async function getScreenings() : Promise<Screening[]> {
   return payload;
 }
 // GET screening with specific id
-export async function getScreening(id: string): Promise<Screening> {
+export async function getScreeningById(id: string): Promise<Screening> {
   const res = await fetch(API_URL + `/screenings?filters[movie]=` +id + `&sort[start_time]=asc`);
+  const payload = await res.json();
+  return payload.data;
+}
+export async function getScreening(id: string): Promise<Screening> {
+  const res = await fetch(API_URL + `/screenings/${id}?populate=movie`);
   const payload = await res.json();
   return payload.data;
 }

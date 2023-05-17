@@ -53,13 +53,15 @@ export default function PaymentPage() {
     cardNumber: string,
     ccv: string,
     cardYear: number,
-    cardMonth: number
+    cardMonth: number,
+    bookingDetails: BookingDetails
   ) => {
     const paymentDetails = {
       cardNumber,
       ccv,
       cardYear,
       cardMonth,
+      bookingDetails,
     };
 
     try {
@@ -94,7 +96,7 @@ export default function PaymentPage() {
       <form
         onSubmit={(ev) => {
           ev.preventDefault();
-          handlePayment(cardNumber, ccv, cardYear, cardMonth);
+          handlePayment(cardNumber, ccv, cardYear, cardMonth, bookingDetails);
         }}
         className="mt-10 mx-auto h-[800px] w-2/5">
         {error && <ErrorMessage error={error} setError={setError} />}

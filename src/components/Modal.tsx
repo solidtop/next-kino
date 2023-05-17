@@ -54,7 +54,7 @@ const Modal: FC<ModalProps> = ({ setShowModal, setIsLoggedIn }) => {
       // Reset form inputs and close the modal
       setEmail("");
       setPassword("");
-      setIsLoggedIn(true)
+      setIsLoggedIn(true);
       setShowModal(false);
     } catch (error) {
       // Handle any login errors
@@ -74,8 +74,7 @@ const Modal: FC<ModalProps> = ({ setShowModal, setIsLoggedIn }) => {
           <div className="mb-6">
             <label
               htmlFor="email"
-              className="block text-gray-700 font-medium mb-2"
-            >
+              className="block text-gray-700 font-medium mb-2">
               E-post
             </label>
             <input
@@ -95,8 +94,7 @@ const Modal: FC<ModalProps> = ({ setShowModal, setIsLoggedIn }) => {
           <div className="mb-6">
             <label
               htmlFor="password"
-              className="block text-gray-700 font-medium mb-2"
-            >
+              className="block text-gray-700 font-medium mb-2">
               Password
             </label>
             <input
@@ -117,13 +115,12 @@ const Modal: FC<ModalProps> = ({ setShowModal, setIsLoggedIn }) => {
           </div>
           <button
             type="submit"
-            className="w-full bg-container-color text-white py-2 px-4 rounded-lg font-medium"
-          >
+            className="w-full bg-container-color text-white py-2 px-4 rounded-lg font-medium">
             Login
           </button>
         </form>
         <p className="mt-4 text-center text-gray-700">
-          Don't have an account? Please{" "}
+          Don&apos;t have an account? Please{" "}
           <Link href="/register" className="text-blue-700">
             Register
           </Link>
@@ -131,8 +128,7 @@ const Modal: FC<ModalProps> = ({ setShowModal, setIsLoggedIn }) => {
         <div className="text-center mt-4">
           <button
             onClick={() => setShowModal(false)}
-            className="bg-transparent border border-blue-500 text-blue-500 py-2 px-4 rounded-lg font-medium"
-          >
+            className="bg-transparent border border-blue-500 text-blue-500 py-2 px-4 rounded-lg font-medium">
             Close
           </button>
         </div>
