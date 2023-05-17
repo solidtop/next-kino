@@ -34,7 +34,14 @@ export default async function MyPages() {
   const jwt = allCookies.get("u-session")?.value;
 
   if (!jwt) {
-    return null;
+    return (
+      <>
+        <Header />
+        <div className="mx-auto sm:w-[600px] w-96 bg-container-color rounded p-4 mt-20">
+          <p className="text-3xl text-center">Logga in för att se denna sida</p>
+        </div>
+      </>
+    );
   }
 
   try {
@@ -65,7 +72,7 @@ export default async function MyPages() {
     );
   } catch (err) {
     return (
-      <div>
+      <div className="flex flex-col sm:flex-row gap-4 bg-container-color rounded p-4 mt-4">
         <h1>Invalid session!</h1>
         <p>Did you tamper with your cookie?</p>
       </div>
