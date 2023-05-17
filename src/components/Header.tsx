@@ -10,7 +10,10 @@ import { getUserSession } from "@/utils/api";
 import { useRouter } from "next/navigation";
 
 const Header: FC<any> = () => {
-  const [userDetails, setUserDetails] = useState<User>();
+  const [userDetails, setUserDetails] = useState<User>({
+    email: null,
+    name: null,
+  });
   const [showModal, setShowModal] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const router = useRouter();

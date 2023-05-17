@@ -1,5 +1,6 @@
 import { BookingDetails } from "@/types";
 import { Dispatch, FC, SetStateAction, useState } from "react";
+import Modal from "./Modal";
 
 type DetailsFormProps = {
   bookingDetails: BookingDetails;
@@ -11,6 +12,7 @@ const DetailsForm: FC<DetailsFormProps> = ({
   setBookingDetails,
 }) => {
   const [email, setEmail] = useState<string>(bookingDetails.email || "");
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   return (
     <div className="p-4 bg-container-color rounded">
@@ -34,9 +36,10 @@ const DetailsForm: FC<DetailsFormProps> = ({
       <button
         type="button"
         className="block w-full py-2 rounded-full bg-btn-primary-color hover:brightness-110 text-center font-semibold"
-      >
+        onClick={() => setShowModal(true)}>
         Logga in / Bli medlem
       </button>
+      {showModal && <Modal setShowModal={setShowModal} />}
     </div>
   );
 };

@@ -6,8 +6,8 @@ export async function GET(res: NextRequest) {
   const jwt = res.cookies.get("u-session")?.value;
 
   const emptyResponse: User = {
-    name: "",
-    email: "",
+    name: null,
+    email: null,
   };
 
   if (!jwt) {
