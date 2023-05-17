@@ -8,8 +8,13 @@ export async function GET(res: NextRequest) {
 
   const response = new NextResponse();
 
+  const emptyResponse: User = {
+    name: "",
+    email: "",
+  };
+
   if (!jwt) {
-    return null;
+    return NextResponse.json(emptyResponse);
   }
 
   try {

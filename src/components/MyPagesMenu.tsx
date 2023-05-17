@@ -5,17 +5,19 @@ import userIcon from "../../public/icons/user-solid.svg";
 import Link from "next/link";
 import { User } from "@/types";
 
-interface MyPagesProps {
+interface MyPagesMenuProps {
   handleLogout: () => void;
   sessionDetails: User;
+  isOpen: boolean;
+  toggleDropdown: () => void;
 }
 
-const MyPages: FC<MyPagesProps> = ({ handleLogout, sessionDetails }) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  const toggleDropdown = (): void => {
-    setIsOpen(!isOpen);
-  };
+const MyPagesMenu: FC<MyPagesMenuProps> = ({
+  handleLogout,
+  sessionDetails,
+  toggleDropdown,
+  isOpen,
+}) => {
   return (
     <div className="relative z-10">
       <div className="flex items-center gap-2">
@@ -44,4 +46,4 @@ const MyPages: FC<MyPagesProps> = ({ handleLogout, sessionDetails }) => {
   );
 };
 
-export default MyPages;
+export default MyPagesMenu;

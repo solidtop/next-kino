@@ -5,13 +5,13 @@ import { User } from "@/types";
 export async function GET(res: NextRequest) {
   const jwt = res.cookies.get("u-session")?.value;
 
-  const response: User = {
+  const emptyResponse: User = {
     name: "",
     email: "",
   };
 
   if (!jwt) {
-    return NextResponse.json(response);
+    return NextResponse.json(emptyResponse);
   }
 
   try {
