@@ -17,8 +17,7 @@ import Loader from "@/components/Loader";
 import { BookingDetails, User } from "@/types";
 
 export default function Content() {
-
-   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
   const [bookingDetails, setBookingDetails] = useState<BookingDetails | null>(
     null
@@ -31,7 +30,6 @@ export default function Content() {
   const params = useParams();
   const { push } = useRouter();
 
-
   // getUser from localstorage
 
   useEffect(() => {
@@ -39,7 +37,7 @@ export default function Content() {
     setUser(storedUser);
     setIsLoggedIn(!!storedUser.token);
   }, []);
-  
+
   let ticketQuantity: number;
   bookingDetails
     ? (ticketQuantity = getTicketsQuantity(bookingDetails.tickets))
@@ -153,7 +151,6 @@ export default function Content() {
 
   return (
     <>
-
       <div className="max-w-screen-xl mx-auto">
         <BackButton />
 
@@ -189,7 +186,7 @@ export default function Content() {
                 <section id="details">
                   <NumericHeader number="3" title="Fyll i detaljer" />
 
-                  {!isLoggedIn &&
+                  {!isLoggedIn && (
                     <DetailsForm
                       bookingDetails={bookingDetails}
                       setBookingDetails={setBookingDetails}
@@ -197,7 +194,6 @@ export default function Content() {
                   )}
 
                   {isLoggedIn && <UserDetails user={user} />}
-
                 </section>
 
                 <section id="payment">
