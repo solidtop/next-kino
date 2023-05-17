@@ -12,8 +12,8 @@ const BookingSummary: FC<BookingSummaryProps> = ({ bookingDetails }) => {
   const movie = screening.attributes.movie.data;
 
   return (
-    <div className="w-full px-4 pt-4 relative md:fixed md:max-w-screen-xl md:top-0 md:left-1/2 md:-translate-x-1/2">
-      <aside className="bg-container-color rounded md:absolute m-0 left-2/3 top-36 right-4 lg:left-3/4 p-4">
+    <div className="w-full px-4 py-4 relative md:p-0 md:sticky top-0">
+      <aside className="bg-container-color rounded md:absolute m-0 left-2/3 top-4 right-4 lg:left-3/4 p-4">
         <div className="flex justify-start items-center gap-x-4">
           <Image
             className="w-24 rounded"

@@ -9,7 +9,7 @@ type MovieCardProps = {
 
 const MovieCard: FC<MovieCardProps> = ({ movie }) => {
   return (
-    <li className="bg-container-color rounded overflow-hidden shadow-xl p-3 relative transition-transform hover:-translate-y-1">
+    <li className="bg-container-color rounded overflow-hidden shadow-xl p-3 relative transition-all hover:-translate-y-1 hover:bg-white hover:bg-opacity-10">
       <Link
         className="absolute top-0 bottom-0 left-0 right-0"
         href={"/movies/" + movie.id}

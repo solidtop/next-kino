@@ -1,5 +1,6 @@
 import MovieList from "@/components/MovieList";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import * as api from "@/utils/api";
 
 export default async function Home() {
@@ -8,9 +9,9 @@ export default async function Home() {
   const loggedIn: boolean = false;
   return (
     <main>
-      <Header loggedIn={loggedIn} />
+      <Header />
       {movies && <MovieList movies={movies}></MovieList>}
-     
+      <Footer />
     </main>
   );
 }

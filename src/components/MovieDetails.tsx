@@ -17,7 +17,7 @@ const MovieDetails: FC<Movie> = ({ movieDetails }) => {
         />
         <div className="flex flex-col">
           <h3 className="text-xl ">{movieDetails.attributes.title}</h3>
-          <p>{movieDetails.attributes.intro}</p>
+          <p className="mt-5 w-2/4">{movieDetails.attributes.intro}</p>
         </div>
       </li>
     </div>
