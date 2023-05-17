@@ -7,14 +7,14 @@ import { User } from "@/types";
 
 interface MyPagesMenuProps {
   handleLogout: () => void;
-  sessionDetails: User;
+  userDetails: User;
   isOpen: boolean;
   toggleDropdown: () => void;
 }
 
 const MyPagesMenu: FC<MyPagesMenuProps> = ({
   handleLogout,
-  sessionDetails,
+  userDetails,
   toggleDropdown,
   isOpen,
 }) => {
@@ -25,7 +25,7 @@ const MyPagesMenu: FC<MyPagesMenuProps> = ({
         <button
           className="flex justify-end text-lg font-semibold"
           onClick={toggleDropdown}>
-          {sessionDetails.name} <RiArrowDownSLine className="ml-1 mt-1" />
+          {userDetails.name} <RiArrowDownSLine className="ml-1 mt-1" />
         </button>
       </div>
       {isOpen && (

@@ -6,14 +6,12 @@ import Image from "next/image";
 import logo from "../../public/icons/biospegeln.png";
 import LoginButton from "./LoginButton";
 import { User } from "@/types";
-import { useRouter } from "next/navigation";
 
 const Header: FC<any> = () => {
-  const [sessionDetails, setSessionDetails] = useState<User>();
+  const [userDetails, setUserDetails] = useState<User>();
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const router = useRouter();
 
   useEffect(() => {
     getUserSession();
@@ -29,14 +27,13 @@ const Header: FC<any> = () => {
       });
 
       const payload = await res.json();
-      setSessionDetails(payload);
+      setUserDetails(payload);
     } catch (err) {
       console.log(err);
     }
   };
 
   const handleLogout = (): void => {
-    console.log("TEST");
     const endUserSession = async () => {
       try {
         const res = await fetch("/api/auth/logout", {
@@ -45,8 +42,11 @@ const Header: FC<any> = () => {
             "Content-Type": "application/json",
           },
         });
-        const payload = await res.json();
-        setSessionDetails(payload);
+        if (res.ok) {
+          setUserDetails({ email: "", name: "" });
+        } else {
+          throw new Error("Logout failed");
+        }
       } catch (err) {
         console.log(err);
       }
@@ -61,7 +61,7 @@ const Header: FC<any> = () => {
   };
 
   return (
-    sessionDetails && (
+    userDetails && (
       <header className="flex justify-between items-center gap-4 container mx-auto my-4 px-4 pb-4 max-w-6xl border-b-2 border-white border-opacity-10">
         <Link className="order-first justify-start" href="/">
           <Image src={logo} alt="Spegeln Logo" className="w-24" />
@@ -79,10 +79,10 @@ const Header: FC<any> = () => {
           </li>
         </ul>
 
-        {sessionDetails.name !== "" ? (
+        {userDetails.name !== "" ? (
           <MyPagesMenu
             handleLogout={handleLogout}
-            sessionDetails={sessionDetails}
+            userDetails={userDetails}
             isOpen={isOpen}
             toggleDropdown={toggleDropdown}
           />
