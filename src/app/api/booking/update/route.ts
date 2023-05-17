@@ -4,6 +4,7 @@ import {
   isValidBookingDetails,
   screeningHasStarted,
   getAmountTotal,
+  isEqual,
 } from "@/utils/validation";
 import {
   RES_INVALID_REQUEST,
@@ -32,6 +33,11 @@ export async function POST(req: NextRequest) {
   const body: BookingDetails = await req.json();
   if (!isValidBookingDetails(body, bookingDetails)) {
     return errorResponse(RES_INVALID_REQUEST.message, RES_INVALID_REQUEST.code);
+  }
+
+  if (!isEqual(body.tickets, bookingDetails.tickets)) {
+    /* Reset seats when changing ticket quantity */
+    body.seats = [];
   }
 
   body.pricing.amountTotal = getAmountTotal(body.tickets);

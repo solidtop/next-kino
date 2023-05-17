@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
   const session = getBookingSession();
   if (session) {
     const bookingDetails = loadBookingSession(session);
-    if (bookingDetails.screening.id === screeningId) {
+    if (bookingDetails.screening.id == screeningId) {
       const screening = await api.getScreening(screeningId);
       if (screeningHasStarted(screening)) {
         return errorResponse(
