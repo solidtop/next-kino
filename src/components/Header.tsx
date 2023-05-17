@@ -7,8 +7,9 @@ import logo from "../../public/icons/biospegeln.png";
 import LoginButton from "./LoginButton";
 import { User } from "@/types";
 
-const Header: FC = () => {
+const Header: FC<any> = () => {
   const [sessionDetails, setSessionDetails] = useState<User>();
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   useEffect(() => {
     const getUserSession = async () => {
@@ -28,7 +29,7 @@ const Header: FC = () => {
     };
 
     getUserSession();
-  }, []);
+  }, [showModal]);
 
   const handleLogout = (): void => {
     const endUserSession = async () => {
@@ -51,7 +52,6 @@ const Header: FC = () => {
     endUserSession();
   };
 
-  console.log(sessionDetails);
   return (
     sessionDetails && (
       <header className="flex justify-between items-center gap-4 container mx-auto my-4 px-4 pb-4 max-w-6xl border-b-2 border-white border-opacity-10">
@@ -77,7 +77,7 @@ const Header: FC = () => {
             sessionDetails={sessionDetails}
           />
         ) : (
-          <LoginButton />
+          <LoginButton showModal={showModal} setShowModal={setShowModal} />
         )}
       </header>
     )
