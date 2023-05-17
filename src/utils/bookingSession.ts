@@ -1,19 +1,43 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import JWT from "jsonwebtoken";
+import JWT, { JwtPayload } from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
-import { BookingDetails, Screening } from "@/types";
+import { BookingDetails, Screening, UserSessionObject } from "@/types";
 
-export function getBookingSession(): string | undefined {
-  return cookies().get("b-session")?.value;
+export function getBookingSession(): string[] {
+  const payload: string[] = [];
+  const bSession: string | undefined = cookies().get("b-session")?.value;
+  const uSession: string | undefined = cookies().get("u-session")?.value;
+
+  bSession ? payload.push(bSession) : undefined;
+  if (uSession) {
+    payload.push(uSession);
+  }
+
+  return payload;
 }
 
-export function loadBookingSession(session: string): BookingDetails {
+export function loadBookingSession(session: string[]): BookingDetails {
   const key = process.env.BOOKING_KEY as string;
-  const payload = JWT.verify(session, key);
-  const bookingDetails: BookingDetails =
-    typeof payload == "object" ? payload.bookingDetails : null;
-  return bookingDetails;
+  const userKey = process.env.JWT_SECRET as string;
+  const payload = JWT.verify(session[0], key);
+
+  if (session.length === 2) {
+    const userPayload = JWT.verify(session[1], userKey);
+
+    const bookingDetails: BookingDetails =
+      typeof payload == "object"
+        ? { ...payload.bookingDetails, email: userPayload.sessionObject.email }
+        : null;
+
+    console.log(bookingDetails);
+    return bookingDetails;
+  } else {
+    const bookingDetails: BookingDetails =
+      typeof payload == "object" ? payload.bookingDetails : null;
+    console.log(bookingDetails);
+    return bookingDetails;
+  }
 }
 
 export function saveBookingSession(

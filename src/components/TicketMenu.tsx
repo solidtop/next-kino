@@ -1,13 +1,18 @@
 import { FC, useState, useEffect } from "react";
 import TicketItem from "./TicketItem";
-import { BookingDetails, Ticket } from "@/types";
+import { BookingDetails, Ticket, User } from "@/types";
 
 type TicketMenuProps = {
   bookingDetails: BookingDetails;
   onUpdate: (bookingDetails: BookingDetails) => void;
+  userSession: User;
 };
 
-const TicketMenu: FC<TicketMenuProps> = ({ bookingDetails, onUpdate }) => {
+const TicketMenu: FC<TicketMenuProps> = ({
+  bookingDetails,
+  onUpdate,
+  userSession,
+}) => {
   const [tickets, setTickets] = useState<Ticket[]>(bookingDetails.tickets);
 
   useEffect(() => {
@@ -20,7 +25,11 @@ const TicketMenu: FC<TicketMenuProps> = ({ bookingDetails, onUpdate }) => {
     );
 
     setTickets(updatedTickets);
-    onUpdate({ ...bookingDetails, tickets: updatedTickets });
+    onUpdate({
+      ...bookingDetails,
+      tickets: updatedTickets,
+      email: userSession.email,
+    });
   };
 
   return (

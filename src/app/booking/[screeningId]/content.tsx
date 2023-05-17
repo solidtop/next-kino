@@ -88,6 +88,7 @@ export default function Content() {
 
     // Set delay before sending request (prevents request spam)
     timer.current = window.setTimeout(async () => {
+      handleSession();
       try {
         const res = await fetch("/api/booking/update", {
           method: "POST",
@@ -102,7 +103,6 @@ export default function Content() {
           return;
         }
 
-        handleSession();
         setBookingDetails(payload);
 
         if (getTicketsQuantity(payload.tickets) !== ticketQuantity) {
@@ -185,6 +185,7 @@ export default function Content() {
                   <TicketMenu
                     bookingDetails={bookingDetails}
                     onUpdate={handleUpdate}
+                    userSession={userSession}
                   />
                 </section>
                 <section id="seating">
@@ -193,6 +194,7 @@ export default function Content() {
                     bookingDetails={bookingDetails}
                     seatingDetails={seatingDetails}
                     onUpdate={handleUpdate}
+                    userSession={userSession}
                   />
                   <SeatingLegend />
                 </section>

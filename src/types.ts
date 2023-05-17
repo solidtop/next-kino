@@ -70,3 +70,9 @@ export type SeatObject = {
   seat: number;
   state: string;
 };
+
+export type UserSessionObject = {
+  id: string;
+  name: string;
+  email: string;
+};

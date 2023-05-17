@@ -3,19 +3,21 @@ import SelectedSeats from "./SelectedSeats";
 import Seats from "./Seats";
 import FilmScreen from "./FilmScreen";
 import { populateTheater } from "@/utils/seatingTemplate";
-import { BookingDetails, SeatObject } from "@/types";
+import { BookingDetails, SeatObject, User } from "@/types";
 import { getTicketsQuantity, getSelectedSeats } from "@/utils/validation";
 
 type SeatingChartProps = {
   bookingDetails: BookingDetails;
   seatingDetails: Array<number>;
   onUpdate: (bookingDetails: BookingDetails) => void;
+  userSession: User;
 };
 
 const SeatingChart: FC<SeatingChartProps> = ({
   bookingDetails,
   seatingDetails,
   onUpdate,
+  userSession,
 }) => {
   const [selectedSeats, setSelectedSeats] = useState<number>(0);
   const [currSeats, setCurrSeats] = useState<Array<SeatObject>>(
@@ -89,7 +91,11 @@ const SeatingChart: FC<SeatingChartProps> = ({
       return;
     }
     if (!occupiedSeats.includes(newSeatNum)) {
-      onUpdate({ ...bookingDetails, seats: bookingSeats });
+      onUpdate({
+        ...bookingDetails,
+        seats: bookingSeats,
+        email: userSession.email,
+      });
     }
   };
   return (
@@ -100,8 +106,7 @@ const SeatingChart: FC<SeatingChartProps> = ({
         selectedSeats={selectedSeats}
       />
       <ul
-        className={`grid grid-cols-12 gap-2 mb-4 justify-center mx-auto max-w-[480px]`}
-      >
+        className={`grid grid-cols-12 gap-2 mb-4 justify-center mx-auto max-w-[480px]`}>
         {currSeats.map((seat: SeatObject) => {
           return (
             <Seats
