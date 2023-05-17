@@ -84,7 +84,6 @@ export default function Content() {
   }, []);
 
   const handleUpdate = (bookingDetails: BookingDetails): void => {
-    handleSession();
     clearTimeout(timer.current);
 
     // Set delay before sending request (prevents request spam)
@@ -102,6 +101,8 @@ export default function Content() {
           handleError(payload.error);
           return;
         }
+
+        handleSession();
         setBookingDetails(payload);
 
         if (getTicketsQuantity(payload.tickets) !== ticketQuantity) {
