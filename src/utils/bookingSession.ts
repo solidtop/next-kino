@@ -30,12 +30,11 @@ export function loadBookingSession(session: string[]): BookingDetails {
         ? { ...payload.bookingDetails, email: userPayload.sessionObject.email }
         : null;
 
-    console.log(bookingDetails);
     return bookingDetails;
   } else {
     const bookingDetails: BookingDetails =
       typeof payload == "object" ? payload.bookingDetails : null;
-    console.log(bookingDetails);
+
     return bookingDetails;
   }
 }
