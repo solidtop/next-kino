@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import JWT, { JwtPayload } from "jsonwebtoken";
+import JWT from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
-import { BookingDetails, Screening, UserSessionObject } from "@/types";
+import { BookingDetails, Screening } from "@/types";
 
 export function getBookingSession(): string[] {
   const payload: string[] = [];
