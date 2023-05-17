@@ -7,8 +7,8 @@ export async function GET(res: NextRequest) {
   const response = new NextResponse();
 
   const emptyResponse: User = {
-    name: "",
-    email: "",
+    name: null,
+    email: null,
   };
 
   if (!jwt) {

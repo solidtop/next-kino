@@ -42,7 +42,7 @@ const Header: FC<any> = () => {
           },
         });
         if (res.ok) {
-          setUserDetails({ email: "", name: "" });
+          setUserDetails({ email: null, name: null });
         } else {
           throw new Error("Logout failed");
         }
@@ -78,7 +78,7 @@ const Header: FC<any> = () => {
           </li>
         </ul>
 
-        {userDetails.name !== "" ? (
+        {userDetails.name !== null ? (
           <MyPagesMenu
             handleLogout={handleLogout}
             userDetails={userDetails}
