@@ -4,26 +4,15 @@ import JWT from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
 import { BookingDetails, Screening } from "@/types";
 
-export function getBookingSession(): string[] {
-  const payload: string[] = [];
-  const bSession: string | undefined = cookies().get("b-session")?.value;
-  const uSession: string | undefined = cookies().get("u-session")?.value;
-
-  bSession ? payload.push(bSession) : undefined;
-  if (uSession) {
-    payload.push(uSession);
-  }
-
-  return payload;
+export function getBookingSession(): string | undefined {
+  return cookies().get("b-session")?.value;
 }
 
 export function loadBookingSession(session: string): BookingDetails {
   const key = process.env.BOOKING_KEY as string;
   const payload = JWT.verify(session, key);
-
   const bookingDetails: BookingDetails =
     typeof payload == "object" ? payload.bookingDetails : null;
-
   return bookingDetails;
 }
 
