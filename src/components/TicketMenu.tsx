@@ -1,6 +1,6 @@
 import { FC, useState, useEffect } from "react";
 import TicketItem from "./TicketItem";
-import { BookingDetails, Ticket, User } from "@/types";
+import { BookingDetails, Ticket } from "@/types";
 
 type TicketMenuProps = {
   bookingDetails: BookingDetails;
@@ -20,10 +20,7 @@ const TicketMenu: FC<TicketMenuProps> = ({ bookingDetails, onUpdate }) => {
     );
 
     setTickets(updatedTickets);
-    onUpdate({
-      ...bookingDetails,
-      tickets: updatedTickets,
-    });
+    onUpdate({ ...bookingDetails, tickets: updatedTickets });
   };
 
   return (

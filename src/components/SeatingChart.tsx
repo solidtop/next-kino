@@ -3,7 +3,7 @@ import SelectedSeats from "./SelectedSeats";
 import Seats from "./Seats";
 import FilmScreen from "./FilmScreen";
 import { populateTheater } from "@/utils/seatingTemplate";
-import { BookingDetails, SeatObject, User } from "@/types";
+import { BookingDetails, SeatObject } from "@/types";
 import { getTicketsQuantity, getSelectedSeats } from "@/utils/validation";
 
 type SeatingChartProps = {
@@ -89,10 +89,7 @@ const SeatingChart: FC<SeatingChartProps> = ({
       return;
     }
     if (!occupiedSeats.includes(newSeatNum)) {
-      onUpdate({
-        ...bookingDetails,
-        seats: bookingSeats,
-      });
+      onUpdate({ ...bookingDetails, seats: bookingSeats });
     }
   };
   return (
