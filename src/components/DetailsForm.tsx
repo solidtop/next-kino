@@ -1,5 +1,6 @@
 import { BookingDetails } from "@/types";
 import { Dispatch, FC, SetStateAction, useState } from "react";
+import Link from "next/link";
 
 type DetailsFormProps = {
   bookingDetails: BookingDetails;
@@ -31,12 +32,12 @@ const DetailsForm: FC<DetailsFormProps> = ({
         required
       />
       <p className="my-4">Eller</p>
-      <a
+      <Link
         href={"/myPages"}
         type="button"
         className="block w-full py-2 rounded-full bg-btn-primary-color hover:brightness-110 text-center font-semibold">
         Logga in / Bli medlem
-      </a>
+      </Link>
     </div>
   );
 };
