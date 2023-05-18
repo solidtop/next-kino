@@ -16,6 +16,8 @@ import {
   saveBookingSession,
   successResponse,
 } from "@/utils/bookingSession";
+import JWT from "jsonwebtoken";
+import { cookies } from "next/headers";
 
 export async function POST(req: NextRequest) {
   const session = getBookingSession();
@@ -38,6 +40,14 @@ export async function POST(req: NextRequest) {
 
   if (!body.tickets.some((ticket) => ticket.quantity > 0)) {
     return errorResponse("Inga biljetter valda", 400);
+  }
+
+  /* Checks if there is a user email */
+  const uSession = cookies().get("u-session")?.value;
+  if (uSession) {
+    const key = process.env.JWT_SECRET as string;
+    const userDetails: any = JWT.verify(uSession, key);
+    body.email = userDetails.sessionObject.email;
   }
 
   if (!isValidEmail(body.email || "")) {

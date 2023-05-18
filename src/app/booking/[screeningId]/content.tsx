@@ -34,10 +34,10 @@ export default function Content() {
   const { push } = useRouter();
 
   useEffect(() => {
-    handleSession();
+    handleUserSession();
   }, []);
 
-  const handleSession = async () => {
+  const handleUserSession = async () => {
     try {
       const payload = await getUserSession();
       if (userSession.name == payload.name) {
@@ -88,7 +88,7 @@ export default function Content() {
 
     // Set delay before sending request (prevents request spam)
     timer.current = window.setTimeout(async () => {
-      handleSession();
+      handleUserSession();
       try {
         const res = await fetch("/api/booking/update", {
           method: "POST",
@@ -185,7 +185,6 @@ export default function Content() {
                   <TicketMenu
                     bookingDetails={bookingDetails}
                     onUpdate={handleUpdate}
-                    userSession={userSession}
                   />
                 </section>
                 <section id="seating">
@@ -194,7 +193,6 @@ export default function Content() {
                     bookingDetails={bookingDetails}
                     seatingDetails={seatingDetails}
                     onUpdate={handleUpdate}
-                    userSession={userSession}
                   />
                   <SeatingLegend />
                 </section>

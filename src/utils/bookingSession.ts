@@ -17,26 +17,14 @@ export function getBookingSession(): string[] {
   return payload;
 }
 
-export function loadBookingSession(session: string[]): BookingDetails {
+export function loadBookingSession(session: string): BookingDetails {
   const key = process.env.BOOKING_KEY as string;
-  const userKey = process.env.JWT_SECRET as string;
-  const payload = JWT.verify(session[0], key);
+  const payload = JWT.verify(session, key);
 
-  if (session.length === 2) {
-    const userPayload: any = JWT.verify(session[1], userKey);
+  const bookingDetails: BookingDetails =
+    typeof payload == "object" ? payload.bookingDetails : null;
 
-    const bookingDetails: BookingDetails =
-      typeof payload == "object"
-        ? { ...payload.bookingDetails, email: userPayload.sessionObject.email }
-        : null;
-
-    return bookingDetails;
-  } else {
-    const bookingDetails: BookingDetails =
-      typeof payload == "object" ? payload.bookingDetails : null;
-
-    return bookingDetails;
-  }
+  return bookingDetails;
 }
 
 export function saveBookingSession(

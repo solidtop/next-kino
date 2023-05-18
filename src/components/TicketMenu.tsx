@@ -5,14 +5,9 @@ import { BookingDetails, Ticket, User } from "@/types";
 type TicketMenuProps = {
   bookingDetails: BookingDetails;
   onUpdate: (bookingDetails: BookingDetails) => void;
-  userSession: User;
 };
 
-const TicketMenu: FC<TicketMenuProps> = ({
-  bookingDetails,
-  onUpdate,
-  userSession,
-}) => {
+const TicketMenu: FC<TicketMenuProps> = ({ bookingDetails, onUpdate }) => {
   const [tickets, setTickets] = useState<Ticket[]>(bookingDetails.tickets);
 
   useEffect(() => {
@@ -28,7 +23,6 @@ const TicketMenu: FC<TicketMenuProps> = ({
     onUpdate({
       ...bookingDetails,
       tickets: updatedTickets,
-      email: userSession.email,
     });
   };
 

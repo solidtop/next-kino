@@ -10,14 +10,12 @@ type SeatingChartProps = {
   bookingDetails: BookingDetails;
   seatingDetails: Array<number>;
   onUpdate: (bookingDetails: BookingDetails) => void;
-  userSession: User;
 };
 
 const SeatingChart: FC<SeatingChartProps> = ({
   bookingDetails,
   seatingDetails,
   onUpdate,
-  userSession,
 }) => {
   const [selectedSeats, setSelectedSeats] = useState<number>(0);
   const [currSeats, setCurrSeats] = useState<Array<SeatObject>>(
@@ -94,7 +92,6 @@ const SeatingChart: FC<SeatingChartProps> = ({
       onUpdate({
         ...bookingDetails,
         seats: bookingSeats,
-        email: userSession.email,
       });
     }
   };
