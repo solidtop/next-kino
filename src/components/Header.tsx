@@ -7,6 +7,12 @@ import logo from "../../public/icons/biospegeln.png";
 import LoginButton from "./LoginButton";
 import { User } from "@/types";
 import { getUserSession } from "@/utils/api";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  logIn,
+  logOut,
+  selectValue,
+} from "@/app/GlobalRedux/Features/userSlice";
 import { useRouter } from "next/navigation";
 
 const Header: FC<any> = () => {
@@ -14,16 +20,21 @@ const Header: FC<any> = () => {
     email: null,
     name: null,
   });
+
+  const loggedIn = useSelector(selectValue);
+  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const router = useRouter();
+  const { push } = useRouter();
 
   useEffect(() => {
     handleSession();
   }, [showModal]);
 
   useEffect(() => {
-    router.refresh();
+    if (userDetails.name !== null) {
+      dispatch(logIn());
+    }
   }, [userDetails]);
 
   const handleSession = async () => {
@@ -46,6 +57,8 @@ const Header: FC<any> = () => {
         });
         if (res.ok) {
           setUserDetails({ email: null, name: null });
+          dispatch(logOut());
+          push("/");
         } else {
           throw new Error("Logout failed");
         }
@@ -81,7 +94,7 @@ const Header: FC<any> = () => {
           </li>
         </ul>
 
-        {userDetails.name !== null ? (
+        {loggedIn ? (
           <MyPagesMenu
             handleLogout={handleLogout}
             userDetails={userDetails}

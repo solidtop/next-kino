@@ -16,6 +16,9 @@ import PaymentSection from "@/components/PaymentSection";
 import Loader from "@/components/Loader";
 import { BookingDetails, User } from "@/types";
 import { getUserSession } from "@/utils/api";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/app/GlobalRedux/store";
+import { logIn } from "@/app/GlobalRedux/Features/userSlice";
 
 export default function Content() {
   const [bookingDetails, setBookingDetails] = useState<BookingDetails | null>(
@@ -29,13 +32,15 @@ export default function Content() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const timer = useRef<number | undefined>(undefined);
+  const loggedIn = useSelector((state: RootState) => state.user.loggedIn);
+  const dispatch = useDispatch();
 
   const params = useParams();
   const { push } = useRouter();
 
   useEffect(() => {
     handleUserSession();
-  }, []);
+  }, [loggedIn]);
 
   const handleUserSession = async () => {
     try {
@@ -81,6 +86,9 @@ export default function Content() {
 
     loadBookingDetails();
     loadSeating(params.screeningId);
+    if (userSession.name !== null) {
+      dispatch(logIn());
+    }
   }, []);
 
   const handleUpdate = (bookingDetails: BookingDetails): void => {
@@ -88,7 +96,6 @@ export default function Content() {
 
     // Set delay before sending request (prevents request spam)
     timer.current = window.setTimeout(async () => {
-      handleUserSession();
       try {
         const res = await fetch("/api/booking/update", {
           method: "POST",

@@ -3,6 +3,8 @@ import { useState, FC, FormEvent, Dispatch, SetStateAction } from "react";
 import Link from "next/link";
 import { loginUser } from "@/utils/api";
 import { LoginCredentials } from "@/types";
+import { useDispatch } from "react-redux";
+import { logIn } from "@/app/GlobalRedux/Features/userSlice";
 
 interface ModalProps {
   setShowModal: Dispatch<SetStateAction<boolean>>;
@@ -15,6 +17,7 @@ const Modal: FC<ModalProps> = ({ setShowModal }) => {
     email: "",
     password: "",
   });
+  const dispatch = useDispatch();
 
   const handleUserLogin = async (
     ev: FormEvent<HTMLFormElement>
@@ -53,6 +56,7 @@ const Modal: FC<ModalProps> = ({ setShowModal }) => {
       setEmail("");
       setPassword("");
       setShowModal(false);
+      dispatch(logIn());
     } catch (error) {
       // Handle any login errors
       setErrors((prevErrors) => ({

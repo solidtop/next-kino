@@ -1,10 +1,7 @@
 import Header from "@/components/Header";
 import UserInformation from "@/components/UserInformation";
-
-// import { useState, useEffect } from "react";
 import { Ticket } from "@/types";
 import { getMovies } from "@/utils/api";
-
 import { cookies } from "next/headers";
 import JWT from "jsonwebtoken";
 import connectDb from "@/utils/connectDb";
