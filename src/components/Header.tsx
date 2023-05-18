@@ -27,13 +27,13 @@ const Header: FC = () => {
 
       <ul className="hidden lg:flex flex-row text-lg font-semibold justify-center items-center gap-14">
         <li>
-          <Link href="/">Öppettider & Kontakt</Link>
+          <Link href="/information/contact">Öppettider & Kontakt</Link>
         </li>
         <li>
-          <Link href="/">Om Spegeln</Link>
+          <Link href="/information/about">Om Spegeln</Link>
         </li>
         <li>
-          <Link href="/">Biljettinfo</Link>
+          <Link href="/information/tickets">Biljettinfo</Link>
         </li>
       </ul>
 
