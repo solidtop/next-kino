@@ -67,7 +67,7 @@ const Modal: FC<ModalProps> = ({ setShowModal }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 mt-8">
+    <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="absolute inset-0 bg-black opacity-50"></div>
       <div className="bg-white rounded-lg p-8 max-w-md w-full relative">
         <h2 className="text-2xl font-bold mb-6 text-gray-700 ">Login</h2>
