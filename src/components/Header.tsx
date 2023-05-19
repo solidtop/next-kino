@@ -22,14 +22,6 @@ const Header: FC<any> = () => {
     handleSession();
   }, [showModal]);
 
-  /*
-  useEffect(() => {
-    if (userDetails.name !== null) {
-    }
-  }, [userDetails]);
-
-  */
-
   const handleSession = async () => {
     try {
       const payload = await getUserSession();
