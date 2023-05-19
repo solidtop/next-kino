@@ -28,8 +28,7 @@ const getMovieList = async () => {
 };
 
 export default async function MyPages() {
-  const allCookies = cookies();
-  const jwt = allCookies.get("u-session")?.value;
+  const jwt = cookies().get("u-session")?.value;
 
   if (!jwt) {
     return <MyPagesContent />;

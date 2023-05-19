@@ -4,17 +4,14 @@ import Header from "./Header";
 import Modal from "./Modal";
 import { useRouter } from "next/navigation";
 import BackButton from "./BackButton";
-import { useSelector } from "react-redux";
-import { selectValue } from "@/app/GlobalRedux/Features/userSlice";
 
 const MyPagesContent: FC = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
-  const loggedIn = useSelector(selectValue);
   const router = useRouter();
 
   useEffect(() => {
     router.refresh();
-  }, [loggedIn]);
+  }, [showModal]);
 
   return (
     <>

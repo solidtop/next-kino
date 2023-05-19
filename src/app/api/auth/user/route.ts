@@ -1,9 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import JWT from "jsonwebtoken";
 import { User } from "@/types";
+import { cookies } from "next/headers";
 
-export async function GET(res: NextRequest) {
-  const jwt = res.cookies.get("u-session")?.value;
+export async function GET() {
+  const allCookies = cookies();
+  const jwt = allCookies.get("u-session")?.value;
 
   const emptyResponse: User = {
     name: null,

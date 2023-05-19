@@ -12,9 +12,6 @@ const DetailsForm: FC<DetailsFormProps> = ({
   setBookingDetails,
 }) => {
   const [email, setEmail] = useState<string>(bookingDetails.email || "");
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-
   return (
     <div className="p-4 bg-container-color rounded">
       <label htmlFor="email-booking">E-post</label>
