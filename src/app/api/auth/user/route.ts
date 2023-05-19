@@ -4,8 +4,7 @@ import { User } from "@/types";
 import { cookies } from "next/headers";
 
 export async function GET() {
-  const allCookies = cookies();
-  const jwt = allCookies.get("u-session")?.value;
+  const jwt = cookies().get("u-session")?.value;
 
   const emptyResponse: User = {
     name: null,
