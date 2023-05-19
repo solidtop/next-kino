@@ -14,20 +14,11 @@ import SeatingLegend from "@/components/SeatingLegend";
 import { getTicketsQuantity } from "@/utils/validation";
 import PaymentSection from "@/components/PaymentSection";
 import Loader from "@/components/Loader";
-import { BookingDetails } from "@/types";
-
-// PLACEHOLDER: Remove when implementing jwt session
-const loggedIn = false;
-const session = loggedIn
-  ? {
-      user: {
-        email: "john@gmail.com",
-        name: "John Doe",
-      },
-    }
-  : null;
+import { BookingDetails, User } from "@/types";
 
 export default function Content() {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [user, setUser] = useState<User | null>(null);
   const [bookingDetails, setBookingDetails] = useState<BookingDetails | null>(
     null
   );
@@ -38,6 +29,14 @@ export default function Content() {
 
   const params = useParams();
   const { push } = useRouter();
+
+  // getUser from localstorage
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
+    setUser(storedUser);
+    setIsLoggedIn(!!storedUser.token);
+  }, []);
 
   let ticketQuantity: number;
   bookingDetails
@@ -186,13 +185,15 @@ export default function Content() {
                 </section>
                 <section id="details">
                   <NumericHeader number="3" title="Fyll i detaljer" />
-                  {!session && (
+
+                  {!isLoggedIn && (
                     <DetailsForm
                       bookingDetails={bookingDetails}
                       setBookingDetails={setBookingDetails}
                     />
                   )}
-                  {session && <UserDetails user={session.user} />}
+
+                  {isLoggedIn && <UserDetails user={user} />}
                 </section>
 
                 <section id="payment">
