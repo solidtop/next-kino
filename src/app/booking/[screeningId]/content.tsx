@@ -21,16 +21,14 @@ import { RootState } from "@/app/GlobalRedux/store";
 import { logIn } from "@/app/GlobalRedux/Features/userSlice";
 
 export default function Content() {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [user, setUser] = useState<User | null>(null);
-  const [bookingDetails, setBookingDetails] = useState<BookingDetails | null>(
-    null
-  );
-  const [seatingDetails, setSeatingDetails] = useState<Array<number>>([]);
   const [userSession, setUserSession] = useState<User>({
     email: null,
     name: null,
   });
+  const [bookingDetails, setBookingDetails] = useState<BookingDetails | null>(
+    null
+  );
+  const [seatingDetails, setSeatingDetails] = useState<Array<number>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const timer = useRef<number | undefined>(undefined);

@@ -51,6 +51,7 @@ const UserInformation: FC<UserInformationProps> = ({
                   if (movie.attributes.title === ticket.movie) {
                     return (
                       <Image
+                        key={movie.attributes.title}
                         className="sm:w-auto sm:h-60 rounded mx-auto sm:mx-0"
                         src={movie.attributes.image.url}
                         height={180}
