@@ -21,6 +21,8 @@ import { RootState } from "@/app/GlobalRedux/store";
 import { logIn } from "@/app/GlobalRedux/Features/userSlice";
 
 export default function Content() {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [user, setUser] = useState<User | null>(null);
   const [bookingDetails, setBookingDetails] = useState<BookingDetails | null>(
     null
   );

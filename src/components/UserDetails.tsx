@@ -2,7 +2,7 @@ import { FC } from "react";
 import { User } from "@/types";
 
 type UserDetailsProps = {
-  user: User;
+  user: User | null;
 };
 
 const UserDetails: FC<UserDetailsProps> = ({ user }) => {
