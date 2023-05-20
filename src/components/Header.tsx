@@ -10,7 +10,7 @@ import { getUserSession } from "@/utils/api";
 import { useRouter } from "next/navigation";
 
 const Header: FC<any> = () => {
-  const [userDetails, setUserDetails] = useState<User>({
+  const [user, setUser] = useState<User>({
     email: null,
     name: null,
   });
@@ -25,7 +25,7 @@ const Header: FC<any> = () => {
   const handleSession = async () => {
     try {
       const payload = await getUserSession();
-      setUserDetails(payload);
+      setUser(payload);
     } catch (err) {
       console.log(err);
     }
@@ -41,7 +41,8 @@ const Header: FC<any> = () => {
           },
         });
         if (res.ok) {
-          setUserDetails({ email: null, name: null });
+          console.log(res);
+          setUser({ email: null, name: null });
           push("/");
         } else {
           throw new Error("Logout failed");
@@ -60,7 +61,7 @@ const Header: FC<any> = () => {
   };
 
   return (
-    userDetails && (
+    user && (
       <header className="flex justify-between items-center gap-4 container mx-auto my-4 px-4 pb-4 max-w-6xl border-b-2 border-white border-opacity-10">
         <Link className="order-first justify-start" href="/">
           <Image src={logo} alt="Spegeln Logo" className="w-24" />
@@ -78,10 +79,10 @@ const Header: FC<any> = () => {
           </li>
         </ul>
 
-        {userDetails.name !== null ? (
+        {user.name !== null ? (
           <MyPagesMenu
             handleLogout={handleLogout}
-            userDetails={userDetails}
+            user={user}
             isOpen={isOpen}
             toggleDropdown={toggleDropdown}
           />

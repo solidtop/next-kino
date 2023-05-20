@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { User } from "@/types";
 import { cookies } from "next/headers";
 
 export async function GET() {
@@ -7,13 +6,8 @@ export async function GET() {
 
   const response = new NextResponse();
 
-  const emptyResponse: User = {
-    name: null,
-    email: null,
-  };
-
   if (!jwt) {
-    return NextResponse.json(emptyResponse);
+    return NextResponse.json({ error: "No user was found", status: 404 });
   }
 
   try {

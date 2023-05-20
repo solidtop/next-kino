@@ -16,7 +16,7 @@ import Loader from "@/components/Loader";
 import { BookingDetails, User } from "@/types";
 import { getUserSession } from "@/utils/api";
 export default function Content() {
-  const [userSession, setUserSession] = useState<User>({
+  const [user, setUser] = useState<User>({
     email: null,
     name: null,
   });
@@ -38,10 +38,10 @@ export default function Content() {
   const handleUserSession = async () => {
     try {
       const payload = await getUserSession();
-      if (userSession.name == payload.name) {
+      if (user.name == payload.name) {
         return;
       } else {
-        setUserSession(payload);
+        setUser(payload);
       }
     } catch (err) {
       console.log(err);
@@ -111,7 +111,7 @@ export default function Content() {
         setError("");
       }
 
-      if (userSession.name == null) {
+      if (user.name == null) {
         handleUserSession();
       }
     }, 1000);
@@ -199,15 +199,13 @@ export default function Content() {
                 </section>
                 <section id="details">
                   <NumericHeader number="3" title="Fyll i detaljer" />
-                  {userSession.name == null && (
+                  {user.name == null && (
                     <DetailsForm
                       bookingDetails={bookingDetails}
                       setBookingDetails={setBookingDetails}
                     />
                   )}
-                  {userSession.name !== null && (
-                    <UserDetails user={userSession} />
-                  )}
+                  {user.name !== null && <UserDetails user={user} />}
                 </section>
 
                 <section id="payment">

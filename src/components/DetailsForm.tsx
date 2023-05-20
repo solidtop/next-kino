@@ -32,7 +32,7 @@ const DetailsForm: FC<DetailsFormProps> = ({
       />
       <p className="my-4">Eller</p>
       <Link
-        href={"/myPages"}
+        href={"/my-pages"}
         type="button"
         className="block w-full py-2 rounded-full bg-btn-primary-color hover:brightness-110 text-center font-semibold">
         Logga in / Bli medlem
