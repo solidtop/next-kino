@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { Movie, Screening } from "@/types";
+import { movieDetailsProp } from "@/types";
 import Link from "next/link";
 
-const MovieDetails: FC<Movie> = ({ movieDetails }) => {
+const MovieDetails: FC<movieDetailsProp> = ({ movieDetails }) => {
   return (
    <>
     <div className="w-full h-10">

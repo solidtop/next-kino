@@ -4,6 +4,7 @@ import {
   AuthResponse,
   UserRegistration,
   Screening,
+  ScreeningsByMovieId,
 } from "@/types";
 
 const API_URL: string = "https://plankton-app-xhkom.ondigitalocean.app/api";
@@ -71,7 +72,7 @@ export async function getScreenings() : Promise<Screening[]> {
   return payload;
 }
 // GET screening with specific id
-export async function getScreeningById(id: string): Promise<Screening> {
+export async function getScreeningById(id: string): Promise<ScreeningsByMovieId[]> {
   const res = await fetch(API_URL + `/screenings?filters[movie]=` +id + `&sort[start_time]=asc`);
   const payload = await res.json();
   return payload.data;
