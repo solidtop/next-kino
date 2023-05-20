@@ -41,7 +41,7 @@ const HamburgerMenu: FC<HamburgerMenuProps> = ({ showModal, setShowModal }) => {
               className="absolute right-6 top-8 hover:cursor-pointer"
               onClick={() => setMenuOpen(false)}
             />
-            <ul className="flex flex-col gap-10 mt-20">
+            <ul className="flex flex-col gap-10 mt-20 items-center">
               <li>
                 <button
                   className="text-2xl font-semibold"
