@@ -31,7 +31,7 @@ const MyPagesMenu: FC<MyPagesMenuProps> = ({
       {isOpen && (
         <div className="absolute right-30 mt-2 bg-container-color rounded shadow-md">
           <Link
-            href={"/myPages"}
+            href={"/my-pages"}
             className="block px-4 py-2  text-white-800 rounded  hover:bg-white hover:bg-opacity-10 text-left">
             Mina sidor
           </Link>
