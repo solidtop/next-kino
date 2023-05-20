@@ -5,8 +5,6 @@ import * as api from "@/utils/api";
 
 export default async function Home() {
   const movies = await api.getMovies();
-
-  const loggedIn: boolean = false;
   return (
     <main>
       <Header />
@@ -15,4 +13,3 @@ export default async function Home() {
     </main>
   );
 }
- 
