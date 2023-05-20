@@ -2,7 +2,7 @@
 
     npm install - Install packages
     npm run build - Build script
-    npm run start - Start production server
+    npm start - Start production server
     npm run dev - Start development server
 
 # API Documentation
