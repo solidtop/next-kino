@@ -76,7 +76,7 @@ export default function Content() {
 
       const payload = await res.json();
 
-      if (payload === "Payment valid") {
+      if (payload.message === "Payment valid") {
         push(`/booking/${params.screeningId}/confirmation`);
       } else {
         setError("Felaktiga kortdetaljer");
@@ -104,8 +104,7 @@ export default function Content() {
           ev.preventDefault();
           handlePayment(cardNumber, ccv, cardYear, cardMonth, bookingDetails);
         }}
-        className="mt-10 mx-auto h-[800px] w-2/5"
-      >
+        className="mt-10 mx-auto h-[800px] w-2/5">
         {error && <ErrorMessage error={error} setError={setError} />}
         <h1 className="text-3xl font-semibold">Betala med kontokort</h1>
 

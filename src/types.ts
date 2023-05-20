@@ -31,8 +31,8 @@ export type ScreeningsByMovieId = {
     room: string;
     createdAt: Date;
     updatedAt: Date;
-  }
-}
+  };
+};
 
 export type Ticket = {
   id: number;
@@ -80,10 +80,10 @@ export type SeatObject = {
 };
 export type movieDetailsProp = {
   movieDetails: Movie;
-}
+};
 export type ScreeningProps = {
-  screenings: ScreeningsByMovieId[]
-}
+  screenings: ScreeningsByMovieId[];
+};
 
 export type UserSessionObject = {
   id: string;

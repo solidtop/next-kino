@@ -1,32 +1,32 @@
-import { FC } from "react"
-import { ScreeningProps } from "@/types"
-import Link from "next/link"
+import { FC } from "react";
+import { ScreeningProps } from "@/types";
+import Link from "next/link";
+import formatDate from "@/utils/formatting";
 
-const Screenings:FC<ScreeningProps> = ({ screenings }) => {
-        return(
-            <ul className="w-100 flex flex-col bg-container-color ">
-                {screenings.map((item, index) => {
-                    const time = new Date(item.attributes.start_time)
-                    return (
-                    <li className="m-1.5 w-full grid grid-cols-4 grid-rows-2 " 
-                    key={index}>
-                    <span className="col-start-2 col-end-4">{time.toUTCString() } </span>
-                    <span className="col-start-2"
-                    >{'Salong: '+ item.attributes.room}</span>
-                    <Link 
-                    className="p-1 bg-btn-primary-color rounded-full text-sm h-7 w-11 text-center col-start-4 justify-self-center"
-                    href={'/booking/' + item.id}
-                    >
-                     Boka
-                    </Link>
-                    <div className="w-full h-0.5 col-start-1 col-end-5 my-1 bg-slate-400"></div>
-                    </li>
-                    )
-                })}
-            </ul>
-            
-        )
-    
-
-}
+const Screenings: FC<ScreeningProps> = ({ screenings }) => {
+  return (
+    <div className="relative mx-auto w-full px-4 mt-10">
+      <p className="text-2xl text-center font-semibold mb-4">Visningstider</p>
+      {screenings.map((item, index) => {
+        return (
+          <li
+            className="bg-container-color rounded mb-4 p-4 flex flex-row w-full"
+            key={index}>
+            <span className="my-auto w-fit lg:w-fit">
+              {formatDate(new Date(item.attributes.start_time))}
+            </span>
+            <span className="my-auto mx-auto  text-center">
+              {"Salong: " + item.attributes.room}
+            </span>
+            <Link
+              className="block w-32 py-3 rounded-full bg-btn-primary-color hover:brightness-110 text-center font-semibold"
+              href={"/booking/" + item.id}>
+              Boka
+            </Link>
+          </li>
+        );
+      })}
+    </div>
+  );
+};
 export default Screenings;

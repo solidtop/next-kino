@@ -15,9 +15,11 @@ export default async function DetailsPage({
   return (
     <>
       <Header />
-      <MovieDetails movieDetails={details} />
-      <Screenings screenings={screenings} />
-      <Footer/>
+      <div className="max-w-screen-lg mx-auto">
+        <MovieDetails movieDetails={details} />
+        <Screenings screenings={screenings} />
+      </div>
+      <Footer />
     </>
   );
 }
