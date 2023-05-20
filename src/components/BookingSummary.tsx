@@ -21,6 +21,7 @@ const BookingSummary: FC<BookingSummaryProps> = ({ bookingDetails }) => {
             alt={movie.attributes.title + " poster"}
             width={70}
             height={70}
+            priority
           />
           <ul>
             <li className="font-bold text-lg mb-2">{movie.attributes.title}</li>

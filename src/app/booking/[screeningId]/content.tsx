@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import BackButton from "@/components/BackButton";
@@ -15,10 +14,12 @@ import { getTicketsQuantity } from "@/utils/validation";
 import PaymentSection from "@/components/PaymentSection";
 import Loader from "@/components/Loader";
 import { BookingDetails, User } from "@/types";
-
+import { getUserSession } from "@/utils/api";
 export default function Content() {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User>({
+    email: null,
+    name: null,
+  });
   const [bookingDetails, setBookingDetails] = useState<BookingDetails | null>(
     null
   );
@@ -30,13 +31,22 @@ export default function Content() {
   const params = useParams();
   const { push } = useRouter();
 
-  // getUser from localstorage
-
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
-    setUser(storedUser);
-    setIsLoggedIn(!!storedUser.token);
+    handleUserSession();
   }, []);
+
+  const handleUserSession = async () => {
+    try {
+      const payload = await getUserSession();
+      if (user.name == payload.name) {
+        return;
+      } else {
+        setUser(payload);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   let ticketQuantity: number;
   bookingDetails
@@ -89,6 +99,7 @@ export default function Content() {
           handleError(payload.error);
           return;
         }
+
         setBookingDetails(payload);
 
         if (getTicketsQuantity(payload.tickets) !== ticketQuantity) {
@@ -98,6 +109,10 @@ export default function Content() {
         console.log(err);
       } finally {
         setError("");
+      }
+
+      if (user.name == null) {
+        handleUserSession();
       }
     }, 1000);
   };
@@ -165,8 +180,7 @@ export default function Content() {
                 onSubmit={(ev) => {
                   ev.preventDefault();
                   handleSubmit(bookingDetails);
-                }}
-              >
+                }}>
                 <section id="tickets">
                   <NumericHeader number="1" title="Välj biljettyper" />
                   <TicketMenu
@@ -185,15 +199,13 @@ export default function Content() {
                 </section>
                 <section id="details">
                   <NumericHeader number="3" title="Fyll i detaljer" />
-
-                  {!isLoggedIn && (
+                  {user.name == null && (
                     <DetailsForm
                       bookingDetails={bookingDetails}
                       setBookingDetails={setBookingDetails}
                     />
                   )}
-
-                  {isLoggedIn && <UserDetails user={user} />}
+                  {user.name !== null && <UserDetails user={user} />}
                 </section>
 
                 <section id="payment">
@@ -203,8 +215,7 @@ export default function Content() {
 
                 <button
                   type="submit"
-                  className="block w-full my-8 py-2 rounded-full bg-btn-primary-color hover:brightness-110 text-center font-semibold"
-                >
+                  className="block w-full my-8 py-2 rounded-full bg-btn-primary-color hover:brightness-110 text-center font-semibold">
                   Fortsätt
                 </button>
               </form>

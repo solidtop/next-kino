@@ -62,13 +62,17 @@ export type UserRegistration = {
 };
 
 export type User = {
-  name: string;
-  email: string;
-  token:string;
-  
+  name: string | null;
+  email: string | null;
 };
 
 export type SeatObject = {
   seat: number;
   state: string;
+};
+
+export type UserSessionObject = {
+  id: string;
+  name: string;
+  email: string;
 };
