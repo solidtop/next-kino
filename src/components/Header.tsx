@@ -8,6 +8,7 @@ import LoginButton from "./LoginButton";
 import { User } from "@/types";
 import { getUserSession } from "@/utils/api";
 import { useRouter } from "next/navigation";
+import HamburgerMenu from "./HamburgerMenu";
 
 const Header: FC<any> = () => {
   const [user, setUser] = useState<User>({
@@ -89,6 +90,7 @@ const Header: FC<any> = () => {
         ) : (
           <LoginButton showModal={showModal} setShowModal={setShowModal} />
         )}
+        <HamburgerMenu showModal={showModal} setShowModal={setShowModal} />
       </header>
     )
   );
