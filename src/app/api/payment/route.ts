@@ -42,9 +42,9 @@ export async function POST(req: NextRequest) {
       cardDate > todaysDate &&
       !availableSeats.includes(false)
     ) {
-      return NextResponse.json("Payment valid");
+      return NextResponse.json({ message: "Payment valid", status: 202 });
     } else {
-      return NextResponse.json("Payment invalid");
+      return NextResponse.json({ message: "Payment invalid", status: 400 });
     }
   } catch (err) {
     console.log(err);
