@@ -2,7 +2,6 @@ import { FC } from "react";
 import Link from "next/link";
 import formatDate from "@/utils/formatting";
 import { Screening } from "@/types";
-import { useRouter } from "next/navigation";
 
 type MovieDetailsProp = {
   screenings: Array<Screening>;
@@ -15,7 +14,9 @@ const Screenings: FC<MovieDetailsProp> = ({ screenings }) => {
       <div>
         {screenings.map((screening) => {
           return (
-            <ul className="bg-container-color rounded mb-4 p-4 flex flex-row w-full">
+            <ul
+              key={screening.id}
+              className="bg-container-color rounded mb-4 p-4 flex flex-row w-full">
               <li className="my-auto w-fit lg:w-fit" key={screening.id}>
                 {formatDate(new Date(screening.attributes.start_time))}
               </li>
