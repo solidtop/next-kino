@@ -100,8 +100,7 @@ const SeatingChart: FC<SeatingChartProps> = ({
         selectedSeats={selectedSeats}
       />
       <ul
-        className={`grid grid-cols-12 gap-2 mb-4 justify-center mx-auto max-w-[480px]`}
-      >
+        className={`grid grid-cols-12 gap-2 mb-4 justify-center mx-auto max-w-[480px]`}>
         {currSeats.map((seat: SeatObject) => {
           return (
             <Seats

@@ -1,48 +1,96 @@
 "use client";
 import React, { FC, useState, useEffect } from "react";
 import Link from "next/link";
-import MyPages from "./MyPages";
+import MyPagesMenu from "./MyPagesMenu";
 import Image from "next/image";
 import logo from "../../public/icons/biospegeln.png";
 import LoginButton from "./LoginButton";
+import { User } from "@/types";
+import { getUserSession } from "@/utils/api";
+import { useRouter } from "next/navigation";
 
-const Header: FC = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+const Header: FC<any> = () => {
+  const [user, setUser] = useState<User>({
+    email: null,
+    name: null,
+  });
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { push } = useRouter();
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
-    setIsLoggedIn(!!user.token);
-  }, []);
+    handleSession();
+  }, [showModal]);
+
+  const handleSession = async () => {
+    try {
+      const payload = await getUserSession();
+      setUser(payload);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleLogout = (): void => {
-    localStorage.removeItem("user");
-    setIsLoggedIn(false);
+    const endUserSession = async () => {
+      try {
+        const res = await fetch("/api/auth/logout", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (res.ok) {
+          console.log(res);
+          setUser({ email: null, name: null });
+          push("/");
+        } else {
+          throw new Error("Logout failed");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    endUserSession();
+    setIsOpen(!isOpen);
+  };
+
+  const toggleDropdown = (): void => {
+    setIsOpen(!isOpen);
   };
 
   return (
-    <header className="flex justify-between items-center gap-4 container mx-auto my-4 px-4 pb-4 max-w-6xl border-b-2 border-white border-opacity-10">
-      <Link className="order-first justify-start" href="/">
-        <Image src={logo} alt="Spegeln Logo" width={96} className="w-24" />
-      </Link>
+    user && (
+      <header className="flex justify-between items-center gap-4 container mx-auto my-4 px-4 pb-4 max-w-6xl border-b-2 border-white border-opacity-10">
+        <Link className="order-first justify-start" href="/">
+          <Image src={logo} alt="Spegeln Logo" className="w-24" />
+        </Link>
 
-      <ul className="hidden lg:flex flex-row text-lg font-semibold justify-center items-center gap-14">
-        <li>
-          <Link href="/">Öppettider & Kontakt</Link>
-        </li>
-        <li>
-          <Link href="/">Om Spegeln</Link>
-        </li>
-        <li>
-          <Link href="/">Biljettinfo</Link>
-        </li>
-      </ul>
+        <ul className="hidden lg:flex flex-row text-lg font-semibold justify-center items-center gap-14">
+          <li>
+            <Link href="/">Öppettider & Kontakt</Link>
+          </li>
+          <li>
+            <Link href="/">Om Spegeln</Link>
+          </li>
+          <li>
+            <Link href="/">Biljettinfo</Link>
+          </li>
+        </ul>
 
-      {isLoggedIn ? (
-        <MyPages handleLogout={handleLogout} />
-      ) : (
-        <LoginButton setIsLoggedIn={setIsLoggedIn} />
-      )}
-    </header>
+        {user.name !== null ? (
+          <MyPagesMenu
+            handleLogout={handleLogout}
+            user={user}
+            isOpen={isOpen}
+            toggleDropdown={toggleDropdown}
+          />
+        ) : (
+          <LoginButton showModal={showModal} setShowModal={setShowModal} />
+        )}
+      </header>
+    )
   );
 };
 

@@ -4,13 +4,12 @@ import {
   AuthResponse,
   UserRegistration,
   Screening,
+  User,
 } from "@/types";
 
 const API_URL: string = "https://plankton-app-xhkom.ondigitalocean.app/api";
 
-export async function loginUser(
-  userInfo: LoginCredentials
-): Promise<AuthResponse> {
+export async function loginUser(userInfo: LoginCredentials): Promise<Boolean> {
   try {
     const res = await fetch("/api/auth/login", {
       method: "POST",
@@ -21,9 +20,7 @@ export async function loginUser(
     });
 
     if (res.ok) {
-      const data = await res.json();
-      localStorage.setItem("user", JSON.stringify(data));
-      return data as AuthResponse;
+      return true;
     } else {
       throw new Error("Login failed");
     }
@@ -48,6 +45,22 @@ export async function registerUser(
     return data as AuthResponse;
   } else {
     throw new Error("User registration failed");
+  }
+}
+
+export async function getUserSession(): Promise<User> {
+  const res = await fetch("/api/auth/user", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (res.ok) {
+    const payload = await res.json();
+    return payload;
+  } else {
+    throw new Error("Attempt to get user session failed");
   }
 }
 

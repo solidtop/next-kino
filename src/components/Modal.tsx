@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, FC, FormEvent, Dispatch, SetStateAction } from "react";
 import Link from "next/link";
 import { loginUser } from "@/utils/api";
@@ -7,10 +6,9 @@ import { LoginCredentials } from "@/types";
 
 interface ModalProps {
   setShowModal: Dispatch<SetStateAction<boolean>>;
-  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Modal: FC<ModalProps> = ({ setShowModal, setIsLoggedIn }) => {
+const Modal: FC<ModalProps> = ({ setShowModal }) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errors, setErrors] = useState<LoginCredentials>({
@@ -52,9 +50,9 @@ const Modal: FC<ModalProps> = ({ setShowModal, setIsLoggedIn }) => {
       await loginUser({ email, password });
 
       // Reset form inputs and close the modal
+
       setEmail("");
       setPassword("");
-      setIsLoggedIn(true);
       setShowModal(false);
     } catch (error) {
       // Handle any login errors
@@ -66,7 +64,7 @@ const Modal: FC<ModalProps> = ({ setShowModal, setIsLoggedIn }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 mt-8">
+    <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="absolute inset-0 bg-black opacity-50"></div>
       <div className="bg-white rounded-lg p-8 max-w-md w-full relative">
         <h2 className="text-2xl font-bold mb-6 text-gray-700 ">Login</h2>
