@@ -12,7 +12,6 @@ export type Movie = {
     publishedAt: Date;
   };
 };
-
 export type Screening = {
   id: number;
   attributes: {
@@ -25,7 +24,6 @@ export type Screening = {
     };
   };
 };
-
 export type ScreeningsByMovieId = {
   id: number;
   attributes: {
@@ -80,7 +78,6 @@ export type SeatObject = {
   seat: number;
   state: string;
 };
-
 export type movieDetailsProp = {
   movieDetails: Movie;
 };
