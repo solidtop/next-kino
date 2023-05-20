@@ -5,6 +5,7 @@ import {
   UserRegistration,
   Screening,
   User,
+  ScreeningsByMovieId,
 } from "@/types";
 
 const API_URL: string = "https://plankton-app-xhkom.ondigitalocean.app/api";
@@ -64,19 +65,10 @@ export async function getUserSession(): Promise<User> {
   }
 }
 
-export async function getScreeningsById(id: string) {
-  try {
-    const res = await fetch(API_URL + "/screenings?filters[movie]=" + id);
-    const content = await res.json();
-    return content.data;
-  } catch (err) {
-    console.log(err);
-  }
-}
-
 export async function getMovies(): Promise<Movie[]> {
   const res = await fetch(API_URL + "/movies");
   const payload = await res.json();
+
   return payload.data;
 }
 // GET the movie with the specified id
@@ -92,6 +84,15 @@ export async function getScreenings(): Promise<Screening[]> {
   return payload;
 }
 // GET screening with specific id
+export async function getScreeningById(
+  id: string
+): Promise<ScreeningsByMovieId[]> {
+  const res = await fetch(
+    API_URL + `/screenings?filters[movie]=` + id + `&sort[start_time]=asc`
+  );
+  const payload = await res.json();
+  return payload.data;
+}
 export async function getScreening(id: string): Promise<Screening> {
   const res = await fetch(API_URL + `/screenings/${id}?populate=movie`);
   const payload = await res.json();
