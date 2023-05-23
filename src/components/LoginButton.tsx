@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import Modal from "./Modal";
+import LoginModal from "@/components/LoginModal";
 
 type LoginButtonProps = {
   showModal: boolean;
@@ -10,11 +10,12 @@ const LoginButton: FC<LoginButtonProps> = ({ showModal, setShowModal }) => {
   return (
     <>
       <button
-        className="hidden lg:flex order-last col-start-5 justify-end mr-10 text-xl font-semibold"
-        onClick={() => setShowModal(true)}>
+        className="text-lg font-semibold"
+        onClick={() => setShowModal(true)}
+      >
         Login/Register
       </button>
-      {showModal && <Modal setShowModal={setShowModal} />}
+      {showModal && <LoginModal setShowModal={setShowModal} />}
     </>
   );
 };

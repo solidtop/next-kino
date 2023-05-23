@@ -1,8 +1,8 @@
 import { useState, FC } from "react";
 import { Ticket } from "@/types";
 import Image from "next/image";
-import PlusIcon from "../../public/icons/plus-solid.svg";
-import MinusIcon from "../../public/icons/minus-solid.svg";
+import PlusIcon from "/public/icons/plus-solid.svg";
+import MinusIcon from "/public/icons/minus-solid.svg";
 
 type TicketItemProps = {
   ticket: Ticket;

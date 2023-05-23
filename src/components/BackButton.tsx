@@ -2,11 +2,10 @@
 import Link from "next/link";
 import { FC } from "react";
 import Image from "next/image";
-import ChevronIcon from "../../public/icons/chevron-left-solid.svg";
+import ChevronIcon from "/public/icons/chevron-left-solid.svg";
 
 const BackButton: FC = () => {
   return (
-    // <div className="w-full px-4 pt-4 relative lg:fixed lg:max-w-screen-xl lg:top-0 lg:left-1/2 lg:-translate-x-1/2">
     <div className="w-full px-4 pt-4 relative lg:p-0 lg:sticky lg-max-w-screen-xl top-0">
       <Link
         href="#"

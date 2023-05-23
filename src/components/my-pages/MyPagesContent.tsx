@@ -1,9 +1,9 @@
 "use client";
 import { FC, useState, useEffect } from "react";
-import Header from "./Header";
-import Modal from "./Modal";
+import Header from "@/components/Header";
+import LoginModal from "@/components/LoginModal";
 import { useRouter } from "next/navigation";
-import BackButton from "./BackButton";
+import BackButton from "@/components/BackButton";
 
 const MyPagesContent: FC = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -21,10 +21,11 @@ const MyPagesContent: FC = () => {
         <button
           type="button"
           onClick={() => setShowModal(true)}
-          className="block w-full py-2 rounded-full bg-btn-primary-color hover:brightness-110 text-center font-semibold">
+          className="block w-full py-2 rounded-full bg-btn-primary-color hover:brightness-110 text-center font-semibold"
+        >
           Logga in / Bli medlem
         </button>
-        {showModal && <Modal setShowModal={setShowModal} />}
+        {showModal && <LoginModal setShowModal={setShowModal} />}
       </div>
     </>
   );

@@ -1,10 +1,9 @@
 "use client";
 
-import { useState, FC, FormEvent, Dispatch, SetStateAction } from "react";
+import { useState, FC, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { registerUser } from "@/utils/api";
 import { UserRegistration } from "@/types";
-import BackButton from "@/components/BackButton";
 
 const Content: FC = () => {
   const router = useRouter();
@@ -94,7 +93,8 @@ const Content: FC = () => {
             <div className="mb-6">
               <label
                 htmlFor="name"
-                className="block text-gray-700 font-medium mb-2">
+                className="block text-gray-700 font-medium mb-2"
+              >
                 Name
               </label>
               <input
@@ -113,7 +113,8 @@ const Content: FC = () => {
             <div className="mb-6">
               <label
                 htmlFor="email"
-                className="block text-gray-700 font-medium mb-2">
+                className="block text-gray-700 font-medium mb-2"
+              >
                 E-post
               </label>
               <input
@@ -132,7 +133,8 @@ const Content: FC = () => {
             <div className="mb-6">
               <label
                 htmlFor="password"
-                className="block text-gray-700 font-medium mb-2">
+                className="block text-gray-700 font-medium mb-2"
+              >
                 Password
               </label>
               <input
@@ -152,13 +154,15 @@ const Content: FC = () => {
             </div>
             <button
               type="submit"
-              className="w-full bg-container-color text-white py-2 px-4 rounded-lg font-medium">
+              className="w-full bg-container-color text-white py-2 px-4 rounded-lg font-medium"
+            >
               Register
             </button>
             <button
               type="button"
               onClick={() => history.go(-1)}
-              className="w-full bg-container-color text-white py-2 px-4 rounded-lg font-medium mt-4">
+              className="w-full bg-container-color text-white py-2 px-4 rounded-lg font-medium mt-4"
+            >
               Cancel
             </button>
           </form>

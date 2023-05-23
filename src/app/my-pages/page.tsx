@@ -1,12 +1,14 @@
 import Header from "@/components/Header";
-import UserInformation from "@/components/UserInformation";
+import Footer from "@/components/Footer";
+import UserInformation from "@/components/my-pages/UserInformation";
 import { Ticket } from "@/types";
 import { getMovies } from "@/utils/api";
 import { cookies } from "next/headers";
 import JWT from "jsonwebtoken";
 import connectDb from "@/utils/connectDb";
 import TicketsModel from "@/models/tickets";
-import MyPagesContent from "@/components/MyPagesContent";
+import MyPagesContent from "@/components/my-pages/MyPagesContent";
+import BackButton from "@/components/BackButton";
 
 type TicketObject = {
   bookingId: string;
@@ -47,18 +49,25 @@ export default async function MyPages() {
     const movies = await getMovieList();
 
     return (
-      movies && (
-        <>
-          <Header />
-          <div className="max-w-screen-xl mx-auto">
-            <UserInformation
-              currentUser={userInfo}
-              userTickets={tickets}
-              movies={movies}
-            />
-          </div>
-        </>
-      )
+      <>
+        <Header />
+        <div className="flex flex-col max-w-screen-xl mx-auto">
+          <BackButton />
+          {movies && (
+            <div className="max-w-screen-sm mx-auto my-4 px-4">
+              <UserInformation
+                currentUser={userInfo}
+                userTickets={tickets}
+                movies={movies}
+              />
+            </div>
+          )}
+          {!movies && (
+            <p className="text-lg mx-auto my-4">Du har inga bokade biljetter</p>
+          )}
+        </div>
+        <Footer />
+      </>
     );
   } catch (err) {
     return (

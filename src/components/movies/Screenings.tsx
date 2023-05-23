@@ -5,28 +5,28 @@ import formatDate from "@/utils/formatting";
 
 const Screenings: FC<ScreeningProps> = ({ screenings }) => {
   return (
-    <div className="relative mx-auto w-full px-4 mt-10">
+    <ul className="relative mx-auto px-4 mt-10">
       <p className="text-2xl text-center font-semibold mb-4">Visningstider</p>
       {screenings.map((item, index) => {
         return (
           <li
-            className="bg-container-color rounded mb-4 p-4 flex flex-row w-full"
-            key={index}>
-            <span className="my-auto w-fit lg:w-fit">
-              {formatDate(new Date(item.attributes.start_time))}
-            </span>
-            <span className="my-auto mx-auto  text-center">
+            className="bg-container-color rounded my-4 p-4 grid grid-cols-3 items-center"
+            key={index}
+          >
+            <span>{formatDate(new Date(item.attributes.start_time))}</span>
+            <span className="text-center justify-self-center">
               {"Salong: " + item.attributes.room}
             </span>
             <Link
-              className="block w-32 py-3 rounded-full bg-btn-primary-color hover:brightness-110 text-center font-semibold"
-              href={"/booking/" + item.id}>
+              className="justify-self-end block w-20 py-2 md:w-32 md:py-3 rounded-full bg-btn-primary-color hover:brightness-110 text-center font-semibold"
+              href={"/booking/" + item.id}
+            >
               Boka
             </Link>
           </li>
         );
       })}
-    </div>
+    </ul>
   );
 };
 export default Screenings;

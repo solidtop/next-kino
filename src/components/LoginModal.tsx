@@ -3,18 +3,20 @@ import { useState, FC, FormEvent, Dispatch, SetStateAction } from "react";
 import Link from "next/link";
 import { loginUser } from "@/utils/api";
 import { LoginCredentials } from "@/types";
+import Loader from "@/components/Loader";
 
-interface ModalProps {
+interface LoginModalProps {
   setShowModal: Dispatch<SetStateAction<boolean>>;
 }
 
-const Modal: FC<ModalProps> = ({ setShowModal }) => {
+const LoginModal: FC<LoginModalProps> = ({ setShowModal }) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errors, setErrors] = useState<LoginCredentials>({
     email: "",
     password: "",
   });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleUserLogin = async (
     ev: FormEvent<HTMLFormElement>
@@ -46,6 +48,7 @@ const Modal: FC<ModalProps> = ({ setShowModal }) => {
     }
 
     try {
+      setIsLoading(true);
       // Call the login API
       await loginUser({ email, password });
 
@@ -60,6 +63,8 @@ const Modal: FC<ModalProps> = ({ setShowModal }) => {
         ...prevErrors,
         email: "Invalid credentials",
       }));
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -72,7 +77,8 @@ const Modal: FC<ModalProps> = ({ setShowModal }) => {
           <div className="mb-6">
             <label
               htmlFor="email"
-              className="block text-gray-700 font-medium mb-2">
+              className="block text-gray-700 font-medium mb-2"
+            >
               E-post
             </label>
             <input
@@ -92,7 +98,8 @@ const Modal: FC<ModalProps> = ({ setShowModal }) => {
           <div className="mb-6">
             <label
               htmlFor="password"
-              className="block text-gray-700 font-medium mb-2">
+              className="block text-gray-700 font-medium mb-2"
+            >
               Password
             </label>
             <input
@@ -113,7 +120,8 @@ const Modal: FC<ModalProps> = ({ setShowModal }) => {
           </div>
           <button
             type="submit"
-            className="w-full bg-container-color text-white py-2 px-4 rounded-lg font-medium">
+            className="w-full bg-container-color text-white py-2 px-4 rounded-lg font-medium"
+          >
             Login
           </button>
         </form>
@@ -126,13 +134,16 @@ const Modal: FC<ModalProps> = ({ setShowModal }) => {
         <div className="text-center mt-4">
           <button
             onClick={() => setShowModal(false)}
-            className="bg-transparent border border-blue-500 text-blue-500 py-2 px-4 rounded-lg font-medium">
+            className="bg-transparent border border-blue-500 text-blue-500 py-2 px-4 rounded-lg font-medium"
+          >
             Close
           </button>
         </div>
       </div>
+
+      {isLoading && <Loader />}
     </div>
   );
 };
 
-export default Modal;
+export default LoginModal;

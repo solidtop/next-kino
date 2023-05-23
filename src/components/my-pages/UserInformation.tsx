@@ -3,8 +3,7 @@ import { Ticket, Movie } from "@/types";
 import formatDate from "@/utils/formatting";
 import { getAmountTotal } from "@/utils/validation";
 import Image from "next/image";
-import SeatsPaymentPage from "./SeatsPaymentPage";
-import BackButton from "./BackButton";
+import SeatsPaymentPage from "@/components/booking/payment/SeatsPaymentPage";
 
 type UserObject = {
   email: string;
@@ -35,13 +34,12 @@ const UserInformation: FC<UserInformationProps> = ({
 }) => {
   return (
     <>
-      <BackButton />
-      <div className="mx-auto sm:w-[600px] w-96 bg-container-color rounded p-4">
+      <div className="bg-container-color rounded p-4">
         <p className="text-3xl">Välkommen {currentUser.name}</p>
         <p>Inloggad med: {currentUser.email}</p>
       </div>
 
-      <div className="mx-auto sm:w-[600px] w-96 my-10">
+      <div className="my-10">
         <p className="text-3xl font-semibold">Bokade biljetter</p>
         {userTickets.map((ticket) => {
           return (
@@ -69,7 +67,8 @@ const UserInformation: FC<UserInformationProps> = ({
                     </li>
                     <li
                       key={formatDate(new Date(ticket.startTime))}
-                      className="text-white opacity-70">
+                      className="text-white opacity-70"
+                    >
                       {formatDate(new Date(ticket.startTime))}
                     </li>
                     <ul className="flex flex-row flex-wrap mt-2 text-white opacity-70">
