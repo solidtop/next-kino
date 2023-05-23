@@ -1,5 +1,5 @@
 import { FC, useState, useEffect } from "react";
-import TicketItem from "./TicketItem";
+import TicketItem from "@/components/booking/TicketItem";
 import { BookingDetails, Ticket } from "@/types";
 
 type TicketMenuProps = {

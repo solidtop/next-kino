@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { FC } from "react";
 import Image from "next/image";
-import sLogo from "../../public/icons/sundsvall-logo.png";
-import abfLogo from "../../public/icons/abf-logo.png";
-import ecLogo from "../../public/icons/europacinemas-logo.png";
+import sLogo from "/public/icons/sundsvall-logo.png";
+import abfLogo from "/public/icons/abf-logo.png";
+import ecLogo from "/public/icons/europacinemas-logo.png";
 
 const Footer: FC = () => {
   return (

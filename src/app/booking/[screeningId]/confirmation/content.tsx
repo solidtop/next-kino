@@ -1,6 +1,6 @@
 "use client";
 
-import TicketSummary from "@/components/TicketSummary";
+import TicketSummary from "@/components/booking/confirmation/TicketSummary";
 import { BookingDetails } from "@/types";
 import Link from "next/link";
 import { useEffect, useState } from "react";

@@ -6,8 +6,8 @@ import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import logo from "/public/icons/biospegeln.png";
 import ErrorMessage from "@/components/ErrorMessage";
-import PaymentSummary from "@/components/PaymentSummary";
-import PaymentDetails from "@/components/PaymentDetails";
+import PaymentSummary from "@/components/booking/payment/PaymentSummary";
+import PaymentDetails from "@/components/booking/payment/PaymentDetails";
 
 export default function Content() {
   const { push } = useRouter();
@@ -89,14 +89,9 @@ export default function Content() {
   /* -------------------------------- */
 
   return (
-    <>
+    <div className="max-w-screen-xl mx-auto px-4">
       <header>
-        <Image
-          src={logo}
-          alt="spegeln logo"
-          width={96}
-          className="mt-6 ml-6 w-24"
-        />
+        <Image src={logo} alt="spegeln logo" width={96} className="mt-6 w-24" />
       </header>
 
       <form
@@ -104,7 +99,7 @@ export default function Content() {
           ev.preventDefault();
           handlePayment(cardNumber, ccv, cardYear, cardMonth, bookingDetails);
         }}
-        className="mt-10 mx-auto h-[800px] w-2/5"
+        className="mt-10 max-w-xl mx-auto"
       >
         {error && <ErrorMessage error={error} setError={setError} />}
         <h1 className="text-3xl font-semibold">Betala med kontokort</h1>
@@ -118,6 +113,6 @@ export default function Content() {
           setCcv={setCcv}
         />
       </form>
-    </>
+    </div>
   );
 }

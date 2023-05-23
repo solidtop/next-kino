@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { Movie } from "../types";
-import MovieCard from "./MovieCard";
+import { Movie } from "@/types";
+import MovieCard from "@/components/movies/MovieCard";
 
 type MovieListProps = {
   movies: Movie[];

@@ -1,9 +1,9 @@
 import { FC, useState } from "react";
 import Image from "next/image";
-import KlarnaIcon from "../../public/icons/KlarnaIcon.png";
-import MasterCardIcon from "../../public/icons/MasterCardIcon.png";
-import SwishIcon from "../../public/icons/SwishIcon.png";
-import VisaIcon from "../../public/icons/VisaIcon.png";
+import KlarnaIcon from "/public/icons/KlarnaIcon.png";
+import MasterCardIcon from "/public/icons/MasterCardIcon.png";
+import SwishIcon from "/public/icons/SwishIcon.png";
+import VisaIcon from "/public/icons/VisaIcon.png";
 
 const PaymentSection: FC<any> = ({}) => {
   const [radioValue, setRadioValue] = useState<string>("cardPayment");

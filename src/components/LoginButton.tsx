@@ -1,5 +1,5 @@
-import React, { FC, useState } from "react";
-import Modal from "./Modal";
+import React, { FC } from "react";
+import Modal from "@/components/LoginModal";
 
 interface LoginButtonProps {
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
@@ -11,7 +11,7 @@ const LoginButton: FC<LoginButtonProps> = ({ setIsLoggedIn }) => {
   return (
     <>
       <button
-        className="order-last col-start-5 flex justify-end mr-10 mt-6 text-xl font-semibold"
+        className="text-lg font-semibold"
         onClick={() => setShowModal(true)}
       >
         Login/Register

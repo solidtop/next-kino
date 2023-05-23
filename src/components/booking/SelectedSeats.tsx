@@ -1,5 +1,5 @@
 import { FC } from "react";
-import SeatIndication from "./SeatIndication";
+import SeatIndication from "@/components/booking/SeatIndication";
 
 const SelectedSeats: FC<any> = ({ bookingDetails }) => {
   const seatArray: Array<number> = bookingDetails.seats;

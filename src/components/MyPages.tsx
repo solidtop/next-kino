@@ -2,7 +2,9 @@ import React, { FC, useState } from "react";
 import { useRouter } from "next/navigation";
 import { RiArrowDownSLine } from "react-icons/ri";
 import Image from "next/image";
-import userIcon from "../../public/icons/user-solid.svg";
+import userIcon from "/public/icons/user-solid.svg";
+import Link from "next/link";
+import { User } from "@/types";
 
 interface MyPagesProps {
   handleLogout: () => void;
@@ -32,14 +34,12 @@ const MyPages: FC<MyPagesProps> = ({ handleLogout }) => {
       </div>
       {isOpen && (
         <div className="absolute right-30 mt-2 bg-container-color rounded shadow-md">
-          {user.name && (
-            <a
-              href="/"
-              className="block px-4 py-2  text-white-800 rounded  hover:bg-white hover:bg-opacity-10 text-left"
-            >
-              Mina sidor
-            </a>
-          )}
+          <Link
+            href={"/my-pages"}
+            className="block px-4 py-2  text-white-800 rounded  hover:bg-white hover:bg-opacity-10 text-left"
+          >
+            Mina sidor
+          </Link>
           <button
             className="block px-4 py-2 w-full text-white-800 rounded hover:bg-white hover:bg-opacity-10 text-left"
             onClick={handleLogout}
