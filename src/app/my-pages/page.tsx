@@ -62,9 +62,6 @@ export default async function MyPages() {
               />
             </div>
           )}
-          {!movies && (
-            <p className="text-lg mx-auto my-4">Du har inga bokade biljetter</p>
-          )}
         </div>
         <Footer />
       </>
