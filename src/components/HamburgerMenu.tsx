@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import Modal from "@/components/LoginModal";
+import LoginModal from "@/components/LoginModal";
 import hamburgerIcon from "/public/icons/hamburger-icon.png";
 import closeIcon from "/public/icons/icons8-close-50.png";
 import logo from "/public/icons/biospegeln.png";
@@ -50,7 +50,7 @@ const HamburgerMenu: FC<HamburgerMenuProps> = ({ showModal, setShowModal }) => {
                   Login/Register
                 </button>
               </li>
-              {showModal && <Modal setShowModal={setShowModal} />}
+              {showModal && <LoginModal setShowModal={setShowModal} />}
               <li>
                 <Link href="/information/contact">Öppettider & Kontakt</Link>
               </li>

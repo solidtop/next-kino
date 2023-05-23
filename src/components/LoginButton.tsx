@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import Modal from "@/components/LoginModal";
+import LoginModal from "@/components/LoginModal";
 
 type LoginButtonProps = {
   showModal: boolean;
@@ -15,7 +15,7 @@ const LoginButton: FC<LoginButtonProps> = ({ showModal, setShowModal }) => {
       >
         Login/Register
       </button>
-      {showModal && <Modal setShowModal={setShowModal} />}
+      {showModal && <LoginModal setShowModal={setShowModal} />}
     </>
   );
 };
