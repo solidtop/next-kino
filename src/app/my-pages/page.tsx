@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import UserInformation from "@/components/my-pages/UserInformation";
 import { Ticket } from "@/types";
 import { getMovies } from "@/utils/api";
@@ -48,12 +49,11 @@ export default async function MyPages() {
     const movies = await getMovieList();
 
     return (
-      movies && (
-        <>
-          <Header />
-          <div className="flex flex-col max-w-screen-lg mx-auto">
-            <BackButton />
-
+      <>
+        <Header />
+        <div className="flex flex-col max-w-screen-xl mx-auto">
+          <BackButton />
+          {movies && (
             <div className="max-w-screen-sm mx-auto my-4 px-4">
               <UserInformation
                 currentUser={userInfo}
@@ -61,9 +61,13 @@ export default async function MyPages() {
                 movies={movies}
               />
             </div>
-          </div>
-        </>
-      )
+          )}
+          {!movies && (
+            <p className="text-lg mx-auto my-4">Du har inga bokade biljetter</p>
+          )}
+        </div>
+        <Footer />
+      </>
     );
   } catch (err) {
     return (
