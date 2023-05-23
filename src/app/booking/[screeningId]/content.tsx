@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import BackButton from "@/components/BackButton";
@@ -14,20 +13,13 @@ import SeatingLegend from "@/components/booking/SeatingLegend";
 import { getTicketsQuantity } from "@/utils/validation";
 import PaymentSection from "@/components/booking/PaymentSection";
 import Loader from "@/components/Loader";
-import { BookingDetails } from "@/types";
-
-// PLACEHOLDER: Remove when implementing jwt session
-const loggedIn = false;
-const session = loggedIn
-  ? {
-      user: {
-        email: "john@gmail.com",
-        name: "John Doe",
-      },
-    }
-  : null;
-
+import { BookingDetails, User } from "@/types";
+import { getUserSession } from "@/utils/api";
 export default function Content() {
+  const [user, setUser] = useState<User>({
+    email: null,
+    name: null,
+  });
   const [bookingDetails, setBookingDetails] = useState<BookingDetails | null>(
     null
   );
@@ -102,6 +94,7 @@ export default function Content() {
           handleError(payload.error);
           return;
         }
+
         setBookingDetails(payload);
 
         const ticketQuantity = getTicketsQuantity(bookingDetails.tickets);
@@ -112,6 +105,10 @@ export default function Content() {
         console.log(err);
       } finally {
         setError("");
+      }
+
+      if (user.name == null) {
+        handleUserSession();
       }
     }, 1000);
   };

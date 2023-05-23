@@ -12,7 +12,6 @@ export type Movie = {
     publishedAt: Date;
   };
 };
-
 export type Screening = {
   id: number;
   attributes: {
@@ -23,6 +22,15 @@ export type Screening = {
     movie: {
       data: Movie;
     };
+  };
+};
+export type ScreeningsByMovieId = {
+  id: number;
+  attributes: {
+    start_time: Date;
+    room: string;
+    createdAt: Date;
+    updatedAt: Date;
   };
 };
 
@@ -62,11 +70,23 @@ export type UserRegistration = {
 };
 
 export type User = {
-  name: string;
-  email: string;
+  name: string | null;
+  email: string | null;
 };
 
 export type SeatObject = {
   seat: number;
   state: string;
+};
+export type movieDetailsProp = {
+  movieDetails: Movie;
+};
+export type ScreeningProps = {
+  screenings: ScreeningsByMovieId[];
+};
+
+export type UserSessionObject = {
+  id: string;
+  name: string;
+  email: string;
 };

@@ -1,13 +1,12 @@
 import React, { FC } from "react";
 import Modal from "@/components/LoginModal";
 
-interface LoginButtonProps {
-  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
-}
+type LoginButtonProps = {
+  showModal: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-const LoginButton: FC<LoginButtonProps> = ({ setIsLoggedIn }) => {
-  const [showModal, setShowModal] = useState<boolean>(false);
-
+const LoginButton: FC<LoginButtonProps> = ({ showModal, setShowModal }) => {
   return (
     <>
       <button
@@ -16,9 +15,7 @@ const LoginButton: FC<LoginButtonProps> = ({ setIsLoggedIn }) => {
       >
         Login/Register
       </button>
-      {showModal && (
-        <Modal setShowModal={setShowModal} setIsLoggedIn={setIsLoggedIn} />
-      )}
+      {showModal && <Modal setShowModal={setShowModal} />}
     </>
   );
 };

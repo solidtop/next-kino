@@ -22,9 +22,17 @@ const Header: FC<any> = () => {
   const { push } = useRouter();
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
-    setIsLoggedIn(!!user.token);
-  }, []);
+    handleSession();
+  }, [showModal]);
+
+  const handleSession = async () => {
+    try {
+      const payload = await getUserSession();
+      setUser(payload);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleLogout = (): void => {
     const endUserSession = async () => {

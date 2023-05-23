@@ -76,7 +76,7 @@ export default function Content() {
 
       const payload = await res.json();
 
-      if (payload === "Payment valid") {
+      if (payload.message === "Payment valid") {
         push(`/booking/${params.screeningId}/confirmation`);
       } else {
         setError("Felaktiga kortdetaljer");

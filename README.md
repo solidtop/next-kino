@@ -1,77 +1,9 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+### Scripts
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-[http://localhost:3000/api/hello](http://localhost:3000/api/hello) is an endpoint that uses [Route Handlers](https://beta.nextjs.org/docs/routing/route-handlers). This endpoint can be edited in `app/api/hello/route.ts`.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-[http://localhost:3000/api/hello](http://localhost:3000/api/hello) is an endpoint that uses [Route Handlers](https://beta.nextjs.org/docs/routing/route-handlers). This endpoint can be edited in `app/api/hello/route.ts`.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-
+    npm install - Install packages
+    npm run build - Build script
+    npm start - Start production server
+    npm run dev - Start development server
 
 # API Documentation
 
@@ -86,7 +18,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - `POST` Create a booking object in server session
 
   {
-  "movieId",
+  "screeningId",
   }
 
 ##### Response
@@ -98,6 +30,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
         "pricing": {
             "amount": number
         }
+        "email": null,
     }
 
 ### /api/booking/update
@@ -108,8 +41,9 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
         {
             "bookingId",
+            "screening",
+            "tickets": [],
             "seats": [],
-            "email": "string",
         }
 
 ##### Response
@@ -124,17 +58,73 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
             }
         }
 
-### /api/booking/create
+### /api/booking/checkout
 
-- `POST` Create a new ticket
+- `POST` Checkout current booking session
 
   ##### Request
 
         {
-            "bookingId": "string",
+            "bookingId": string,
+            "screening": Screening,
+            "tickets": Ticket[],
+            "seats": number[],
+            "pricing": {
+                amountTotal: number;
+            },
+            "email": string | null,
         }
 
   ##### Response
+
+        {
+            "Bokningsdetaljer godkänd"
+        }
+
+- `GET` Checkout current booking session
+
+  ##### Response
+
+        {
+            "bookingId": string,
+            "screening": Screening,
+            "tickets": Ticket[],
+            "seats": number[],
+            "pricing": {
+                amountTotal: number;
+            },
+            "email": string | null,
+        }
+
+### /api/booking/confirm
+
+- `POST` Checkout current booking session
+
+  ##### Request
+
+        {
+            "bookingId": string,
+            "screening": Screening,
+            "tickets": Ticket[],
+            "seats": number[],
+            "pricing": {
+                amountTotal: number;
+            },
+            "email": string | null,
+        }
+
+  ##### Response
+
+        {
+            "bookingId": string,
+            "screening": Screening,
+            "tickets": Ticket[],
+            "seats": number[],
+            "pricing": {
+                amountTotal: number;
+            },
+            "email": string | null,
+        }
 
 ### /api/auth/login
 
@@ -143,14 +133,18 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
   ##### Request
 
         {
-            "email": "string",
-            "password": "string"
+            "email": string,
+            "password": string
         }
 
   ##### Response
 
         {
-
+            create "u-session cookie", {
+                "id": strig,
+                "name": string,
+                "email": string,
+            }
         }
 
 ### /api/auth/register
@@ -168,4 +162,66 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
         {
 
+        }
+
+### /api/auth/logout
+
+- `GET` Logout user
+
+  ##### Response
+
+        {
+            delete "u-session cookie"
+        }
+
+### /api/auth/update
+
+- `GET` Update user
+
+  ##### Response
+
+        {
+            "name": string,
+            "email": string,
+        }
+
+### /api/payment
+
+- `POST` Control payment
+
+  ##### Request
+
+        {
+            "cardNumber": string,
+            "ccv": string,
+            "cardYear": number,
+            "cardMonth": number,
+            "bookingDeatails": {
+                "bookingId": string,
+                "screening": Screening,
+                "tickets": Ticket[],
+                "seats": number[],
+                "pricing": {
+                    amountTotal: number;
+                },
+                "email": string,
+            }
+        }
+
+  ##### Response
+
+        {
+            "Payment valid", 200 status
+        }
+
+        {
+            "Payment invalid", 400 status
+        }
+
+- `GET` Get seating from database
+
+  ##### Response
+
+        {
+            "seating": number[]
         }
